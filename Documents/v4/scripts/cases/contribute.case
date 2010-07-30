@@ -1,0 +1,69 @@
+<?php
+
+/*
+contribute.case
+
+the proverbial busker hat
+*/
+
+$content="
+<style>h2 { margin-bottom: 0px; }</style>
+
+<div style='background: #ffc; color: black;'>
+<h1>Contribute! Donate to a planwatch preferred charity</h1>
+Running planwatch.org takes a fair amount of time and a bit of money. This is time and money that we can't
+spend supporting other causes we care about, so please consider supporting one of these organizations on our behalf:<br />
+<span style='font-size: 140%;'>
+<a href='http://www.oxfamamerica.org/whatyoucando/donate'>Oxfam</a> &bull;
+<!--<a href='https://www.thedatabank.com/dpg/199/donate.asp?formid=donate'>Food First</a> &bull;
+<a href='http://www.wmionline.org/donate/donate.html'>Women's Microfinance Initiative</a> &bull; -->
+<a href='https://org2.democracyinaction.org/o/6174/shop/custom.jsp?donate_page_KEY=1850'>Global Fund for Women</a> &bull;
+<a href='http://www.kintera.org/site/c.nlIWIgN2JwE/b.4542089/k.2D56/Donate_Now.htm'>Human Rights Watch</a>
+</span>
+</div>
+<br /><br />You can also help out by <a href='/help'>writing help docs</a>, <a href='/feature'>filing bugs</a>, or <a href='http://groups.google.com/group/planworld'>getting involved with development</a>.
+<hr />
+If you prefer, you can give to us directly instead:
+<div style='margin: 1%; text-align: center; padding: 1%; float: left; width: 45%;'>
+<h1>Subscribe Monthly</h1>
+<h2>$2</h2>
+<form action='https://authorize.payments.amazon.com/pba/paypipeline' method='post'>   <input type='hidden' name='immediateReturn' value='1' >   <input type='hidden' name='collectShippingAddress' value='0' >   <input type='hidden' name='signatureVersion' value='2' >   <input type='hidden' name='signatureMethod' value='HmacSHA256' >   <input type='hidden' name='accessKey' value='11SEM03K88SD016FS1G2' >   <input type='hidden' name='recurringFrequency' value='1 month' >   <input type='hidden' name='amount' value='USD 2' >   <input type='hidden' name='signature' value='PeyNqJm/SVuDNqt4QpnwxHKZarsYSlYPtZOp6QX6mxo=' >   <input type='hidden' name='description' value='Planwatch Support $2/month' >   <input type='hidden' name='amazonPaymentsAccountId' value='HDCLNXRBZDWO4BEMAKZA3PKT4ML8KD2NSIZQ4U' >   <input type='hidden' name='returnUrl' value='http://planwatch.org/contribute/subscribe/2' >   <input type='hidden' name='processImmediate' value='0' >   <input type='hidden' name='cobrandingStyle' value='logo' >   <input type='hidden' name='abandonUrl' value='http://planwatch.org/contribute' >   <input type='image' src='http://g-ecx.images-amazon.com/images/G/01/asp/golden_small_subscribe_withlogo_lightbg.gif' border='0'> </form> 
+
+<h2>$1</h2>
+<form action='https://authorize.payments.amazon.com/pba/paypipeline' method='post'>   <input type='hidden' name='immediateReturn' value='1' >   <input type='hidden' name='collectShippingAddress' value='0' >   <input type='hidden' name='signatureVersion' value='2' >   <input type='hidden' name='signatureMethod' value='HmacSHA256' >   <input type='hidden' name='accessKey' value='11SEM03K88SD016FS1G2' >   <input type='hidden' name='recurringFrequency' value='1 month' >   <input type='hidden' name='amount' value='USD 1' >   <input type='hidden' name='signature' value='uFHzerivYe89TRxEW//bhN7GRP+sSWPFd3KMnDNANkM=' >   <input type='hidden' name='description' value='Planwatch Support $1/month' >   <input type='hidden' name='amazonPaymentsAccountId' value='HDCLNXRBZDWO4BEMAKZA3PKT4ML8KD2NSIZQ4U' >   <input type='hidden' name='returnUrl' value='http://planwatch.org/contribute/subscribe/1' >   <input type='hidden' name='processImmediate' value='0' >   <input type='hidden' name='cobrandingStyle' value='logo' >   <input type='hidden' name='abandonUrl' value='http://planwatch.org/contribute' >   <input type='image' src='http://g-ecx.images-amazon.com/images/G/01/asp/golden_small_subscribe_withlogo_lightbg.gif' border='0'> </form> 
+
+<h2>50&cent;</h2>
+<form action='https://authorize.payments.amazon.com/pba/paypipeline' method='post'>   <input type='hidden' name='immediateReturn' value='1' >   <input type='hidden' name='collectShippingAddress' value='0' >   <input type='hidden' name='signatureVersion' value='2' >   <input type='hidden' name='signatureMethod' value='HmacSHA256' >   <input type='hidden' name='accessKey' value='11SEM03K88SD016FS1G2' >   <input type='hidden' name='recurringFrequency' value='1 month' >   <input type='hidden' name='amount' value='USD .50' >   <input type='hidden' name='signature' value='Vx/T3JWSF9LcZVGLtA6bVC/nwOvKHjX3Wh2SFicUUs4=' >   <input type='hidden' name='description' value='Planwatch Support $0.50/month' >   <input type='hidden' name='amazonPaymentsAccountId' value='HDCLNXRBZDWO4BEMAKZA3PKT4ML8KD2NSIZQ4U' >   <input type='hidden' name='returnUrl' value='http://planwatch.org/contribute/subscribe/.5' >   <input type='hidden' name='processImmediate' value='0' >   <input type='hidden' name='cobrandingStyle' value='logo' >   <input type='hidden' name='abandonUrl' value='http://planwatch.org/contribute' >   <input type='image' src='http://g-ecx.images-amazon.com/images/G/01/asp/golden_small_subscribe_withlogo_lightbg.gif' border='0'> </form> 
+</div>
+
+<div style='margin: 1%; text-align: center;  padding: 1%; float: left; width: 45%;'>
+<h1>Contribute Once</h1>
+
+<h2>$24 once</h2>
+<form action='https://authorize.payments.amazon.com/pba/paypipeline' method='post'>   <input type='hidden' name='immediateReturn' value='1' >   <input type='hidden' name='collectShippingAddress' value='0' >   <input type='hidden' name='signatureVersion' value='2' >   <input type='hidden' name='signatureMethod' value='HmacSHA256' >   <input type='hidden' name='accessKey' value='11SEM03K88SD016FS1G2' >   <input type='hidden' name='amount' value='USD 24' >   <input type='hidden' name='signature' value='QkdmkhNP5oNK241l1OxKxvAlKM6nkHnUNc5mJ5i0gEE=' >   <input type='hidden' name='isDonationWidget' value='0' >   <input type='hidden' name='description' value='Planwatch Support $24' >   <input type='hidden' name='amazonPaymentsAccountId' value='HDCLNXRBZDWO4BEMAKZA3PKT4ML8KD2NSIZQ4U' >   <input type='hidden' name='returnUrl' value='http://planwatch.org/contribute/onetime/24' >   <input type='hidden' name='processImmediate' value='1' >   <input type='hidden' name='cobrandingStyle' value='logo' >   <input type='hidden' name='abandonUrl' value='http://planwatch.org/contribute' >   <input type='image' src='http://g-ecx.images-amazon.com/images/G/01/asp/golden_small_paynow_withlogo_lightbg.gif' border='0'> </form> 
+
+<h2>$12 once</h2>
+<form action='https://authorize.payments.amazon.com/pba/paypipeline' method='post'>   <input type='hidden' name='immediateReturn' value='1' >   <input type='hidden' name='collectShippingAddress' value='0' >   <input type='hidden' name='signatureVersion' value='2' >   <input type='hidden' name='signatureMethod' value='HmacSHA256' >   <input type='hidden' name='accessKey' value='11SEM03K88SD016FS1G2' >   <input type='hidden' name='amount' value='USD 12' >   <input type='hidden' name='signature' value='1M4//LSDcf0M/9X2r0E8E60f/Z8j5+3BpbB5naod/bI=' >   <input type='hidden' name='isDonationWidget' value='0' >   <input type='hidden' name='description' value='Planwatch Support $12' >   <input type='hidden' name='amazonPaymentsAccountId' value='HDCLNXRBZDWO4BEMAKZA3PKT4ML8KD2NSIZQ4U' >   <input type='hidden' name='returnUrl' value='http://planwatch.org/contribute/onetime/12' >   <input type='hidden' name='processImmediate' value='1' >   <input type='hidden' name='cobrandingStyle' value='logo' >   <input type='hidden' name='abandonUrl' value='http://planwatch.org/contribute' >   <input type='image' src='http://g-ecx.images-amazon.com/images/G/01/asp/golden_small_paynow_withlogo_lightbg.gif' border='0'> </form> 
+
+<h2>$6 once</h2>
+<form action='https://authorize.payments.amazon.com/pba/paypipeline' method='post'>   <input type='hidden' name='immediateReturn' value='1' >   <input type='hidden' name='collectShippingAddress' value='0' >   <input type='hidden' name='signatureVersion' value='2' >   <input type='hidden' name='signatureMethod' value='HmacSHA256' >   <input type='hidden' name='accessKey' value='11SEM03K88SD016FS1G2' >   <input type='hidden' name='amount' value='USD 6' >   <input type='hidden' name='signature' value='cS///7v9VU9TWSzYEa3a+NvYI5MnPfNbFMNBKvc0X84=' >   <input type='hidden' name='isDonationWidget' value='0' >   <input type='hidden' name='description' value='Planwatch Support $6' >   <input type='hidden' name='amazonPaymentsAccountId' value='HDCLNXRBZDWO4BEMAKZA3PKT4ML8KD2NSIZQ4U' >   <input type='hidden' name='returnUrl' value='http://planwatch.org/contribute/onetime/6' >   <input type='hidden' name='processImmediate' value='1' >   <input type='hidden' name='cobrandingStyle' value='logo' >   <input type='hidden' name='abandonUrl' value='http://planwatch.org/contribute' >   <input type='image' src='http://g-ecx.images-amazon.com/images/G/01/asp/golden_small_paynow_withlogo_lightbg.gif' border='0'> </form> </div>
+
+<div style='text-align: center;'>
+<br /><br /><h1 style='margin-top: 20px; margin-bottom: 0px;'>Choose Your Own Amount</h1>
+(specify joshuawdavidson@gmail.com as the payee)
+<h2><a href='https://payments.amazon.com/sdui/sdui/paymentsend'>via amazon</a></h2>
+
+<h2><a href='https://www.paypal.com/us/cgi-bin/webscr?cmd=_send-money&nav=1'>via paypal</a></h2>
+<br /><br />
+or by mail to:<br />
+
+Josh Davidson<br />
+PO Box 423402<br />
+San Francisco, CA 94142-3402<br /><br />
+
+or let me know if you have some kind of other payment preference.
+";
+
+output("Contribute to PWO",$content);
+
+?>

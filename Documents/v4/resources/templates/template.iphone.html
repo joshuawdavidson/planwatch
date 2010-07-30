@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<title>
+$title
+</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0;"/>
+
+<link rel='stylesheet' type='text/css' href='/includes/2010-07-06/iui.css' title='Standard' />
+
+<script type='application/x-javascript'>
+http_host="{$_SERVER['HTTP_HOST']}";
+web_root='';
+user="{$_SERVER[USER]}";
+</script>
+$extracss
+
+
+</head>
+<body>
+    <div class="toolbar">
+    	<h1 id='pageTitle'></h1>
+        <!--<a id="backButton" class="button" href="#" style='font-size: 9px;'></a>-->
+		$tabbar
+    </div>
+	<div class='main_content' selected="true" title='$title'>
+	$readertoolbar
+	$content
+	</div>
+
+<script type="application/x-javascript" src="/includes/2010-07-06/iphone_ajax.js"></script>
+$analytics
+</body>
+</html>

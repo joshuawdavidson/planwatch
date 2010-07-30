@@ -1,0 +1,206 @@
+<?php
+
+/*
+cases/ENTRY.php
+
+handles hiding, deleting and such for journaling entries
+*/
+
+include_once('snoop.php');
+include_once('plan_read.php');
+
+$_SERVER['USER']='cacheuser';
+
+switch($urlarray[2]):
+
+case "ajax_new":
+	$_SERVER['USER']=$_SERVER['USERINFO_ARRAY']['username'];
+	$divider_filename="$_SERVER[USER_ROOT]/plan/plandivider.txt";
+
+	$entry_time=$urlarray[3];
+	if (file_exists($divider_filename))
+	{
+		$divider=stripslashes(file_get_contents($divider_filename));
+	}
+
+	$divider=plan_prepare_divider($_SERVER['USER'],$_SERVER['USER'],$divider,$entry_time,'','',FALSE,'');
+
+	$plan_content="\n<div class='plan_entry' id='plan_entry_$entry_time'>\n$divider\n<div class='entry_content' id='entry_content_$entry_time'></div></div>
+	<script type='text/javascript'>
+		
+	</script>\n";
+
+	echo $plan_content;
+	break;
+
+case "delete":
+
+	$old_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_clean(array_unique($old_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);
+
+	$entry=$urlarray[3];
+
+	if ($entry)
+	{
+		files_move_entry($entry,'rem.');
+	}
+
+	cache_clear($_SERVER['USERINFO_ARRAY']['username']);
+
+	$new_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_add(array_unique($new_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);
+
+	if ($urlarray[4]=='ajax') echo "Entry from ".date("F jS h:ia")." deleted";
+	else
+	{
+		if (plan_is_journaling($user)) redirect("/read/$user");
+		else redirect("/read/{$_SERVER[USERINFO_ARRAY][username]}/archives");
+	}
+	break;
+
+case "hide":
+
+	$entry=$urlarray[3];
+	list($zip,$entry_time)=explode('.',$entry);
+
+	echo "<br/>";
+
+	$old_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_clean(array_unique($old_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);
+
+	if ($entry)
+	{
+		files_move_entry($entry,'hidden.');
+	}
+
+	cache_clear($_SERVER['USERINFO_ARRAY']['username']);
+
+	$new_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_add(array_unique($new_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);
+
+	if ($urlarray[4]=='ajax') echo "Entry from ".date("F jS h:ia",$entry_time)." hidden";
+	else redirect("/read/{$_SERVER[USERINFO_ARRAY][username]}");
+	break;
+
+case "privatize":
+
+	$entry=$urlarray[3];
+
+	$old_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_clean(array_unique($old_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);
+
+	if ($entry)
+	{
+		files_move_entry($entry,'','.p');
+	}
+
+	cache_clear($_SERVER['USERINFO_ARRAY']['username']);
+
+	$new_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_add(array_unique($new_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);	
+	$entry_time=substr($entry,1,strlen($entry)-1);
+	if ($urlarray[4]=='ajax') echo "<a href=\"javascript:loadXMLDoc('http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/entry/publicize/$entry/ajax',null,'privacy_$entry_time');document.getElementById('privacy_marker_$entry_time').innerHTML=' ';void(null);\">publicize</a>";
+	else redirect("/read/{$_SERVER[USERINFO_ARRAY][username]}");
+	break;
+
+case "publicize":
+
+	$entry=$urlarray[3];
+
+	$old_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_clean(array_unique($old_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);
+
+	if ($entry)
+	{
+		files_move_entry($entry,'','',array('hidden.','.p'));
+	}
+
+	cache_clear($_SERVER['USERINFO_ARRAY']['username']);
+
+	$new_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_add(array_unique($new_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);	
+
+	$entry_time=substr($entry,1,strlen($entry)-1);
+	if ($urlarray[4]=='ajax') echo "<a href=\"javascript:loadXMLDoc('http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/entry/privatize/$entry/ajax',null,'privacy_$entry_time');document.getElementById('privacy_marker_$entry_time').innerHTML='private entry';void(null);\">privatize</a>";
+	else redirect("/read/{$_SERVER[USERINFO_ARRAY][username]}");
+	break;
+
+case "unhide":
+
+	$entry=$urlarray[3];
+
+	$old_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_clean(array_unique($old_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);
+
+	if ($entry)
+	{
+		files_move_entry($entry,'','','hidden.');
+	}
+
+
+	cache_clear($_SERVER['USERINFO_ARRAY']['username']);
+
+	$new_snoop_array=snoop_find(plan_read($_SERVER['USERINFO_ARRAY']['username']),$_SERVER['USERINFO_ARRAY']['username']);
+	snoop_add(array_unique($new_snoop_array),$_SERVER['USERINFO_ARRAY']['username']);	
+
+	redirect("/read/{$_SERVER[USERINFO_ARRAY][username]}");
+	break;
+
+case "editbox":
+	$entry_time=$urlarray[3];
+	
+	if ($_SERVER['USERINFO_ARRAY']['username'])
+	{
+		plan_get_owner_info($_SERVER['USERINFO_ARRAY']['username']);
+
+		$entry_filename=files_get_entry_filename($entry_time);
+	
+		if ($entry_filename)
+		{
+			$textarea_data=htmlentities(stripslashes(stripslashes(file_get_contents("$_SERVER[USER_ROOT]/plan/".$entry_filename))));
+		}
+		else { echo "Are you sure that's a real entry? We can't find it."; exit; }
+	}
+	else { echo "Oh dear, you seem to have logged out while you were staring at this page.
+	You'll want to log back in now, I expect (you can do that in a new window)."; exit; }
+
+	$entry_timecode=str_replace(".","",$entry_time);
+	$content="<input type='button' value='Post Changes' class='submit' onclick=\"updatePlan('$entry_timecode','$entry_is_private','$entry_nolinebreaks','{$_SERVER['USERINFO_ARRAY']['username']}');\"/>
+	<input type='button' value='Full Editor' onclick=\"sendToFullEditor('$entry_timecode','$entry_is_private','$entry_nolinebreaks','{$_SERVER['USERINFO_ARRAY']['username']}');\"/>
+	<input type='button' value='Cancel' onclick=\"swapContent('entry_content_' + $entry_timecode,'editLayer_' + $entry_timecode);\"/>
+	<div id='format_toolbar_$entry_timecode' class='format_toolbar'>
+	<a href=\"javascript:insertTag('editBox_$entry_timecode','<strong>','</strong>');void(0);\"><strong>B</strong></a> 
+	<a href=\"javascript:insertTag('editBox_$entry_timecode','<em>','</em>');void(0);\"><em>I</em></a>
+	<a href=\"javascript:insertTag('editBox_$entry_timecode','<blockquote>','</blockquote>');void(0);\">&quot;</a>
+	<a href=\"javascript:DoPrompt('snoop','editBox_$entry_timecode');void(0);\">snoop</a>
+	<a href=\"javascript:DoPrompt('url','editBox_$entry_timecode');void(0);\">link</a>
+	<a href=\"javascript:DoPrompt('spiel','editBox_$entry_timecode');void(0);\">spiel</a>
+	<a href=\"javascript:DoPrompt('image','editBox_$entry_timecode');void(0);\">image</a>
+	</div>
+	<textarea id='editBox_$entry_timecode' style='width: 80%; max-width: 600px; height: 300px;'>$textarea_data</textarea>
+	<br clear='all'/>\n";
+	echo $content;
+	break;
+
+case "unprocessed":
+	$entry=$urlarray[3];
+
+	if ($_SERVER['USERINFO_ARRAY']['username'])
+	{
+		plan_get_owner_info($_SERVER['USERINFO_ARRAY']['username']);
+
+		$entry_filename=files_get_entry_filename($entry);
+	
+		if ($entry_filename)
+		{
+			echo htmlentities(stripslashes(stripslashes(file_get_contents("$_SERVER[USER_ROOT]/plan/".$entry_filename))));
+		}
+		else echo "Are you sure that's a real entry? We can't find it.";
+	}
+	else echo "Oh dear, you seem to have logged out while you were staring at this page.
+	You'll want to log back in now, I expect (you can do that in a new window).";
+	break;
+
+endswitch;
+
+?>

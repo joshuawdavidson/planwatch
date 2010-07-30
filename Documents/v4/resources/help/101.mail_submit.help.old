@@ -1,0 +1,12 @@
+<?php
+global $user,$pass;
+$fingerprint=fingerprint_get($user,$pass);
+$title='How to Email a Plan Update';
+$body="
+	If you'd like, you can write your plan updates
+	as emails and send them to <a href='mailto:post@planwatch.org'>post@planwatch.org</a> to have them posted. It's pretty easy:
+	just write a plan update as the body of the message, with the subject set to your planwatch fingerprint and hit send. Planwatch checks its mail every 2 minutes, so your update should be posted soon after you send it.
+	<br><br>
+	Your planwatch fingerprint is: <hr><b>$fingerprint</b><hr><br><div align='center'><div class='alert'>note: Your fingerprint will change if you change your username or password.</div></div>
+";
+?>

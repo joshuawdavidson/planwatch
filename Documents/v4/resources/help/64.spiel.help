@@ -1,0 +1,30 @@
+<?php
+$title="
+
+What is Spiel? How do I use it?
+
+";
+
+
+$body="
+<strong>What is Spiel?</strong><br>
+Spiel is a new feature of planwatch.org (as of May 2004) that allows you to track discussions going on in planworld.
+<br><br>
+<strong>Sounds exciting. How do I use it?</strong><br>
+When you want to start a discussion using spiel, you insert a spiel link (it's like a plan link) that looks like this:<br>
+! spiel:<em>topic_name</em>:<em>title of my entry</em> !<br>
+which would look like this on your plan: <a href='/spiel/view/topic_name'>title of my entry</a><br><br>
+Planwatch will take your rant and make a page for it, which you can see by going to its <em>spiel page</em> at http://planwatch.org/spiel/view/<em>topic_name</em>. A link to that page will appear in your watched list along with the last time it was updated.<br><br>
+<strong>Right. So when does the discussing start?</strong><br>
+When someone sees your spiel on your plan, they can click the title to see the spiel page. On the page is a \"join the discussion\" link they can click to insert their own spiel on the topic. Alternately, any spiel they enter on their plan with the same topic name (the entry name can change, or be left out altogether) will become part of the discussion.<br><br>
+<strong>Why is my entry on the spiel page twice?</strong>
+Right now, whenever you go back and edit an old spiel entry, it re-posts it. This is a bug, and it will be fixed eventually.<br><br>
+<strong>Spiel is a dumb name, and I'll never be able to spell it!</strong><br>
+Go to <a href='/read/jwdavidson'>jwdavidson's</a> plan and look at the list of proposed names. Vote for your favorite, or suggest a new one by emailing or snooping josh.<br><br>
+<strong>Why don't people from amherst or planworld.net join in?</strong><br>
+Those systems haven't yet implemented spiel. They probably will by the end of the summer. Patience, grasshopper.<br><br>
+<strong>What about my friends on diarlyland or LJ?</strong><br>
+They're condemned to a terrible half-life. They should join planwatch if they want to play with spiel.<br><br>
+
+";
+?>

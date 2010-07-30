@@ -1,0 +1,16 @@
+<?php
+
+/*
+FINGERPRINT.case
+
+displays a user's fingerprint
+*/
+
+if (user_is_valid($user,$pass))
+	output(
+		"planwatch fingerprint",
+		"Your planwatch fingerprint is: <hr>".user_get_fingerprint($user,$pass)."<hr><br />
+		You must use your fingerprint when submitting updates via email. Copy and paste it into
+		the first line of your message. For more information, read the <a href='$_SERVER[WEB_ROOT]/help/mail_submit'>mail submission help</a>");
+
+?>

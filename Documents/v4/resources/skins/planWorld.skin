@@ -1,0 +1,46 @@
+<?php
+/*
+PLANWORLD_..BY_MADVANI....SKIN
+this skin was automatically created on 05 Feb 2002, 09:59:50 pm GMT
+from madvani's color and font prefs
+*/
+
+$sitename=""; 
+
+$pagebgimage="";
+$listsbgimg="";
+$planbgimg="";
+$headbgimg="";
+$pwlogo="/resources/graphics/planworld.gif";
+$viewicon='/resources/graphics/read.gif';
+$writeicon="/resources/graphics/pencil.gif";
+$toolsicon="/resources/graphics/hammer.gif";
+$snitchicon="/resources/graphics/eye.gif";
+$prefsicon="/resources/graphics/smiley.gif";
+$helpicon="/resources/graphics/help.gif";
+$logouticon="/resources/graphics/x.gif";
+$navtextcolor="black";
+$textcolor="black";
+$linkcolor="#003366";
+$navlinkcolor="#003366";
+$vlinkcolor="#003366";
+$alinkcolor="#003366";
+$planlinkcolor="#003366";
+$pagebgcolor="#FFFFFF";
+$listsbgcolor="#AABBCC";
+$headbgcolor="#336699";
+$planbgcolor="#FFFFCC";
+$titletextcolor="white";
+$nfonts="arial, helvetica, sans-serif";
+$sfonts="arial, helvetica, sans-serif";
+$hfonts="trebuchet ms, verdana, arial, sans-serif";
+$pfonts="arial, helvetica, sans-serif";
+$nfsize="10pt";
+$sfsize="9pt";
+$hfsize="18pt";
+$pfsize="11pt";
+$skin_css="
+	a { font-weight: bold; } 
+	.planwatch a { font-weight: normal; }
+";
+?>

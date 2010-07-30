@@ -1,0 +1,44 @@
+<?php
+
+/*
+SLOGANS.case
+*/
+
+
+	include_once('slogan_functions.php');
+
+switch($urlarray[2]):
+
+case "mod":
+	$rating=slogans_modify_one_rating($urlarray[3],$urlarray[4]);
+	echo " [ $rating ] ";
+	break;
+
+case "write_ajax":
+	$slogan=urldecode(str_replace("/slogans/write_ajax/$urlarray[3]/",'',implode('/',$urlarray)));
+	echo slogans_write_one($slogan,'oldslogan_placeholder',$urlarray[3]);
+	break;
+
+case "list_mine":
+	slogans_list_mine($urlarray[3]);
+	break;
+	
+case "list":
+	slogans_list_all($urlarray[3]);
+	break;
+
+case "list_inactive":
+	slogans_list_inactive($urlarray[3]);
+	break;
+
+case "delete":
+	slogans_delete_one($urlarray[3]);
+	break;
+
+default:
+	slogans_edit_one($urlarray[3]);
+	break;
+	
+endswitch;
+
+?>

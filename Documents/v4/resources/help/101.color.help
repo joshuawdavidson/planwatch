@@ -1,0 +1,299 @@
+<?php
+	$title="Intro Formatting: HTML Colors";
+	$body="<style>.color_list li { display: inline; list-style: none; margin: 4px; padding: 2px;} .color_list { display: inline; list-style: none; padding: 0px; margin: 0px; }</style>
+You can use HTML colors or english color names.
+
+<div style='float: right;'>
+<h2>Interactive Color Picker</h2>
+<script type='text/javascript' src='http://cdn.widgetserver.com/syndication/subscriber/InsertWidget.js'></script><script>if (WIDGETBOX) WIDGETBOX.renderWidget('24387354-2e8c-4818-8e73-6e01a4824d22');</script><noscript>Get the <a href='http://www.widgetbox.com/widget/farbtastic-widget'>Farbtastic Widget</a> widget and many other <a href='http://www.widgetbox.com/'>great free widgets</a> at <a href='http://www.widgetbox.com'>Widgetbox</a>! Not seeing a widget? (<a href='http://docs.widgetbox.com/using-widgets/installing-widgets/why-cant-i-see-my-widget/'>More info</a>)</noscript></div>
+
+## English Color Names
+<ul class='color_list'>
+<li  style='color: aqua'>aqua</li>
+<li   style='color: black'>black</li>
+<li  style='color: blue'>blue</li>
+<li  style='color: fuchsia'>fuchsia</li>
+<li  style='color: gray'>gray</li>
+<li  style='color: green'>green</li>
+<li  style='color: lime'>lime</li>
+<li  style='color: maroon'>maroon</li>
+<li  style='color: navy'>navy</li>
+<li  style='color: olive'>olive</li>
+<li   style='color: purple'>purple</li>
+<li  style='color: red'>red</li>
+<li  style='color: silver'>silver</li>
+<li  style='color: teal'>teal</li>
+<li  style='color: white; background: black;'>white</li>
+<li style='color: yellow'>yellow</li>
+</ul>
+
+## HTML Color Codes
+Also, here's a table that has the standard 216 color HTML  palatte with codes:
+<table border='0' cellpadding='2' cellspacing='0'>
+<!-- Copyright 200 VisiBone -->
+<!-- Arrangement by Bob Stein -->
+  <tr>
+    <td  style='background-color:#FFF; color: black'>FFF</td>
+    <td  style='background-color: #CCC; color: black'>CCC</td>
+    <td  style='background-color: #999;color:black'>999</td>
+    <td   style='background-color:#666;color:white'>666</td>
+    <td   style='background-color:#333;color:white'>333</td>
+    <td   style='background-color:#000;color:white'>000</td>
+    <td   style='background-color:#FC0;color:black'>FC0</td>
+    <td   style='background-color:#F90;color:black'>F90</td>
+    <td   style='background-color:#F60;color:black'>F60</td>
+    <td   style='background-color:#F30;color:white'>F30</td>
+    <td colspan='6' valign='top' align='right'><span style='font-family: Geneva,Arial,Helvetica'><small><small>SWITCH TO </small><a href='http://html-color-codes.com/rgb.html'><b>DECIMAL RGB</b></a><small><br>
+    COLOR CODES</small></small></span></td>
+  </tr>
+  <tr>
+    <td   style='background-color:#9C0;color:black'>9C0</td>
+    <td colspan='4'></td>
+    <td   style='background-color:#C90;color:black'>C90</td>
+    <td   style='background-color:#FC3;color:black'>FC3</td>
+    <td   style='background-color:#FC6;color:black'>FC6</td>
+    <td   style='background-color:#F96;color:black'>F96</td>
+    <td   style='background-color:#F63;color:black'>F63</td>
+    <td   style='background-color:#C30;color:white'>C30</td>
+    <td colspan='4'></td>
+    <td   style='background-color:#C03;color:white'>C03</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#CF0;color:black'>CF0</td>
+    <td   style='background-color:#CF3;color:black'>CF3</td>
+    <td   style='background-color:#330;color:white'>330</td>
+    <td   style='background-color:#660;color:white'>660</td>
+    <td   style='background-color:#990;color:black'>990</td>
+    <td   style='background-color:#CC0;color:black'>CC0</td>
+    <td   style='background-color:#FF0;color:black'>FF0</td>
+    <td   style='background-color:#C93;color:black'>C93</td>
+    <td   style='background-color:#C63;color:white'>C63</td>
+    <td   style='background-color:#300;color:white'>300</td>
+    <td   style='background-color:#600;color:white'>600</td>
+    <td   style='background-color:#900;color:white'>900</td>
+    <td   style='background-color:#C00;color:white'>C00</td>
+    <td   style='background-color:#F00;color:white'>F00</td>
+    <td   style='background-color:#F36;color:white'>F36</td>
+    <td   style='background-color:#F03;color:white'>F03</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#9F0;color:black'>9F0</td>
+    <td   style='background-color:#CF6;color:black'>CF6</td>
+    <td   style='background-color:#9C3;color:black'>9C3</td>
+    <td   style='background-color:#663;color:white'>663</td>
+    <td   style='background-color:#993;color:black'>993</td>
+    <td   style='background-color:#CC3;color:black'>CC3</td>
+    <td   style='background-color:#FF3;color:black'>FF3</td>
+    <td   style='background-color:#960;color:white'>960</td>
+    <td   style='background-color:#930;color:white'>930</td>
+    <td   style='background-color:#633;color:white'>633</td>
+    <td   style='background-color:#933;color:white'>933</td>
+    <td   style='background-color:#C33;color:white'>C33</td>
+    <td   style='background-color:#F33;color:white'>F33</td>
+    <td   style='background-color:#C36;color:white'>C36</td>
+    <td   style='background-color:#F69;color:black'>F69</td>
+    <td   style='background-color:#F06;color:white'>F06</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#6F0;color:black'>6F0</td>
+    <td   style='background-color:#9F6;color:black'>9F6</td>
+    <td   style='background-color:#6C3;color:black'>6C3</td>
+    <td   style='background-color:#690;color:white'>690</td>
+    <td   style='background-color:#996;color:black'>996</td>
+    <td   style='background-color:#CC6;color:black'>CC6</td>
+    <td   style='background-color:#FF6;color:black'>FF6</td>
+    <td   style='background-color:#963;color:white'>963</td>
+    <td   style='background-color:#630;color:white'>630</td>
+    <td   style='background-color:#966;color:white'>966</td>
+    <td   style='background-color:#C66;color:black'>C66</td>
+    <td   style='background-color:#F66;color:black'>F66</td>
+    <td   style='background-color:#903;color:white'>903</td>
+    <td   style='background-color:#C39;color:white'>C39</td>
+    <td   style='background-color:#F6C;color:black'>F6C</td>
+    <td   style='background-color:#F09;color:white'>F09</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#3F0;color:black'>3F0</td>
+    <td   style='background-color:#6F3;color:black'>6F3</td>
+    <td   style='background-color:#390;color:white'>390</td>
+    <td   style='background-color:#6C0;color:black'>6C0</td>
+    <td   style='background-color:#9F3;color:black'>9F3</td>
+    <td   style='background-color:#CC9;color:black'>CC9</td>
+    <td   style='background-color:#FF9;color:black'>FF9</td>
+    <td   style='background-color:#C96;color:black'>C96</td>
+    <td   style='background-color:#C60;color:white'>C60</td>
+    <td   style='background-color:#C99;color:black'>C99</td>
+    <td   style='background-color:#F99;color:black'>F99</td>
+    <td   style='background-color:#F39;color:white'>F39</td>
+    <td   style='background-color:#C06;color:white'>C06</td>
+    <td   style='background-color:#906;color:white'>906</td>
+    <td   style='background-color:#F3C;color:black'>F3C</td>
+    <td   style='background-color:#F0C;color:white'>F0C</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#0C0;color:white'>0C0</td>
+    <td   style='background-color:#3C0;color:black'>3C0</td>
+    <td   style='background-color:#360;color:white'>360</td>
+    <td   style='background-color:#693;color:white'>693</td>
+    <td   style='background-color:#9C6;color:black'>9C6</td>
+    <td   style='background-color:#CF9;color:black'>CF9</td>
+    <td   style='background-color:#FFC;color:black'>FFC</td>
+    <td   style='background-color:#FC9;color:black'>FC9</td>
+    <td   style='background-color:#F93;color:black'>F93</td>
+    <td   style='background-color:#FCC;color:black'>FCC</td>
+    <td   style='background-color:#F9C;color:black'>F9C</td>
+    <td   style='background-color:#C69;color:black'>C69</td>
+    <td   style='background-color:#936;color:white'>936</td>
+    <td   style='background-color:#603;color:white'>603</td>
+    <td   style='background-color:#C09;color:white'>C09</td>
+    <td   style='background-color:#303;color:white'>303</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#3C3;color:black'>3C3</td>
+    <td   style='background-color:#6C6;color:black'>6C6</td>
+    <td   style='background-color:#0F0;color:black'>0F0</td>
+    <td   style='background-color:#3F3;color:black'>3F3</td>
+    <td   style='background-color:#6F6;color:black'>6F6</td>
+    <td   style='background-color:#9F9;color:black'>9F9</td>
+    <td   style='background-color:#CFC;color:black'>CFC</td>
+    <td colspan='3'></td>
+    <td   style='background-color:#C9C;color:black'>C9C</td>
+    <td   style='background-color:#969;color:white'>969</td>
+    <td   style='background-color:#939;color:white'>939</td>
+    <td   style='background-color:#909;color:white'>909</td>
+    <td   style='background-color:#636;color:white'>636</td>
+    <td   style='background-color:#606;color:white'>606</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#060;color:white'>060</td>
+    <td   style='background-color:#363;color:white'>363</td>
+    <td   style='background-color:#090;color:white'>090</td>
+    <td   style='background-color:#393;color:white'>393</td>
+    <td   style='background-color:#696;color:black'>696</td>
+    <td   style='background-color:#9C9;color:black'>9C9</td>
+    <td colspan='3'></td>
+    <td   style='background-color:#FCF;color:black'>FCF</td>
+    <td   style='background-color:#F9F;color:black'>F9F</td>
+    <td   style='background-color:#F6F;color:black'>F6F</td>
+    <td   style='background-color:#F3F;color:black'>F3F</td>
+    <td   style='background-color:#F0F;color:white'>F0F</td>
+    <td   style='background-color:#C6C;color:black'>C6C</td>
+    <td   style='background-color:#C3C;color:white'>C3C</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#030;color:white'>030</td>
+    <td   style='background-color:#0C3;color:white'>0C3</td>
+    <td   style='background-color:#063;color:white'>063</td>
+    <td   style='background-color:#396;color:white'>396</td>
+    <td   style='background-color:#6C9;color:black'>6C9</td>
+    <td   style='background-color:#9FC;color:black'>9FC</td>
+    <td   style='background-color:#CFF;color:black'>CFF</td>
+    <td   style='background-color:#39F;color:black'>39F</td>
+    <td   style='background-color:#9CF;color:black'>9CF</td>
+    <td   style='background-color:#CCF;color:black'>CCF</td>
+    <td   style='background-color:#C9F;color:black'>C9F</td>
+    <td   style='background-color:#96C;color:black'>96C</td>
+    <td   style='background-color:#639;color:white'>639</td>
+    <td   style='background-color:#306;color:white'>306</td>
+    <td   style='background-color:#90C;color:white'>90C</td>
+    <td   style='background-color:#C0C;color:white'>C0C</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#0F3;color:black'>0F3</td>
+    <td   style='background-color:#3F6;color:black'>3F6</td>
+    <td   style='background-color:#093;color:white'>093</td>
+    <td   style='background-color:#0C6;color:black'>0C6</td>
+    <td   style='background-color:#3F9;color:black'>3F9</td>
+    <td   style='background-color:#9FF;color:black'>9FF</td>
+    <td   style='background-color:#9CC;color:black'>9CC</td>
+    <td   style='background-color:#06C;color:white'>06C</td>
+    <td   style='background-color:#69C;color:black'>69C</td>
+    <td   style='background-color:#99F;color:black'>99F</td>
+    <td   style='background-color:#99C;color:black'>99C</td>
+    <td   style='background-color:#93F;color:white'>93F</td>
+    <td   style='background-color:#60C;color:white'>60C</td>
+    <td   style='background-color:#609;color:white'>609</td>
+    <td   style='background-color:#C3F;color:white'>C3F</td>
+    <td   style='background-color:#C0F;color:white'>C0F</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#0F6;color:black'>0F6</td>
+    <td   style='background-color:#6F9;color:black'>6F9</td>
+    <td   style='background-color:#3C6;color:black'>3C6</td>
+    <td   style='background-color:#096;color:white'>096</td>
+    <td   style='background-color:#6FF;color:black'>6FF</td>
+    <td   style='background-color:#6CC;color:black'>6CC</td>
+    <td   style='background-color:#699;color:black'>699</td>
+    <td   style='background-color:#036;color:white'>036</td>
+    <td   style='background-color:#369;color:white'>369</td>
+    <td   style='background-color:#66F;color:white'>66F</td>
+    <td   style='background-color:#66C;color:white'>66C</td>
+    <td   style='background-color:#669;color:white'>669</td>
+    <td   style='background-color:#309;color:white'>309</td>
+    <td   style='background-color:#93C;color:white'>93C</td>
+    <td   style='background-color:#C6F;color:black'>C6F</td>
+    <td   style='background-color:#90F;color:white'>90F</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#0F9;color:black'>0F9</td>
+    <td   style='background-color:#6FC;color:black'>6FC</td>
+    <td   style='background-color:#3C9;color:black'>3C9</td>
+    <td   style='background-color:#3FF;color:black'>3FF</td>
+    <td   style='background-color:#3CC;color:black'>3CC</td>
+    <td   style='background-color:#399;color:white'>399</td>
+    <td   style='background-color:#366;color:white'>366</td>
+    <td   style='background-color:#069;color:white'>069</td>
+    <td   style='background-color:#039;color:white'>039</td>
+    <td   style='background-color:#33F;color:white'>33F</td>
+    <td   style='background-color:#33C;color:white'>33C</td>
+    <td   style='background-color:#339;color:white'>339</td>
+    <td   style='background-color:#336;color:white'>336</td>
+    <td   style='background-color:#63C;color:white'>63C</td>
+    <td   style='background-color:#96F;color:black'>96F</td>
+    <td   style='background-color:#60F;color:white'>60F</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#0FC;color:black'>0FC</td>
+    <td   style='background-color:#3FC;color:black'>3FC</td>
+    <td   style='background-color:#0FF;color:black'>0FF</td>
+    <td   style='background-color:#0CC;color:black'>0CC</td>
+    <td   style='background-color:#099;color:white'>099</td>
+    <td   style='background-color:#066;color:white'>066</td>
+    <td   style='background-color:#033;color:white'>033</td>
+    <td   style='background-color:#39C;color:black'>39C</td>
+    <td   style='background-color:#36C;color:white'>36C</td>
+    <td   style='background-color:#00F;color:white'>00F</td>
+    <td   style='background-color:#00C;color:white'>00C</td>
+    <td   style='background-color:#009;color:white'>009</td>
+    <td   style='background-color:#006;color:white'>006</td>
+    <td   style='background-color:#003;color:white'>003</td>
+    <td   style='background-color:#63F;color:white'>63F</td>
+    <td   style='background-color:#30F;color:white'>30F</td>
+  </tr>
+  <tr>
+    <td   style='background-color:#0C9;color:black'>0C9</td>
+    <td colspan='4' valign='middle' align='center'>© 206 <a href='http://www.visibone.com/'>VisiBone</a>
+    </td>
+    <td   style='background-color:#09C;color:white'>09C</td>
+    <td   style='background-color:#3CF;color:black'>3CF</td>
+    <td   style='background-color:#6CF;color:black'>6CF</td>
+    <td   style='background-color:#69F;color:black'>69F</td>
+    <td   style='background-color:#36F;color:white'>36F</td>
+    <td   style='background-color:#03C;color:white'>03C</td>
+    <td colspan='4'></td>
+    <td   style='background-color:#30C;color:white'>30C</td>
+  </tr>
+  <tr>
+    <td colspan='6'></td>
+    <td   style='background-color:#0CF;color:black'>0CF</td>
+    <td   style='background-color:#09F;color:white'>09F</td>
+    <td   style='background-color:#06F;color:white'>06F</td>
+    <td   style='background-color:#03F;color:white'>03F</td>
+    <td colspan='6' valign='middle' align='center'></td>
+  </tr>
+</table>
+(stolen from the very useful <a href='http://html-color-codes.com'>html-color-codes.com</a>
+
+##Other Color Formats
+You can also use <a href='http://www.drpeterjones.com/colorcalc/'>RGB or HSV</a> color codes, and even RGBA (that is &quot;RGB with transparency&quot;) codes. These are sort of beyond the scope of this help file, but !jwdavidson:i! will be happy to help you with them if you ask.";
+	?>

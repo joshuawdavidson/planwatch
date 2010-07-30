@@ -1,0 +1,69 @@
+<?php
+	$title="Help with Privacy";
+	$body="<b>About Privacy</b><br>
+    if you host a plan at planwatch.org, you may choose one of 4 levels of privacy:
+    <ul>
+		<li><b>Everyone! Advertise Me!</b> or 
+		<li><b>Eh. Anyone. </b> means everyone can read your plan, but they have to know it exists first (there used to be an advertised plans list that was publicly viewable, but it's been gone for a year or two)
+		<li><b>Registered Users Only</b> means only registered users of one of the planworld nodes can read your plan. As of 17 August 2008, users of planworld.net that have not been vouched for by another trusted user do not get to read Registered Only plans.
+		<li><b>Only My Allowed List</b> means that only people you <a href='/lists/edit/allowed'>specifically allow</a>
+			can read your plan
+       </ul>
+       
+	<br>
+	<b>Blocking readers outside planwatch.org</b><br/>
+	If you answer <code>no</code> to the question <code>do you want your plan to
+	be available to users on other nodes?</code>, only users on planwatch.org
+	will be able to read your plan. Starting in September 2008, this option will be removed since other privacy options are sufficient for protecting your data.
+
+	<br/><br/>
+	<b>Allowing people to read your private plan entries</b><br>
+	To give people access to your private plan, add their usernames to your
+	<a href='/lists/edit/allowed'>allowed list</a>. you can't give private
+	access to someone who doesn't have an account (though you can give private
+	access to Amherst or planworld.net users by including their full username).
+	
+	<h3>Blocking specific users</h3>
+	You also have a <a href='/lists/edit/blocked'>'blocked' list</a>, which prevents
+	particular users from viewing your plan. you can block Amherst and planworld.net users
+	as well as local users.
+    <br>
+    <i>Note: If your plan is advertised or public, they could still view it when logged out,
+    so blocking only really makes sense for registered-only or private plans</i>.
+
+
+	<h3>Users that are allowed <i>and</i> blocked</h3>
+	If someone is on both your allowed list and your blocked list for some reason,
+	they'll be blocked.
+
+	<br><br>
+	<b>Changing your privacy settings</b><br>
+	You can always change your privacy settings by going to the
+	<a href='/prefs'>Prefs</a> page.
+
+	<br><br>
+	<b>Making a single entry private</b><br>
+	Private entries are like private plans: no one can read
+	them except for the people on your <a href='lists/edit/allowed'>allowed list</a>.
+	when someone who isn't allowed looks at your plan, they won't see the entry at all.
+	when someone looks at your plan who is on your allowed list, the entry will show up
+	right in line with the others. you can put the keyword PRIVATE in your divider if
+	you want a mark on private entries.
+
+	<br><br>
+	The easiest way to make an entry private is to check the box next to 'make this entry
+	private' when you're writing it. If you've alread written it, the easiest way to make
+	it private is to click on the 'privatize' link at the bottom of the entry. once you've
+	made it private, you can click on 'publicize' to make it public again.<br>
+	You can also <a href='/view/all_private'>view a list of all your private entries</a>.
+
+	<br><br>
+	If you don't want <i>anyone</i> to see an entry, you can also <a href='/help/hidden'>hide
+	or delete it</a>. Hidden entries are only visible to the person who wrote them, by choosing <a href='http://planwatch.org/view/all_hidden'>view your hidden entries</a> from the &quot;view&quot; menu.
+	<br><br>
+	<i>note: if your plan is private and you change it to a more public status
+	(registered-only, public, or advertised) all the entries will also gain that status
+	unless you explicitly make them private</i>
+	<br><br>
+";
+	?>

@@ -1,0 +1,186 @@
+<?php
+/*
+cases/READ.case
+
+handles cases related to reading plans
+*/
+
+// INCLUDES
+//------------------------------------------------------------------------------
+// plan_read.php has all the functions we care about for the read case
+
+include_once('plan_read.php');
+
+
+
+// READBEGIN
+//------------------------------------------------------------------------------
+// This reads in all the relevant info about the plan owner and puts it in
+// $_SERVER[PLANOWNER_INFO_ARRAY][]
+if($urarray[2]!='privatefeed')
+{
+	profile('planowner_info');
+	$planowner=urldecode($_SERVER['URL_ARRAY'][2]);
+	plan_get_owner_info($planowner);
+	profile('planowner_info');
+}
+
+
+
+switch($urlarray[3]):
+
+
+	case "search":
+		$plan  = "
+		
+			<style type='text/css'>
+			.result_title { display: block; margin-top: 20px; font-weight: bold; }
+			.found { background: $listsbgcolor; color: $navtextcolor; }
+			</style>
+			<h1>Results for <span class='found'>$urlarray[4]</span> in $_SERVER[PLANOWNER_DISPLAY_NAME]'s archives</h1>
+			<form action='http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/scripts/form_shim.php' method='get'>
+				new search: <input type='text' name='keyword' value='$urlarray[4]'/>
+				<input type='hidden' name='writer' value='$urlarray[2]'/>
+				<input type='hidden' name='action' value='archive_search'/>
+				<input type='submit' value='&gt;'/>
+			</form>"
+			.str_replace($urlarray[4],"<span class='found'>$urlarray[4]</span>",plan_search_local($planowner,$_SERVER['USER'],$urlarray[4]));
+
+		$title = "$urlarray[4] in $planowner's archives";		
+		break;
+
+	case "bio":
+		include_once('bios.php');
+		if (!($urlarray[2])) redirect($_SERVER['HTTP_REFERER']);
+		$plan  = bio_read($urlarray[2]);
+		$title = "$urlarray[2]'s bio";
+		break;
+
+	case "archives":
+		$planowner=$urlarray[2];
+		$plan=plan_read_archives($planowner);
+		break;
+
+	case "source":
+		if(isadmin())
+		{
+			if ($urlarray[4])
+			{
+				$begindate=mktime(str_replace(array('%3A00',':00'),'',$urlarray[7]),0,0,$urlarray[5],$urlarray[6],$urlarray[4]);
+			}
+			
+			if ($urlarray[4][0]=='.')
+			{
+				$threshhold=$urlarray[4];
+			}
+	
+			$plan=plan_read($planowner,$threshhold,$begindate,TRUE);
+			output("$planowner's plan: source view",$plan);
+			exit;
+		}
+		break;
+
+	case "privatefeed":
+		$salt=$_SERVER['URL_ARRAY'][2];
+		profile('planowner_info');
+		$planowner=trim(file_get_contents("$_SERVER[FILE_ROOT]/resources/privatefeeds/$salt.owner"));
+		plan_get_owner_info($planowner);
+		profile('planowner_info');
+		
+		$_SERVER['OUTPUT_MODE']='ATOM_PRIVATE';
+		$plan=str_replace("&nbsp;",' ',plan_read($planowner));
+		output("$planowner",$plan);
+		//		echo "plan: $plan"; exit;
+		break;
+
+	default:
+
+		if (!$urlarray[3])
+		{
+			$threshhold=$_SERVER['PLANOWNER_INFO_ARRAY']['defaultdays']."d";
+			if ($threshhold=='d') $threshhold='2d';
+		}
+		else
+		{
+			$threshhold=$urlarray[3];
+		}
+
+		if ($urlarray[2]=='single')
+		{
+				$_SERVER['OUTPUT_MODE']='AJAX';
+				$plan=str_replace("/read/single/$urlarray[3]/",'',$_SERVER['REQUEST_URI']);
+				$content=plan_read_simplepie_single($plan,$urlarray[3]);
+				echo $content; exit;
+//				output("single entry $urlarray[3]",$content);
+		}
+		
+
+		if ($_SERVER['OUTPUT_MODE']=='RSS')
+		{
+			if (!$_SERVER['USER']) $_SERVER['USER']='rss_reader';
+	
+			if(plan_test_privacy($_SERVER['USER'],$urlarray[2]))
+			{
+				$plan=str_replace(array('<br>','&nbsp;','&'),array('<br />',' ','&amp;'),plan_read($planowner));
+			}
+			else
+			{
+				$plan=plan_encapsulate_rss($_SERVER[PLANOWNER_DISPLAY_NAME],time(),"sorry, $_SERVER[PLANOWNER_DISPLAY_NAME]'s plan is not available as an rss feed");
+				include_once('snitch.php');
+				snitch_write('rss reader',$urlarray[2],' failed');
+			}
+		}
+
+		if (strstr($_SERVER['OUTPUT_MODE'],'ATOM'))
+		{
+			if (!$_SERVER['USER']) $_SERVER['USER']='rss_reader';
+	
+			if(plan_test_privacy($_SERVER['USER'],$urlarray[2]))
+			{
+				$plan=str_replace("&nbsp;",' ',plan_read($planowner));
+			}
+			else
+			{
+				$plan=plan_encapsulate_rss($_SERVER[PLANOWNER_DISPLAY_NAME],time(),"sorry, $_SERVER[PLANOWNER_DISPLAY_NAME]'s plan is not available as an rss feed");
+				snitch_write('rss reader',$urlarray[2],' failed');
+			}
+		}
+
+		if ($_SERVER['OUTPUT_MODE']=='HTML' || $_SERVER['OUTPUT_MODE']=='IPHONE')
+		{
+			// url structure: /read/$username/YYYY/MM/DD/H:i
+			profile('plan_read');
+			if ($urlarray[4])
+			{
+				$begindate=mktime(str_replace(array('%3A00',':00'),'',$urlarray[7]),0,0,$urlarray[5],$urlarray[6],$urlarray[4]);
+			}
+			
+			if ($urlarray[3][0]=='.')
+			{
+				$threshhold=$urlarray[3];
+			}
+
+			$plan=plan_read($planowner,$threshhold,$begindate);
+			$plan=plan_process_directives($plan);
+	
+			if (!$_SERVER['USERINFO_ARRAY']['hatessmileys']) $plan=plan_process_smileys($plan);
+			if ($hatessmileys==2) $plan=plan_process_smileys($plan,'hate');
+
+			profile('plan_read');	
+		}
+		break;
+
+endswitch;
+
+$title="$_SERVER[PLANOWNER_DISPLAY_NAME]";
+/*
+if  (stristr($_SERVER['HTTP_HOST'],'iphone'))
+{
+	//echo "<div title='$urlarray[2]'>".strip_tags($plan,"<br><strong><span><em><a><p><div><h1><h2><h3>")."</div>";
+	echo "<div title='$urlarray[2]'>$plan</div>";
+}
+
+*/
+output($title,$plan);
+
+?>

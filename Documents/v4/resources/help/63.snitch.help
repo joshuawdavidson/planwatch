@@ -1,0 +1,55 @@
+<?php
+$title='Help with Snitch';
+$body="
+In order to view your snitch, you click the eyeball icon, or the snitch link on the bottom of the page.
+If you want to view more (or less) of your snitch than the default 2 days, you can do it this way:
+instead of typing <b>planwatch.org/snitch</b>, type <b>planwatch.org/snitch/2w</b>. that will show you
+2 weeks worth. <b>/3d</b> will show you 3 days worth, <b>/1m</b> will show you a month's worth, and so on.<br><br>
+Also, you can click on the username of a planwatch.org user in your snitch to read their plan.<br><br>
+<b>A few notes about snitch and logging:</b><br>
+the system keeps track of who you read and who you are, if you're registered. we won't use this
+information, sell it, or do anything else unethical with it. but in order to implement snitch
+and get an idea of how the site is operating, we pretty much have to collect the data, and we thought
+you'd want to know we were doing it. specifically, we collect the following:
+</p>
+<ul>
+<li>the version of your browser
+<li>your IP address
+<li>the page you came from
+<li>the page you're on
+<li>your username, if you're logged in
+<li>when you viewed the page in question
+</ul>
+<p>
+there's no way for anyone but the administrators to actually view this info, and it's not really
+all that useful anyway. we're not doing any sophisticated analysis on your viewing patterns or anything
+(though we have the data if we wanted to).
+<br>
+Also, it's worth noting that we won't sell, lend, or reveal your personal information to
+any third party, or use it for our own evil devices. No telemarketing, no banner advertising,
+no spam, nothing.
+<br>
+If you don't want someone to know you're reading their plan, you can log out and try to read it
+anonymously, but that will only work if their privacy level is 'public' or 'advertised'.
+
+<br><br><font size='+1'><b>snitch is now selectable.</b></font>  you can turn off snitch if you want, and it won't wipe out your snitch archives, but as long as snitch is off other people won't show up on your snitch. you can also select from basic (username only) or full (username + a note if you read archives or are blocked) levels of snitch. full snitch is on by default. click 'prefs' to change this setting.
+<br><br><a name='coward'><font size='+1'>What is an Anonymous Coward?</font></a><br>
+Anonymous Cowards are people who read your plan without being logged in to planwatch.org or
+another planworld site. If your plan is set to public or advertised, these people will be
+able to read it. If your plan is set to private or registered only, they won't be able to
+and you'll see the word 'failed' next to their entries in your snitch, indicating they
+tried but didn't get to read you.<br>
+Because Anonymous Cowards choose not to provide their username to you (or are unable to for
+some reason), you get the IP address of the computer they used to read you instead. You can
+hit the 'trace' link to try to get an idea of where they are. Sometimes this works and
+sometimes it's gibberish.
+
+<br><br><a name='rss_reader'><font size='+1'>What is an RSS Reader?</font></a><br>
+RSS Readers are people who read your plan's RSS feed. If you have a journaling plan that's
+public or advertised, you have an rss feed at http://planwatch.org/read/%user%/plan.rss to
+which people can subscribe. Every time someone grabs this file, you get a snitch to let
+you know it happened.<br>
+Since RSS readers don't have any way to leave behind a username, you get their IP address
+instead. RSS Reader IPs have the same trace function as Anonymous Coward IPs (see above).
+";
+?>

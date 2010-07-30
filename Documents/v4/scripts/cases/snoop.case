@@ -1,0 +1,33 @@
+<?php
+/*
+cases/SNOOP.case
+
+allows modifications to snoops.
+*/
+	include_once('snoop.php');
+
+	switch($urlarray[2]):
+
+	case "ignore":
+		snoop_self_clean($urlarray[3],"return");
+		if($urlarray[4]=="snitch") redirect("snitch");
+		else redirect("snoop");
+		break;
+		
+	case "ignore_ajax":
+		snoop_self_clean($urlarray[3],"return");
+		$_SERVER['OUTPUT_MODE']=='AJAX';
+		if($urlarray[4]=="planwatch")	include_once('watched.case');
+		if($urlarray[4]=="homesnoop") echo "<li class='listheader'>snoop</li>".snoop_list("homesnoop");
+		break;
+
+	default:
+		include_once('snoop.php');
+		$snoop=snoop_list();
+		output("Snoop","<h1>Snoop <em style='font-size: 50%; font-weight: normal;'>(not an exact science)</em></h1>
+		As best we can tell, these users are referring to you on their plans right now. There could be others, and we could be wrong, so click the little 'x' to ignore any fake snoops (or ones you just don't want to see).<ul id='snoop' class='flicklist'>\n $snoop</ul>");
+		
+		break;
+
+	endswitch;
+?>

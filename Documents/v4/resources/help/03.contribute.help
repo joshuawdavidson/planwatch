@@ -1,0 +1,25 @@
+<?php
+	$title="Contributing to Planwatch.org";
+	$body="<h2>This thing is great! How can I support it?</h2>
+We welcome contributions of all kinds -- bugs, documentation, tasty treats, code, and currency.
+
+<h2>I don't know how to code</h2>
+No worries. Pick another option. May I recommend <a href='/feature'>filing a bug or requesting a feature</a>? Details make things much more likely to get fixed or added.
+
+<h2>I want to give you some money.</h2>
+Thanks! You can do that <a href='/contribute'>at the contribution page</a>.
+
+<h2>What will you do with the money I send you?</h2>
+Buy groceries? Or a bus pass? If it's time to pay the hosting bill, probably that.
+
+<h2>I want to send you something nice</h2>
+Thanks! Josh's address is on <a href='/contribute'>the contribution page</a>.
+
+<h2>Not Josh, he's annoying -- always begging for money. Someone else.</h2>
+Well, you can send them if their address isn't on their plan.
+
+<h2>I'd like to write a help file of some sort</h2>
+<a href='/help/edit/new'>Go right ahead</a>.
+
+<br />";
+	?>

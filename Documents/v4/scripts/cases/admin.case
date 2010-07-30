@@ -1,0 +1,151 @@
+<?php
+/*
+ADMIN.case
+
+administrator quicklinks
+*/
+
+if (user_is_administrator())
+{
+	
+	switch($urlarray[2]):
+	
+	case "todo_list":
+		if ($urlarray[3]) $version = $urlarray[3];
+		else $version=4.5;
+		exec("grep -n 'TODO' $_SERVER[FILE_ROOT]/backend/*.php",$todo_list);
+		exec("grep -n 'TODO' $_SERVER[FILE_ROOT]/scripts/*.php",$todo_list);
+		exec("grep -n 'TODO' $_SERVER[FILE_ROOT]/scripts/cases/*.case",$todo_list);
+		exec("grep -n 'TODO' $_SERVER[FILE_ROOT]/scripts/standard_library/*.php",$todo_list);
+
+		$content="
+		<style type='text/css'>
+		.block_odd  { margin-top: 20px; }
+		.block_even { background-color: #eee; border-top: thin solid #ccc; border-bottom: thin solid #ccc; margin-top: 20px; } 
+		.line_even  { background-color: #ddd; margin-left: 20px; font-size: smaller; display: block; }
+		.line_odd   { margin-left: 20px; font-size: smaller; display: block;}
+		.filename   { font-weight: bold; display: block; margin-bottom: none; }
+		</style>\n\n";
+
+		$content.="<h1>TODO List</h1>";
+
+		$oldfilename='FAKEFILENAME';
+		foreach($todo_list as $i=>$todo)
+		{
+			list($filename,$file_linenumber,$junk,$todo)=explode(":",$todo,4);
+			preg_match("/\(v([1-9.]+)\)/",$todo,$matches);
+			$thisversion = $matches[1];
+			$filename=basename($filename);
+			if ($thisversion <= $version && $todo)
+			{
+				$todo_filelist[$filename][$file_linenumber]=$todo;
+			}
+		}
+
+		foreach($todo_filelist as $filename=>$todo_list)
+		{
+			$block_number+=1;
+			if ($block_number%2) $block = 'odd';
+			else $block='even';
+			$content.="<div class='block_$block'>\n";
+			$content.="<a class='filename' href='$_SERVER[WEB_ROOT]/admin/source/$filename'>$filename</a>";
+			$line_number=0;
+			foreach($todo_list as $file_linenumber=>$todo)
+			{
+				$line_number+=1;
+				if ($line_number%2) $line='odd';
+				else $line='even';
+				$content.= "<a class='line_$line' href='$_SERVER[WEB_ROOT]/admin/source/$filename#$file_linenumber'>$file_linenumber: $todo</a>";
+			}
+			$content.="\n</div>\n";
+		}
+
+		output("TODO list",$content);
+		break;
+
+	case "function_list":
+		exec("grep '^function .*(' $_SERVER[FILE_ROOT]/scripts/*.php",$functionlist);
+		exec("grep '^function .*(' $_SERVER[FILE_ROOT]/scripts/standard_library/*.php",$functionlist);
+		exec("grep '^function .*(' $_SERVER[FILE_ROOT]/scripts/cases/*.case",$functionlist);
+
+		$content="
+		<style type='text/css'>
+		.block_odd  { margin-top: 20px; }
+		.block_even { background-color: #eee; border-top: thin solid #ccc; border-bottom: thin solid #ccc; margin-top: 20px; } 
+		.line_even  { background-color: #ddd; margin-left: 20px; font-size: smaller; display: block; }
+		.line_odd   { margin-left: 20px; font-size: smaller; display: block;}
+		.filename   { font-weight: bold; display: block; margin-bottom: none; }
+		.args       { font-style: oblique; }
+		</style>\n\n";
+
+		$content.="<h1>Function List</h1>";
+
+		foreach($functionlist as $functionline)
+		{
+			list($filename,$function)=explode(":",$functionline,2);
+			$filename=basename($filename);
+			if ($filename!=$oldfilename)
+			{
+				$block_number+=1;
+				if ($block_number%2) $block = 'odd';
+				else $block='even';
+				if ($oldfilename) $content.="\n</div>\n";
+				$content.="<div class='block_$block'>\n";
+				$line_number=0;
+				$content.="<a class='filename' href='$_SERVER[WEB_ROOT]/admin/source/$filename'>$filename</a>\n";
+			}
+
+			if ($function)
+			{
+				$line_number+=1;
+				if ($line_number%2) $line='odd';
+				else $line='even';
+				$content.=preg_replace('/function\s+(\w+)(.*)/',"<a class='line_$line' href='$_SERVER[WEB_ROOT]/admin/source/$filename#\\1'>\\1<span class='args'>\\2</span></a>",$function);
+			}
+			$oldfilename=$filename;
+
+			if ($filename!=$oldfilename)
+			{
+			}
+		}
+
+		output ("Function List",$content);
+		break;
+	
+	case "sitebackup.tgz":
+		redirect("http://planwatch.org:2082/getbackup/backup-planwatch.org-".date("m-d-Y").".tar.gz");
+		exit;
+		break;
+	
+	case "phpinfo":
+		phpinfo();
+		break;
+		
+	case "source":
+		if (strstr($urlarray[3],'.case')) $urlarray[3]="/cases/".$urlarray[3];
+		echo "<html><head><title>$urlarray[3]</title><style type='text/css'>
+		BR { margin: 4px; }
+		DIV { font-family: monospace; }
+		.line_number { font-family: monospace; color: #999; }
+		#line$urlarray[4] { background-color: #0F0; border: thin solid black; color: black; }
+		.keys { color: #00B; }
+		.strings { color: #B00; }
+		.dots { color: #0B0; }
+		</style></head><body>"
+		.highlight_php("$_SERVER[DOCUMENT_ROOT]/scripts/$urlarray[3]")
+		."$_SERVER[ERRORS]</body></html>";
+		break;
+
+	case "whois":
+		$_SERVER['PLAN_LOCATION_ARRAY']=array();
+		echo "<br/>\n$urlarray[3]'s location: ".plan_get_real_location($urlarray[3],1);
+		break;
+
+	default:
+		redirect('/');
+		break;
+	
+	endswitch;
+	
+}
+else redirect('/');

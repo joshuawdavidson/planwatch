@@ -1,0 +1,61 @@
+<?php
+
+/*
+PLAN.CASE
+planworld client api version 3.0
+
+usage:
+	read:   GET /plan/USERNAME
+	update: POST /plan
+		or  POST /plan/USERNAME for authorized plans
+
+*/
+
+$username="";
+
+// planworld_plan_gettext()
+//
+// xml_rpc interface to plan_read.php:plan_read_local()
+//------------------------------------------------------------------------------
+function planworld_plan_gettext($m) {
+	global $xmlrpcerruser;
+	include_once('plan_read.php');
+	$err="";
+	// get the param values (should add integrity checking here)
+	$lu=$m->getParam(0);
+	$ru=$m->getParam(1);
+	$sn=$m->getParam(2);
+//	$ar=$m->getParam(3);
+
+	$localuser  = $lu->scalarval();
+	$remoteuser = $ru->scalarval();
+	$snitch     = $sn->scalarval();
+	list($localuser,$archives)=explode("___",$localuser);
+//	$archives   = $ar->scalarval();
+
+	// TODO:(v4.5) think about what to do with the archives variable
+
+	$localuser=str_replace("@planwatch.org",'',$localuser);
+	plan_get_owner_info($localuser);
+
+	$_SERVER['USER']=$remoteuser;
+	$_SERVER['USERINFO_ARRAY']['snitchlevel']=$snitch+1;
+	$_SERVER['REMOTENODE']=strstr($remoteuser,'@');
+	if ($archives=='archives')
+	{
+		$plan=plan_read_archives($localuser);
+	}
+	else $plan=plan_read($localuser,$archives);
+
+	if (isset($_SERVER['PLANOWNER_INFO'])) $plan.="<!--planowner info set-->";
+	$plan="<!--plan styles--><style type='text/css'>{$_SERVER['PLANOWNER_INFO']['css']}</style>".$plan;
+    
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($plan,'base64'));
+	}
+}

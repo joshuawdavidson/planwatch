@@ -1,0 +1,47 @@
+<?php
+global $writeicon;
+$title="
+
+
+
+About writing plans
+
+
+
+";
+
+
+
+
+
+$body="
+
+<h3>General Information</h3>
+
+If you have a local plan, you'll see a <img src="$writeicon'>write button at the top of the page. When you click on it, you are taken to a <a href="/write'>form</a> that allows you to edit your plan.<br><br>
+
+If you have a journaling plan, the write button allows you to post a new update that is displayed at the top of your plan. If you have a traditional plan, the write button allows you to edit your entire plan at once.
+
+<br><br>
+
+<h3>Journaling and Traditional Plans</h3>
+
+A journaling plan is like a blog or a diary, in that each entry you write is independent, and has a date attached. You can delete, hide, or make private a single entry without affecting the rest of your plan, and old entries automatically move into your archives after a period of time (usually 2 days, unless you've changed it).<br><br>
+
+Traditional plans are all a single text block. When you edit it, the entire old one moves into your archives.  However, you have more control with a traditional plan because it isn't chronological.
+
+<br><br>
+
+<h3>Headers, footers, and dividers</h3>
+
+Every plan has a header that goes at the top and a footer at the bottom. Journaling plans have a divider as well, which is explained <a href="/help/divider'>in its own help file</a>. Headers and footers are don't change unless you change them, so they're a good place to put information you want to always be on your plan.
+
+<br><br>
+
+<h3>Formatting Options</h3>
+
+You can use any HTML or javascript you want in your entries, header, and footer. You can also add color using <a href="/help/color'>HTML color codes</a>. There are two popup menus next to the writing textarea that allow you to insert <a href="/help/smiley'>smileys</a> and other HTML formatting, but you're not limited by these if you want to do more. Take a look at !jwdavidson!'s all-singing, all-dancing CSS block header for an example of how flexible this is. It even shows up on the right instead of at the top like a normal header.
+
+";
+
+?>

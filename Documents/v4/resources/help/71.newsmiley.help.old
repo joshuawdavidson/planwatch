@@ -1,0 +1,31 @@
+<?php
+
+$title='How to Make a New Smiley';
+$body="
+<b>1. get a graphics editor</b><br>
+there are a bunch of programs that can edit images and save them as GIFs (the format you need for smileys). free ones are a bit more scarce. for windows, the only ones i can find are 
+!http://www.photo-editor.net/:VicMan! and !http://www.gimp.org/:the gimp!. 
+!rlweiss! recommends !http://www.jasc.com/download_4.asp?prod=001:paint shop pro 7!, which has some user-authored tutorials on their site you might find handy. it has a 30 day free trial, which can apparently be extended.
+<br>
+for the mac, !http://www.gimp.org/:the gimp! is also available (on os x), and appleworks can do a chunk of the work in paint mode, combined with !http://versiontracker.com/moreinfo.fcgi?id=1819&db=mac:gifbuilder!. (or !http://www.versiontracker.com/moreinfo.fcgi?id=10438&db=mac:gifbuilder for os x!), or !http://www.caffeinesoft.com:tiffany! can be had for a trial (which will last long enough to make a smiley).<br>
+<br>
+the easiest apps to do this with are probably !http://www.macromedia.com/software/fireworks/:macromedia fireworks! or !http://www.adobe.com/products/photoshopel/demoreg.html:adobe photoshop elements!, both of which have free trials.<br>
+<br>
+<b>2. create the image</b><br>
+<i>file->new</i><br>
+once you have your image editor, go to file->new and make an image of the appropriate size (the standard smileys are 15 x 15 pixels. the largest (:toast:) is 60 x 40 pixels. set the background to be transparent, if possible at this stage.<br>
+<br>
+<i>draw the smiley</i><br>
+i can't help you much here - i can barely draw myself. start with a circle, i guess, and work from there until you have what you're after. if you want an animated smiley, you'll probably have to draw each 'cell' of the animation separately and then combine them later using another program (giffun or gifbuilder on the mac - i'm not really sure what on windows or linux).<br>
+<br>
+<i>save the smiley</i><br>
+once you have the smiley all pretty-like, go to file->save and save it as a .gif (Graphics Interchange Format) preserving the transparency if there's an option for it.<br>
+<br>
+<b>3. uploading a smiley to pw.o</b><br>
+go to !http://planwatch.org/edit/smiley:the smiley adding form! and click 'browse' - a file open dialog will appear. choose your new smiley and click 'OK'.<br>
+type a name for the smiley (one word, no spaces or weird characters, don't duplicate an existing smiley's name) and click 'upload smiley'<br>
+<br>
+<b>4. add new strings for the smiley</b><br>
+once your smiley is up, you can add new things for people to type to make it appear. go to !http://planwatch.org/help/smileys:the smiley list! and click 'edit' next to your smiley. add a new string to the list of available ones and click the oddly named (by me, admittedly) 'smiley_writekeys' button. then you can freely use your new keywords to make your happy spiff smiley appear and dazzle the world with your greatness.<br>
+";
+?>

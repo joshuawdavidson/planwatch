@@ -1,0 +1,74 @@
+<?php
+/*
+SEND.case
+*/
+
+include_once('send.php');
+$send_dir="$_SERVER[USER_ROOT]/sends";
+
+switch($urlarray[2]):
+
+case "unread":
+	touch("$send_dir/".files_encode_safe_name("$urlarray[3]..new"));
+	redirect('/');
+	break;
+		
+case "":
+	if (!is_dir($send_dir))
+	{
+		$old=umask(0);
+		mkdir($send_dir,0777);
+		umask($old);
+	}	
+
+	if (file_exists("$send_dir/..new"))
+		unlink("$send_dir/..new");
+
+	$sends=files_list($send_dir,"*",'-c');
+	foreach($sends as $send)
+	{
+		list($sender,$timecode,$junk)=explode("..",$send);
+		$sender=files_decode_safe_name($sender);
+		if (!strstr($already,$sender)) { $senders[$timecode]=$sender; }
+	}
+
+	krsort($senders);
+	$senders=array_unique($senders);
+	foreach($senders as $last_time=>$sender)
+	{
+		$sendtime=formattime($last_time);
+		if (file_exists("$send_dir/$sender..new")) $class='unread';
+			else $class='read';
+		$senders[$last_time]="<li class='$class'><a href='/send/$sender'>$sender <span style='font-size: 80%;'>$sendtime</span></a></li>";
+	}
+
+	$senders=implode("\n",$senders);
+
+	$content="<h1>Send</h1>
+	<button onclick='document.getElementById(\"sendform\").style.display=\"block\";' style='background: url(http://m.planwatch.org/iui/listGroup.png); color: white; -webkit-border-radius: 10px; text-align: center; margin: 4px;' >Start a new conversation</button>
+	<form id='sendform' style='display: none;' action='/scripts/send.php' method='post'>
+	<div style='margin-bottom: 20px;'>
+	to: <input type='text' name='recipient' style='width: 200px !important;' value=''/><br/>
+	message:<br/>
+	<textarea name='sendmessage' id='textbox'></textarea><br/>
+	<input type='hidden' name='action' value='send'>
+	<input type='submit' class='bigbutton' value='Send'/>
+	</div>
+	</form>
+
+	<ul class='flicklist'><li class='header'>Existing Correspondents</li>
+	$senders
+	</ul>
+	";
+	output("Send",$content);
+	break;
+
+default:
+	$content=send_display($urlarray[2],TRUE,$urlarray[3]);
+	output("Send: $urlarray[2]",$content);
+	break;
+	
+endswitch;
+
+
+?>

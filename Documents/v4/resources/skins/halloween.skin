@@ -1,0 +1,41 @@
+<?php
+/*
+HALLOWEEN.SKIN -- part of the planwatch library
+
+has variables which designate colors and such
+*/
+
+$pwlogo='/resources/skins/halloween/pumpkin.gif';
+$snitchicon='/resources/skins/halloween/halloween_eye.gif';
+$writeicon='/resources/skins/halloween/halloween_write.gif';
+$helpicon='/resources/skins/halloween/halloween_help.gif';
+$prefsicon='/resources/skins/halloween/halloween_prefs.gif';
+$toolsicon='/resources/skins/halloween/halloween_tools.gif';
+$logouticon='/resources/skins/halloween/halloween_logout.gif';
+
+$textcolor='#FF3300';
+$linkcolor='#FF3300';
+$vlinkcolor='#FF3300';
+$alinkcolor='#FFFF00';
+$navlinkcolor='#000000';
+
+$pagebgcolor='#000000';
+$listsbgcolor='#FF9900';
+$headbgcolor='#000000';
+$planbgcolor='#000000';
+$pagebgimage='';
+
+$titletextcolor='#ff9900';
+$navtextcolor='#000000';
+
+$pfonts="courier,monaco,fixed-width";
+$sfonts="swing,script,fantasy,serif";
+$nfonts="georgia,serif";
+$hfonts="gadget,comic sans,ms comic sans,verdana,sans-serif";
+
+$hfsize='7';
+$sfsize='5';
+$nfsize='3';
+$pfsize='3';
+
+?>

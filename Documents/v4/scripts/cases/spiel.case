@@ -1,0 +1,25 @@
+<?php
+/*
+cases/SPIEL.case
+
+allows modifications to spiels.
+*/
+	include_once('spiel.php');
+
+	switch($urlarray[2]):
+
+	case "ignore":
+		spiel_ignore($urlarray[3]);
+		redirect('/');
+		break;
+		
+	case "view":
+		output("Spiel: $urlarray[3]",spiel_view_page($urlarray[3]));
+		break;
+
+	default:
+		output("Spiel","<h1>Spiel</h1>\n ".str_replace("\n","<br />",spiel_format_list_html()));
+		break;
+
+	endswitch;
+?>

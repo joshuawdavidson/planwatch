@@ -1,0 +1,29 @@
+<?php
+
+switch($urlarray[2]):
+
+	case "edit":
+		if (user_is_administrator())
+		{
+			$filename=$_SERVER['FILE_ROOT'].str_replace('/textfiles/edit','',implode('/',$urlarray));
+
+			$data=stripslashes(stripslashes(file_get_contents($filename)));
+			
+			$basename=basename($filename);
+			
+			$content="
+			<h2>Edit $basename</h2>
+			<form action='$_SERVER[WEB_ROOT]/scripts/form_shim.php' method='post'>
+			<textarea name='data' id='textbox'>".htmlspecialchars($data)."</textarea>
+			<input type='hidden' name='filename' value='$filename'/><br/>
+			<input type='submit' id='submit_button' value='Save Changes'/>
+			</form>
+			";
+			
+			output("Edit $filename",$content);
+		}
+		else redirect('/');
+		break;
+
+endswitch;
+?>

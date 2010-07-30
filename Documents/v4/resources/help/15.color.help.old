@@ -1,0 +1,27 @@
+<?php
+	$title="HTML Color Help";
+	$body="	You can use HTML-standard hex colors (#RRGGBB), or these english color names:<br>
+	<i>(the one you can't see is probably white)</i><br>
+	<ul>
+	<li><font color='aqua'>aqua</font><br>
+	<li><font color='black'>black</font><br>
+	<li><font color='blue'>blue</font><br>
+	<li><font color='fuchsia'>fuchsia</font><br>
+	<li><font color='gray'>gray</font><br>
+	<li><font color='green'>green</font><br>
+	<li><font color='lime'>lime</font><br>
+	<li><font color='maroon'>maroon</font><br>
+	<li><font color='navy'>navy</font><br>
+	<li><font color='olive'>olive</font><br>
+	<li><font color='purple'>purple</font><br>
+	<li><font color='red'>red</font><br>
+	<li><font color='silver'>silver</font><br>
+	<li><font color='teal'>teal</font><br>
+	<li><span style='color: white; background: black;'>white</span><br>
+	<li><font color='yellow'>yellow</font><br>
+	</ul>
+	<br><br>
+	Also, here's a graphic that has the standard 216 color palatte listed with HTML
+	colors on the right of the color swatch:<br>
+	<img src='/graphics/colors.gif'>";
+	?>

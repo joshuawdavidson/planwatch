@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/resources/templates/rss.css" type="text/css"?>
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns="http://purl.org/rss/1.0/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+ xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+>
+
+<channel rdf:about="http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/">
+ <title>$title</title>
+ <link>$rss_link</link>
+ <description>[planwatch.org]</description>
+<div class="info" xmlns="http://www.w3.org/1999/xhtml">This is an Atom formatted XML site feed. It is intended to be viewed in a Newsreader or syndicated to another site. Please visit the <a href="http://help.blogger.com/bin/answer.py?answer=697">Blogger Help</a> for more info.</div>
+ <dc:language>en-us</dc:language>
+ <dc:rights>Copyright 2000-$thisYear, $planowner</dc:rights>
+ <dc:date>$thisDate</dc:date>
+ 
+ <dc:publisher>planwatch.org</dc:publisher>
+ <dc:creator>system@planwatch.org</dc:creator>
+ <dc:subject>Miscellaneous</dc:subject>
+ <syn:updatePeriod>hourly</syn:updatePeriod>
+ <syn:updateFrequency>1</syn:updateFrequency>
+ <syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+<items>
+<rdf:Seq>
+$items
+</rdf:Seq>
+</items>
+</channel>
+$plan
+</rdf:RDF>

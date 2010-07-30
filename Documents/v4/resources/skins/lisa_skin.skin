@@ -1,0 +1,32 @@
+<?php
+/*
+STYLES.PHP -- part of the planwatch library
+
+has variables which designate colors and such
+*/
+
+$textcolor='silver';
+$linkcolor='red';
+$vlinkcolor='white';
+$alinkcolor='white';
+$navlinkcolor='white';
+
+$pagebgcolor='#333333';
+$listsbgcolor='maroon';
+$headbgcolor='maroon';
+$planbgcolor='black';
+
+$titletextcolor='silver';
+$navtextcolor='silver';
+
+$pfonts="courier new,courier,monaco,monospace";
+$sfonts="trebuchet ms, verdana, helvetica, arial, sans-serif";
+$nfonts="verdana, trebuchet ms, helvetica, arial, sans-serif";
+$hfonts="impact, trebuchet ms, verdana, helvetica, arial, sans-serif";
+
+$hfsize='6';
+$sfsize='2';
+$nfsize='2';
+$pfsize='2';
+
+?>

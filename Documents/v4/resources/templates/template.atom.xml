@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://planwatch.org/resources/templates/atom.css" type="text/css"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+	<title>$title</title>
+	<link href="$rss_link"/>
+	<updated>$thisDate</updated>
+	<id>$rss_link</id>
+	<fullcount>$fullcount</fullcount>
+	<div class="info" xmlns="http://www.w3.org/1999/xhtml">This is an Atom formatted XML site feed. It is intended to be viewed in a Newsreader or syndicated to another site. Please visit the <a href="http://help.blogger.com/bin/answer.py?answer=697">Blogger Help</a> for more info.</div>
+
+	$plan
+
+</feed>
+

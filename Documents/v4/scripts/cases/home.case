@@ -1,0 +1,332 @@
+<?php
+/*HOME.case
+the new home page
+*/
+
+if($urlarray[2]=="desktop_version")
+{
+	setcookie("forceview","desktop",time()+3600*24,'/');
+	redirect("http://planwatch.org");
+	exit;
+}
+
+if($urlarray[2]=="mobile_version")
+{
+	setcookie("forceview","mobile",time()+3600*24,'/');
+	redirect("http://planwatch.org");
+	exit;
+}
+
+if ($_SERVER['OUTPUT_MODE']=="IPHONE")
+{
+	if ($_SERVER['USER'])	{ include_once('cases/watched.case'); exit; }
+	else					{ include_once('cases/login.case'); exit; }
+}
+
+if (!$_SERVER['USER'] || $urlarray[2]=='clean' || $urlarray[1]=='failed')
+{
+	$data=file_get_contents("$_SERVER[FILE_ROOT]/resources/mainpage/siteinfo.txt");
+	if($urlarray[1]=='failed') $failuremessage="<div style='background: red; color: white; text-align: center;'>Login failed. Please try again. Email for <a href='mailto:help@planwatch.org'>help</a> if this keeps happening.</div>";
+
+
+	$content="\n<div class='homebox'><h1>planwatch.org</h1>\n<h3>a home for .plan nomads</h3>";
+
+	$content.="\n<form action='$_SERVER[WEB_ROOT]/scripts/form_shim.php' method='post' name='loginForm'>
+	$failuremessage
+		user <input id='login_username' autocapitalize='off' type='text' name='user' size='10' />
+		pass <input id='login_userpass' autocapitalize='off' type='password'  name='pass' size='6' />
+		<input type='checkbox' name='remember' id='remember' value='1' />
+		<label for='remember'>remember me</label>
+		<input type='hidden' name='action' value='login'/>
+		<input type='submit' name='action' value='login' onclick='document.forms.loginForm.submit();' />
+		<input type='hidden' name='prevpage' value='".str_replace('/','!!',$thisurl)."'/>
+	</form>\n";
+	$content.="<div id='siteinfo'>( read invite@planwatch.org for an invitation )</div>";
+	$content.="</div>\n";
+
+
+	if (is_mobile())
+	{
+		$content.="<a style='display: block; text-align: center; background: #ffc; font-size: 40px;' href='/home/mobile_version'>switch to mobile view</a><br />";
+	}
+
+	echo "<!doctype html><html lang='en'><head><meta name=\"robots\" content=\"noindex, nofollow, noarchive\" />
+			<title>planwatch</title>
+	<style type='text/css'>
+	.homebox { -moz-border-radius: 40px; -khtml-border-radius: 40px; text-align: center; padding: 10px;
+		border-top: solid 4px #e0e0f5; border-left: solid 4px #e0e0f5;
+		border-right: solid 4px #efefff; border-bottom: solid 4px #efefff; margin: 2px; background: #e9e9f9; }
+	h3 { font-size: 15px; text-transform: all-caps; letter-spacing: .5em; font-family: futura,'trebuchet ms',tahoma,sans-serif; margin: 0px; color: #667; }
+	h4 { font-weight: normal; font-size: 12px; letter-spacing: .25em; word-spacing: 1em; font-family: futura,'trebuchet ms',tahoma,sans-serif; margin: 20px; color: #aab; }
+	h4 a { background: #dde; color: #667; font-weight: bold; -moz-border-radius: 6px; -khtml-border-radius: 6px; text-decoration: none; padding: 3px; }
+	.homebox form { -moz-border-radius: 15px; -khtml-border-radius: 15px; background: white; padding: 10px; margin-top: 20px;
+	border-top: solid 2px #efefff; border-left: 2px solid #efefff; border-right: 2px solid #dde; border-bottom: 2px solid #dde; }
+	body { padding: 20%; background: repeat-x white
+		url($_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/white_grad.jpg); }
+	h1 { font-family: futura,'trebuchet ms',tahoma,sans-serif; font-size: 50px; text-align: center; color: #aab; margin: 0px; }
+	#siteinfo { font-family: georgia,serif; color: #668; letter-spacing: .1em}
+	</style></head><body>$content</body></html>"; exit;
+}
+
+if ($_SERVER['USER_ROOT'])
+{
+	$send_dir="$_SERVER[USER_ROOT]/sends";
+	if (!is_dir($send_dir))
+	{
+		$old=umask(0);
+		mkdir($send_dir,0777);
+		umask($old);
+	}
+}
+
+if ($urlarray[2]=='ajax')
+{
+	$_SERVER['OUTPUT_MODE']='AJAX';
+	$snitch_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homesnitch\",\"/home/ajax/snitch\");'  class='tool'>&#x21bb;</a>  <a href='/snitch' class='tool'>&hellip;</a></div>";
+	$snoop_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homesnoop\",\"/home/ajax/snoop\");'  class='tool'>&#x21bb;</a>  <a href='/snoop' class='tool'>&hellip;</a></div>";
+	$send_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homesend\",\"/home/ajax/send\");'  class='tool'>&#x21bb;</a>  <a href='/send' class='tool'>&hellip;</a></div>";
+	$spiel_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homespiel\",\"/home/ajax/spiel\");'  class='tool'>&#x21bb;</a>  <a href='/spiel' class='tool'>&hellip;</a></div>";
+
+	switch($urlarray[3]):
+
+
+	case "snitch":
+		include_once('snitch.php');
+		$snitch=snitch_read($_SERVER['USER'],"r2h");
+//		$snitch="<script type='text/javascript'>refresh('homesnitch','/home/ajax/snitch');</script>\n";
+		if ($snitch) $ajax_content="<li class='listheader'>$snitch_tool_links snitch</li>$snitch<li><a href='/snitch'>more...</a></li>";
+		else $ajax_content="<li class='listheader'>snitch <a href='javascript:refresh(\"homesnitch\",\"/home/ajax/snitch\");'>&#x293E;</a> <a href='/snitch'>...</a> </li><li>no readers in the past 2 hours</li><li><a href='/snitch'>more...</a></li>";
+		break;
+
+	case "snoop":
+		include_once('snoop.php');
+		$snoop=snoop_list("homesnoop");
+		if (!strstr($snoop,'no snoops found')) $ajax_content="<li class='listheader'>$snoop_tool_links snoop</li>$snoop";
+		break;
+
+	case "send":
+		include_once('send.php');
+		$send_files=files_list($send_dir,"*");
+		if (is_array($send_files))
+		foreach($send_files as $send)
+		{
+			if ($send=='.htaccess') $send='';
+			else {
+				list($sender,$timecode,$junk)=explode("..",$send);
+				if (file_exists("$send_dir/$sender..new")) $style=' style="font-weight: bold;" ';
+					else $style='';
+				$sender=files_decode_safe_name($sender);
+				$sender=str_replace("@planwatch.org","",$sender);
+				if ($timecode > time()-(24*3600*7)) $senders[$timecode]="<a href='/send/$sender' $style>$sender</a>";
+			}
+		}
+		if (is_array($senders))
+		{
+			krsort($senders);
+			$senders=array_unique($senders);
+
+			foreach($senders as $last_time=>$sender)
+			{
+				$sends.="<li>$sender ".formattime($last_time)."</li>\n";
+			}
+			$sends.="<li><a href='/send'>more...</a></li>\n";
+		}
+		if ($sends) $ajax_content="<li class='listheader'>$send_tool_links send</li>$sends";
+		break;
+
+	case "spiel":
+		include_once('spiel.php');
+		$spiel="<li>".str_replace("\n","</li>\n<li>",spiel_format_list_html()."</li>");
+		break;
+
+	default: break;
+	endswitch;
+
+	$_SERVER['OUTPUT_MODE']='AJAX'; output("home $urlarray[3]",$ajax_content); exit;
+}
+
+if ($urlarray[2]=='micro')
+{
+	if ($new_sends_list=files_list("$_SERVER[USER_ROOT]/sends/","*..new")) $new_sends_title=count($new_sends_list)." sends";
+
+	$list_fn="$_SERVER[USER_ROOT]/watchedlist.txt";	// reads in the user's watched list
+	if (file_exists($list_fn))
+	{
+		$list=file($list_fn);
+	}
+	$ptime=plan_get_last_update($list);
+	$lastview=plan_get_last_view($list);
+
+	foreach($list as $z=>$plan)
+	{
+		if ($ptime[$z] > $lastview[$z]) $new_plans_title+=1;
+	}
+
+
+	if ($new_plans_title) $new_plans_title.=" plans";
+	if ($new_plans_title && $new_sends_title) $new_plans_title.=', ';
+	header("Content-type: text/plain;");
+	header("Expires: ".date("D, d M Y H:i:s",time()+60)." GMT");
+	echo "[pwo] $new_plans_title $new_sends_title";
+	exit;
+}
+
+
+if ($_SERVER['USER'])
+{
+
+	if (is_mobile())
+	{
+		$content.="<a href='/home/mobile_version'>switch to mobile view</a><br />";
+	}
+
+	eval('$data="'.file_get_contents("$_SERVER[FILE_ROOT]/resources/mainpage/siteinfo.txt").'";');
+
+	$content.="<style>
+	.askdiv { text-align: center; background: $GLOBALS[textcolor]; color: $GLOBALS[planbgcolor]; padding: 3px; margin: auto; width: 70%; margin-top: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px;  font-size: 16px;}
+	.askdiv a.choice { font-size: 20px; border: 1px solid $GLOBALS[planbgcolor]; -webkit-border-radius: 10px; -moz-border-radius: 10px; background: $GLOBALS[linkcolor]; color: $GLOBALS[planbgcolor]; }
+	.askdiv a.choice:hover { border-color: $GLOBALS[planbgcolor]; background: $GLOBALS[planbgcolor]; color: $GLOBALS[linkcolor]; }
+	.askdiv .help, .askdiv .help a { font-size: 10px; color: $GLOBALS[planbgcolor]; }
+	.askdiv .help a { text-decoration: underline; }
+	</style>
+	";
+
+//	if(user_is_administrator())
+//	{
+		$tools_array=array();
+		$toolset=file_get_contents("http://planwatch.org/tools/ajax/".user_get_fingerprint($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['password']));
+		$tool_lists=explode("<ul class='linkbox flicklist'>",$toolset);
+
+		foreach($tool_lists as $t=>$tool_list)
+		{
+			if(strstr($tool_list,"li") && $t>0)
+				$tools_array=array_merge($tools_array,explode("<li",$tool_list));
+		}
+
+		shuffle($tools_array);
+		for($i=0;$i<10;$i++)
+		{
+			if(!strstr($tools_array[$i],"<a") || strstr($tools_array[$i],"logout") ||  strstr($tools_array[$i],"delete") || $total>=3) $i++;
+			else
+			{
+				$total++;
+
+				$tools_array[$i]=str_replace("</ul>",'',"<li".$tools_array[$i]);
+				$tools.=$tools_array[$i];
+			}
+		}
+	$tools.="<li><a href='/read/invite'>invite a friend</a></li>";
+	$content.="<style>#tools { text-align: center; margin: 0px; padding: 0px; } #tools li { padding: 4px; display: inline; margin-left: 20px; } #tools li a { font-size: 16px; padding: 2px;  background: $GLOBALS[listsbgcolor]; color: $GLOBALS[navlinkcolor]; }</style> <ul id='tools'>$tools</ul>";
+//	}
+
+
+	if(!isset($_SERVER['USERINFO_ARRAY']['allow_analytics']))
+	$data=str_replace("<!--ANALYTICS_LINK-->","<div class='askdiv'>We'd like to collect anonymous usage data to help improve planwatch.org.<br />Will you let us collect yours?   <br /><br /><a class='choice' href='/prefs/one/allow_analytics/1'> Sure </a>     <a class='choice' href='/prefs/one/allow_analytics/0'> I'd rather not </a><div class='help'><a href='/help/analytics'>Learn more</a>. Nothing will happen until you choose. You can always <a class='help' style='font-size: 10px;' href='http://planwatch.org/prefs/interface'>change your pref later</a>. Josh will <a class='help' href='/send/jwdavison'>answer your questions</a>.</div></div>",$data);
+
+//	if(!$_SERVER['USERINFO_ARRAY']['hide_contribute_links'] && user_is_administrator())
+//	$data=str_replace("<!--CONTRIBUTE_LINK-->","<div class='askdiv' style='background: #cfc;'><a style='float: left; font: 18px sans-serif;' href='/prefs/one/show_contribute_links/0'>X</a> Drop a dollar in the hat to support planwatch.org<br /><a href='/contribute'>Contribute</a>       <a style='font: 11px sans-serif;' href='/help/contribute'>Learn more</a></div>",$data);
+
+	$content.=stripslashes(stripslashes($data));
+
+	if (user_is_administrator()) $content.=" <span class='edit_links'>[ <a href='$_SERVER[WEB_ROOT]/textfiles/edit/resources/mainpage/siteinfo.txt'>edit</a> ]</span>";
+
+	include_once('snitch.php');
+	include_once('snoop.php');
+	include_once('spiel.php');
+	include_once('send.php');
+//	$snitch="<script type='text/javascript'>refresh('homesnitch','/home/ajax/snitch');</script>\n";
+	$snitch=snitch_read($_SERVER['USER'],"r2h");
+	if ($snitch) $snitch.="<li><a href='/snitch'>more...</a></li>\n";
+	$snoop=snoop_list("homesnoop");
+	$spiel="<li>".str_replace("\n","</li>\n<li>",spiel_format_list_html()."</li>");
+
+	$send_files=files_list($send_dir,"*");
+	if (is_array($send_files))
+	foreach($send_files as $send)
+	{
+		if ($send=='.htaccess') $send='';
+		else {
+			list($sender,$timecode,$junk)=explode("..",$send);
+			if (file_exists("$send_dir/$sender..new")) $style=' style="font-weight: bold;" ';
+				else $style='';
+			$sender=files_decode_safe_name($sender);
+			$sender=str_replace("@planwatch.org","",$sender);
+			if ($timecode > time()-(24*3600*7)) $senders[$timecode]="<a href='/send/$sender' $style>$sender</a>";
+		}
+	}
+	if (is_array($senders))
+	{
+		krsort($senders);
+		$senders=array_unique($senders);
+
+		foreach($senders as $last_time=>$sender)
+		{
+			$sends.="<li>$sender ".formattime($last_time)."</li>\n";
+		}
+		$sends.="<li><a href='/send'>more...</a></li>\n";
+	}
+
+
+	$snitch_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homesnitch\",\"/home/ajax/snitch\");'  class='tool'>&#x21bb;</a>  <a href='/snitch' class='tool'>&hellip;</a></div>";
+	$snoop_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homesnoop\",\"/home/ajax/snoop\");'  class='tool'>&#x21bb;</a>  <a href='/snoop' class='tool'>&hellip;</a></div>";
+	$send_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homesend\",\"/home/ajax/send\");'  class='tool'>&#x21bb;</a>  <a href='/send' class='tool'>&hellip;</a></div>";
+	$spiel_tool_links="<div style='float: right; font-size: 80%;'><a href='javascript:refresh(\"homespiel\",\"/home/ajax/spiel\");'  class='tool'>&#x21bb;</a>  <a href='/spiel' class='tool'>&hellip;</a></div>";
+
+	if ($snitch) $snitchlist="<ul class='peek_list' id='homesnitch'><li class='listheader'>$snitch_tool_links snitch </li>$snitch</ul>";
+	if ($snoop && !strstr($snoop,'no snoops found')) $snooplist="<ul class='peek_list' id='homesnoop'><li class='listheader'>$snoop_tool_links snoop</li>$snoop</ul>";
+	if ($sends) $sendlist="<ul class='peek_list' id='homesend'><li class='listheader'>$send_tool_links send</li>$sends</ul>";
+	if ($spiel!='<li></li>') $spiellist="<ul class='peek_list' id='homespiel'><li class='listheader'>$spiel_tool_links spiel</li>$spiel</ul>";
+
+	$content.="$snitchlist $snooplist $sendlist $spiellist <br clear='all' />";
+
+	// RECENT SKINS
+	//
+	exec("ls -c $_SERVER[FILE_ROOT]/resources/skins/*.skin",$skinlist);
+	$content.="<div class='widebox'>\n";
+	$content.="recent skins :: \n";
+
+	for($k=0;$k<3;$k++)
+	{
+		$prettyskin=str_replace('_',' ',str_replace('-',' ',str_replace('.skin','',basename($skinlist[$k]))));
+		$prettyskin=str_replace('  ',"'",str_replace('..','(',str_replace("...",")",$prettyskin)));
+		$prettyskin=str_replace('(by'," <span class='edit_links'> (by",$prettyskin);
+		$prettyskin=str_replace(')',")</span>",$prettyskin);
+		$content.="<a href='$_SERVER[WEB_ROOT]/apply/".str_replace('.skin','',basename($skinlist[$k]))."'>$prettyskin</a>\n";
+	}
+	$content.="<a href='$_SERVER[WEB_ROOT]/prefs/skin'>      more...</a>\n";
+	$content.="</div>\n";
+}
+
+
+	// RECENT HELP
+	//
+	exec("ls -c $_SERVER[FILE_ROOT]/resources/help/*.help",$helplist);
+	$content.="<div class='widebox'>\n";
+	$content.="recent help :: \n";
+
+	for($k=0;$k<3;$k++)
+	{
+		$helpfile=basename($helplist[$k]);
+		if ($helpfile) include_once("$_SERVER[FILE_ROOT]/resources/help/$helpfile");
+		unset($body);
+		$helpname=str_replace('.help','',$helpfile);
+		$content.="<a href='$_SERVER[WEB_ROOT]/help/$helpname'>$title</a>\n";
+	}
+
+	$content.="<a href='$_SERVER[WEB_ROOT]/help'>      more...</a>\n";
+	$content.="</div>\n";
+
+	// refresh!
+	$content.="\n<script type='text/javascript'>
+		setInterval(\"refresh('homesnitch','/home/ajax/snitch');\",53012);
+		setInterval(\"refresh('homesnoop','/home/ajax/snoop');\",97017);
+		setInterval(\"refresh('homesend','/home/ajax/send');\",39009);\n</script>\n";
+/*
+		setInterval(\"refresh('homespiel','/home/ajax/spiel');\",Math.floor(Math.random()*30020));\n</script>\n";
+*/
+
+
+
+output("Home",$content);
+
+?>

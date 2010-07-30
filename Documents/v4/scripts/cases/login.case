@@ -1,0 +1,36 @@
+<?php
+/*
+cases/LOGIN.php
+
+handles the login processing
+*/
+
+	if ($urlarray[2])
+	{
+		$user=$urlarray[2];
+		$pass=$urlarray[3];
+		$remember=$urlarray[4];
+		
+		login($user,$pass,$remember,"/$urlarray[5]");
+	}
+	
+	if (!($urlarray[2]) && !($_SERVER['USER']))
+	{
+		if($urlarray[1]=='failed') $failuremessage="<div style='background: red; color: white; text-align: center;'>Login failed. Please try again. Email for <a href='mailto:help@planwatch.org'>help</a> if this keeps happening.</div>";
+		$content="
+		<form action='$_SERVER[WEB_ROOT]/scripts/form_shim.php' method='post'>
+		<label for='user' style='font-weight: bold;'>username</label><br /><input  autocapitalize='off' id='user' type='text' name='user' /><br /><br />
+		<label for='pass' style='font-weight: bold;'>password</label><br /><input  autocapitalize='off' id='pass' type='password' name='pass' /><br />
+		<label for='remember'> <input type='checkbox' name='remember' id='remember' value='1' /> remember me</label><br />
+		<input type='submit' value='login' />
+		$failuremessage
+		<input type='hidden' name='action' value='login' />
+		</form>
+		<a style='margin-top: 40px; display: block; text-align: center; background: #ffc; font-size: 20px;'
+		target='_self' href='/home/desktop_version'>switch to desktop view</a><br />";
+
+		header("Cache-control: no-cache");
+		output('please log in',$content);
+	}
+	
+?>

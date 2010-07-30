@@ -1,0 +1,71 @@
+<?php
+/*
+cases/PREFS.case
+
+*/
+
+if ($_SERVER['USER'])
+{
+	switch($urlarray[2]):
+	
+	case "one":
+		include_once('users.php');
+		change_one_pref($urlarray[3],$urlarray[4]);
+		redirect($_SERVER['HTTP_REFERER']);
+		break;
+
+	case "custom_css":
+		include_once('editstyles.php');
+		output('Custom CSS',styles_css_edit());
+		break;
+
+	case "userinfo":
+		include_once('gravity_forms.php');
+		include_once('prefs_form.php');
+		output('User Info Form',form_build_from_struct('User Info',$user_form_definitions));
+		break;
+		
+	case "interface":
+		include_once('gravity_forms.php');
+		include_once('prefs_form.php');
+		output( 'Interface Preferences Form' ,
+				form_build_from_struct('Interface Preferences',$prefs_form_definitions)
+			  );
+		break;
+	
+	case "skin":
+		include_once('editstyles.php');
+		skin_select();
+		break;
+	
+	case "makeskin":
+		include_once('editstyles.php');
+		skin_create();
+		break;
+	
+	case "styles":
+		include_once('editstyles.php');
+		styles_colors_edit();
+		break;
+	
+	case "fonts":
+		include_once('editstyles.php');
+		output('edit fonts',styles_fonts_edit());
+		break;
+	
+	default:
+		include_once('gravity_forms.php');
+		include_once('prefs_form.php');
+		output( 'Interface Preferences Form' ,
+				form_build_from_struct('Interface Preferences',$prefs_form_definitions)
+			  );
+		break;
+		
+	endswitch;
+}
+else
+{
+	redirect('/');
+}
+
+?>

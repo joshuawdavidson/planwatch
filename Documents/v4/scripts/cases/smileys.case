@@ -1,0 +1,49 @@
+<?php
+
+/*
+SMILEYS.case
+
+URLs relating to smiley management
+*/
+
+include_once("smiley_functions.php");
+
+switch($urlarray[2]):
+
+case "delete":
+	if ($urlarray[5]!='TRUE') smiley_delete($urlarray[4]);
+	if ($urlarray[5]=='TRUE') smiley_delete($urlarray[4],TRUE);
+	break;
+
+case "list":
+	$smileyarray=smiley_listall();
+	$content="<b>Smileys</b><br />\n";
+	$i=0;
+	foreach($smileyarray as $graphic=>$keylist)
+	{
+		$i+=1;
+	   if (($i/3)-floor($i/3) < .3)  $divcolor='#DDDDDD';
+	   if (($i/3)-floor($i/3) > .3)  $divcolor='#EEEEEE';
+	   if (($i/3)-floor($i/3) > .6)  $divcolor='#CCCCCC';
+		$graphic_size=getimagesize("$_SERVER[FILE_ROOT]/resources/smileys/$graphic");
+	
+		$key=$keylist[0];
+		if (!strstr($key,':') && !strstr($key,'>') && !strstr($key,'8') && !strstr($key,')')) $key=":$key:";
+	
+		echo "<div><a href=\"javascript:addSmiley(' $key ');\"><img border='0' src='$_SERVER[WEB_ROOT]/resources/smileys/$graphic' align='middle' $graphic_size[3] /></a></div>"
+			.implode(' ',$keylist)."\n";
+	}
+	break;
+
+case "add":
+	smiley_upload();
+	break;
+	
+default:
+	$smiley=$urlarray[3];
+	if ($urlarray[2]!='delete') smiley_editkeys($smiley);
+	break;
+
+endswitch;
+
+?>

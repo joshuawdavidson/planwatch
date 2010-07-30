@@ -1,0 +1,11 @@
+<?php
+
+/*
+SIDEBAR.case
+
+the mozilla sidebar for planwatch
+*/
+
+output(0,'sidebar');
+
+?>

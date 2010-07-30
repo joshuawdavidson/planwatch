@@ -1,0 +1,304 @@
+<?php
+if (user_is_administrator() || $_SERVER['USER']=='backup')
+{
+switch($urlarray[2]):
+
+case "embedbugs":
+	include_once('plan_read.php');
+	$plan="And the internet provides: &lt;i&gt;Abridged Classics: Becoming Jane&lt;/i&gt;&lt;br /&gt;&lt;a href=\"http://www.youtube.com/watch?v=FoFfX4LfU2E\"&gt;http://www.youtube.com/watch?v=FoFfX4LfU2E&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;My favorite bit is perhaps the \"waistwatch,\" which points out that for some reason Jane Austen is wearing gowns that are entirely too early for the period of the film. Or maybe it's the shot of Laurence Fox with the caption that just reads \"[deserves better than Jane].\" But the whole thing amused me. And it has the virtue, unlike myself, of being concise.";
+	$plan=html_entity_decode($plan);
+	preg_match_all("|[^'\"=/;>](http://.*\.youtube\.com/watch.*)[\s\W]|",$plan,$matches);
+	print_r($matches); echo "<hr>";
+	$outplan=preg_replace_callback("|[^'\"=/;>](http://.*\.youtube\.com/watch.*)[\s\W]|",'plan_process_oembed',$plan);
+	echo $outplan;
+	break;
+
+case "json":
+	include_once('json.php');
+	$data=file_get_contents("http://oohembed.com/oohembed/?url=http://www.youtube.com/watch?v=pmuJDmjq-xQ");
+	$json=new JSON;
+	$embed=$json->unserialize($data);
+	echo $embed->html;
+	break;
+
+case "fingerprint":
+	echo $_COOKIE[$_SERVER['AUTH_COOKIE']];
+	exit;
+	break;
+
+case "tumblr_rss":
+	header("http/1.1 200 ok");
+	$urls="http://dogblogsf.tumblr.com/rss";
+	$data=file_get_contents($urls);
+	include_once('simplepie.1.2.inc');
+//	$feed = new SimplePie($urls);
+
+	$feed = new SimplePie();
+	$feed->set_useragent("Planwatch.org/4.1 Reader (Gecko WebKit Mozilla, that sort of thing)");
+	 
+	// Set which feed to process.
+	$feed->set_feed_url($urls);
+	 
+	// Run SimplePie.
+	$feed->init();
+	 
+	// This makes sure that the content is sent to the browser as text/html and the UTF-8 character set (since we didn't change it).
+	$feed->handle_content_type();
+
+	$items=$feed->get_items();
+	print_r($items);
+	echo "<hr>";
+	echo $data;
+	exit;
+	break;
+
+case "mailtest":
+		$message="this is a test plan";
+		$writer="testuser";
+		user_read_info($writer,TRUE);
+
+//		echo "curl! $_SERVER[AUTH_COOKIE] $_SERVER[USER]<hr>";
+
+		$post_params['action'] ='Update Journaling Plan';
+		$post_params['writer'] =$writer;
+		$post_params['private']=$private;
+		$post_params['nolinebreaks']=$nolinebreaks;
+		$post_params['nofeed']=$nofeed;
+//		$post_params['edit']=FALSE;
+		$post_params['newplan']=$message."<!--email post\n$headers-->";
+		$post_params['mailpost']=1;
+		$post_params['sid']=user_get_fingerprint($_SERVER['USER'],$_SERVER['USERINFO_ARRAY']['userpass']);
+
+		$request_url = "http://planwatch.org/scripts/plan_update.php";
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $request_url );
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+//		curl_setopt($ch, CURLOPT_COOKIE, "$_SERVER[AUTH_COOKIE]: ".user_get_fingerprint($_SERVER['USER'],$_SERVER['USERINFO_ARRAY']['userpass']));
+		curl_setopt($ch, CURLOPT_POST, 1 );
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params );
+		$result=curl_exec($ch);
+		curl_close($ch);
+		echo "$result ";
+		if($result=="posted") echo "s"; else echo "f";
+//		echo curl_error($ch);
+//		echo "<hr>done";
+//		mail($from,"cookie","$_SERVER[AUTH_COOKIE]: ".user_get_fingerprint($_SERVER['USER'],$_SERVER['USERINFO_ARRAY']['userpass']));
+
+	break;
+
+case "clear_cache":
+	exec("rm -f $_SERVER[DOCUMENT_ROOT]/temp/*.cache");
+	echo "done";
+	exit;
+	break;
+
+case "xnr":
+	include_once('plan_read.php');
+	echo plan_read_xmlrpc("jwdavidson","@planwatch.org");
+	break;
+
+case "whitelist":
+	$remoteuser="testuser"; $remotenode="planwatch.org";
+	$nodeinfo=planworld_node_getinfo($remotenode);
+	$f=new xmlrpcmsg('planworld.plan.getContent');
+	$f->addParam(new xmlrpcval($remoteuser, "string"));
+	$f->addParam(new xmlrpcval("emfernandez@planworld.net", "string"));
+	$f->addParam(new xmlrpcval($snitch, "boolean"));
+
+	$c=new xmlrpc_client($nodeinfo["directory"], $nodeinfo["server"], $nodeinfo["port"]);
+	$c->setDebug(0);
+	$r=$c->send($f);
+
+	if (!$r) { $plan="<div class='alert'>Could not retrieve $remoteuser's plan from $nodeinfo[server].</div>"; }
+	else
+	{
+		$v=$r->value();
+		if (!$r->faultCode()) {
+			if ($v->kindOf()=='scalar') $plan=WrapWords($v->scalarval(),80);
+		} else {
+		$plan="Fault: ";
+		$plan.="Code: " . $r->faultCode() .
+			" Reason '" .$r->faultString()."'<br/>";
+		}
+	}
+
+	echo "$plan <hr>";
+	print_r($v);
+	break;
+
+
+case "pglu":
+	$plan=str_replace("/test/pglu/","",$_SERVER['REQUEST_URI']);
+	echo "plan get last update! $plan<br />";
+	echo $time=plan_find_time($plan);
+	echo " ".date("F jS Y g:ia",$time);
+	break;
+
+case "invite":
+	include_once('send.php');
+	echo "invite test ".time()." ".send_invite_user("jwdavidson",time());
+	break;
+
+case "time":
+	if ($urlarray[3]) echo "$urlarray[3]: ".date("F jS h:ia",$urlarray[3])."<br />\n";
+	echo time().": ".date("F jS h:ia")."<br />\n";
+	break;
+
+case "find":
+	include_once('plan_read.php');
+	var_dump(plan_feed_search("http://www.eschatonblog.com/"));
+	break;
+
+case "rpc_read":
+	print_r(planworld_xmlrpc_query("@planwatch.org","planworld.plan.getContent",array("jwdavidson","jwdavidson@note",TRUE),TRUE));
+	break;
+
+case "archive_lookup":
+	//http://planwatch.org/read/jwdavidson/r1d/2008/02/05/0:00
+//	echo date("F jS Y, g:ia",$urlarray[3])." $urlarray[3]";
+	redirect("http://planwatch.org/read/$_SERVER[USER]/r1d/".date("Y/m/d/g:i",$urlarray[3]));
+	break;
+
+case "preg_match":
+	$string="archives ( r1d 31192604400 )";
+	preg_match("|archives \\( (r.*d) 3(.*) \\)|",$string,$matches);
+	print_r($matches);
+	break;
+
+case "style_strip":
+	echo "<h1>Style Strip</h1>";
+	include_once('plan_read.php');
+	$data=file_get_contents("http://planwatch.org/read/jwdavidson");
+	while(strstr($data,"<style"))
+	{
+		$start=strpos($data,"<style");
+		$end=strpos($data,"</style>");
+		$data=str_replace(substr($data,$start,$end-$start+8),'',$data);
+	}
+	$data=preg_replace("/style=['\"][^'\"]*['\"]/",'',$data);
+	$data=preg_replace("/<link [^\>]*stylesheet[^\>]*>/",'',$data);
+
+//	$data=preg_replace("/<style[^<]</style>/","",$data);
+	echo str_replace(array("<",">"),array("&lt;","&gt;"),$data);
+	break;
+
+case "list":
+	exec("ls $_SERVER[PWUSERS_DIR]/*/*list.txt",$list_list);
+	foreach($list_list as $list)
+	{
+		$content.="$list<br/>\n";
+	}
+	output("List Test",$content);
+	break;
+
+case "update_times":
+	$node="planwatch.org";
+	$nodeplanusers=array("jwdavidson","wmmoller");
+	foreach($nodeplanusers as $i=>$plan)
+	{
+		if (strpos($plan,'@')) list($plan,$junk)=explode('@',$plan);
+		if (strpos($plan,'.')) list($plan,$junk)=explode('.',$plan);
+		$xmlarray[$i]=new xmlrpcval($plan,'string');
+	}
+	$sendarray=new xmlrpcval($xmlarray,"array");
+
+	unset($nodeplanusers);
+	unset($xmlarray);
+
+	$f=new xmlrpcmsg('users.getLastUpdate');
+	$f->addParam($sendarray);
+
+	$nodeinfo=planworld_node_getinfo($node);
+
+	$c=new xmlrpc_client($nodeinfo['directory'],$nodeinfo['server'],$nodeinfo['port']);
+
+	$c->setDebug(0);
+	$r=$c->send($f);
+	if (!$r) { echo "XML-RPC send failed trying to connect to $node\n"; }
+	else
+		if (!$r->faultCode())
+		{
+			$nodeplantimes=xmlrpc_decode($r->value());
+		}
+
+	if ($nodeplantimes)
+	foreach($nodeplantimes as $i=>$time)
+	{
+		echo "$i@$node: $time (".date("F jS h:ia",$time).")\n";
+		$filestring.="!!!$i@$node...$time";
+		$crossnode_times_array["$i@$node"]=$time;
+	}
+
+//	print_r(planworld_xmlrpc_query("@note","planworld.user.getLastUpdate",array(array("jlodom00"=>"jlodom00","mjweber02"=>"mjweber02")),TRUE));
+	break;
+
+case "lj_update":
+	$watched_array=array("$urlarray[3]@lj");
+	$debug=TRUE;
+	include_once('pt.php');
+	break;
+
+case "time_test":
+	if ($urlarray[3]=='http:') $testitem=str_replace("/test/time_test/",'',implode('/',$urlarray));
+	else $testitem=$urlarray[3];
+	$testitem=plan_get_real_location($testitem);
+	$lastupdate=plan_get_last_update("$testitem");
+	echo "testitem: $testitem, $lastupdate ".date("F jS g:ia",$lastupdate)."<br/>\n ";
+	echo $_SERVER['DEBUG_INFO'];
+	break;
+
+case "rss_time":
+	if ($urlarray[3]=='http:') $testitem=str_replace("/test/rss_time/",'',implode('/',$urlarray));
+	else $testitem=$urlarray[3];
+	$feeds_array=array($testitem);
+	$debug=TRUE;
+	include('times_rss.php');
+//	echo "testitem: $lastupdate ".date("F jS g:ia",$lastupdate);
+	break;
+
+case "snoop_add":
+	include_once('snoop.php');
+//	print_r(snoop_add(array("jwdavidson"),"testuser"));
+	print_r(snoop_add_xmlrpc("jlodom00@amherst.edu","@note.amherst.edu","testuser@planwatch.org"));
+//	print_r(planworld_xmlrpc_query("@note.amherst.edu","planworld.snoop.add",array("jlodom00","jwdavidson@planwatch.org"),TRUE));
+	break;
+
+case "snoop_remove":
+	print_r(planworld_xmlrpc_query("@note.amherst.edu","planworld.snoop.remove",array("jlodom00","testuser@planwatch.org"),TRUE));
+	break;
+
+case "pgrl":
+	echo plan_get_real_location($urlarray[3],TRUE);
+	echo "<hr>$_SERVER[DEBUG_INFO]";
+	break;
+
+case "lastread":
+	$filter=$urlarray[3];
+	$lastfn_dat="$_SERVER[USER_ROOT]/lastread.dat";
+	if (file_exists($lastfn_dat))
+		$lastread=unserialize(file_get_contents($lastfn_dat));
+	foreach ($lastread as $i=>$last)
+	{
+		if (stristr($i,$filter))
+			echo "$i: $last ".formattime($last)."<br/>\n";
+	}
+	break;
+
+case "myspace":
+	$planowner=$urlarray[3];
+	echo "http://myspace.com/".str_replace('@myspace','',$planowner),"<hr/>";
+	echo $data=file_get_contents("http://myspace.com/".str_replace('@myspace','',$planowner))."<hr/>";
+	preg_match("/friendID=(\d{1,})/",$data,$id);
+	print_r($id);
+	echo $planowner="http://makedatamakesense.com/myspace/?url=http%3A%2F%2Fblog.myspace.com%2Findex.cfm%3Ffuseaction%3Dblog.List%26friendID%3D$id[1]";
+	break;
+
+default:
+	redirect('/');
+	break;
+
+endswitch;
+}
+else redirect('/');
+?>

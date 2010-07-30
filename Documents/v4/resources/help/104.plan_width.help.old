@@ -1,0 +1,19 @@
+<?php
+	$title="How to control your plan width";
+	$body="Here's how you make sure your plan doesn't get too wide for people who like to have very wide browser windows, but not very wide content (and also doesn't get too narrow to be usable by people on small screens and devices):
+%user%
+## On Planwatch.org
+add this line to your <a href='/write/css'>plan styles</a> (where &quot;yourusername&quot; is your actual username, like jwdavidson)
+> `#plan_body_yourusername { max-width: 600px; }`
+
+## On NOTE and Planworld.net
+1. put this line at the top of your plan:
+> `<div style='max-width: 600px;>`
+
+2. put this line at the bottom of your plan:
+> `</div>`
+
+that's all. you're done. this will allow the plan to still be wide in ie6, which is not a big deal, because people still using ie6 are accustomed to this sort of minor inconvenience, and in any case can just resize their windows.
+
+other methods (setting a fixed or relative width, using a table) will not be readable in mobile browsers. please do not do this. more and more people are using mobile browsers these days.";
+	?>

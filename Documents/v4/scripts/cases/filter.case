@@ -1,0 +1,74 @@
+<?php
+/*
+FILTER.case 
+allows you to view only selected entries from a feed
+*/
+
+list($junk,$vars)=explode('?',$_SERVER['REQUEST_URI']);
+parse_str($vars);
+$_SERVER['OUTPUT_MODE']='ATOM1.0';
+include_once('plan_read.php');
+
+output($url,plan_filter_rss($url,$filters));
+
+function plan_filter_rss($url,$filters)
+{
+	$result=@fetch_rss($url);
+
+	if (!($result->items))
+	{
+		$result->items[0]['title']="Error";
+		$result->items[0]['date_timestamp']=time();
+		$result->items[0]['content']['encoded']="Reading $url failed. If this persists, please write <a href='mailto:help@planwatch.org'>help@planwatch.org</a>";
+	}
+
+	else
+	{
+		foreach($result->items as $item)
+		{
+//			print_r($item);
+			$entry_header='';
+			if ($item['title'])
+				$entry_header.="<a href='$item[link]' class='entry_title'>$item[title]</a>\n";
+	
+			$dc=$item['dc'];
+	
+			if ($item['date_timestamp']) $timecodes=formattime($item['date_timestamp']);
+			if ($item['modified']!=$item['issued']) $modified=formattime(parse_w3cdtf($item['modified']));
+	
+			$entry_header.= "<span class='edit_links'>";
+			if ($dc['subject']) $entry_header.=" $dc[subject], ";
+			if ($timecodes) $entry_header.=" posted $timecodes ";
+			if ($dc['creator']) $entry_header.="by $dc[creator] ";
+			elseif ($item['author_name']) $entry_header.="by ".($item['author_name'])." ";
+			elseif ($item['author']) $entry_header.="by $item[author] ";
+			if ($modified) $entry_header.="(modified $modified)";
+			$entry_header.="</span><br />\n";
+			
+	
+			// if there are multiple options for content, pick the longest one.
+			$atom_length=strlen($item['atom_content']);
+			$ce_length=strlen($item['content']['encoded']);
+			$description_length=strlen($item['description']);
+	
+			if (max($atom_length,$ce_length,$description_length)==$atom_length) $entry_text=$item['atom_content'];
+			if (max($atom_length,$ce_length,$description_length)==$ce_length) $entry_text=$item['content']['encoded'];
+			if (max($atom_length,$ce_length,$description_length)==$description_length) $entry_text=$item['description'];
+	
+			foreach($filters as $filter)
+			{
+				if (strstr($entry_header,$filter)) $entry_text.='FILTER';
+			}
+			$entry = plan_encapsulate_atom($url,$item['title'],$entry_text);
+			$content.=$entry;
+			echo $entry;
+		}
+	}
+
+	$content=str_replace("src='/","src='$channel_info[link]/",$content);
+	$content=str_replace("src=\"/","src=\"$channel_info[link]/",$content);
+	$content=str_replace("SRC='/","src='$channel_info[link]/",$content);
+	$content=str_replace("SRC=\"/","src=\"$channel_info[link]/",$content);
+
+return $content;
+}

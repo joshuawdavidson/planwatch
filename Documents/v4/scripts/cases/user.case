@@ -1,0 +1,114 @@
+<?php
+
+/*
+case/USER.case
+*/
+
+switch($urlarray[2]):
+case "accept_invite":
+	include_once('users.php');
+	if (file_exists("$_SERVER[FILE_ROOT]../pwusers/$urlarray[3]/stats/$urlarray[4].invite"))
+	{
+		$filename="$_SERVER[FILE_ROOT]../pwusers/$urlarray[3]/stats/$urlarray[4].invite";
+	}
+	else
+	{
+		if (file_exists("$_SERVER[FILE_ROOT]/temp/invites/$urlarray[4].$urlarray[3].invite"))
+		{
+			$filename="$_SERVER[FILE_ROOT]/temp/invites/$urlarray[4].$urlarray[3].invite";
+		}
+	}
+
+//	$filename="$_SERVER[FILE_ROOT]/../pwusers/$urlarray[3]/stats/$urlarray[4].used.invite";
+	$_GET=unserialize(file_get_contents($filename));
+	if (!$_GET['name'] || !$_GET['email']) $content="Invalid invitation.";
+	else
+	{
+		$content="<h1>Register a User</h1><div style='width: 400px;'>".user_register_form()."</div>";
+//		rename($filename,str_replace('.invite','.used.invite',$filename));
+	}
+	output("Register",$content);
+	break;
+	
+case "invite":
+	$total_invites=5;
+	if ($_SERVER['USER']=='jwdavidson') $total_invites=100000;
+	$used_invites=count(files_list("$_SERVER[USER_ROOT]/stats/","*.invite"));
+	$invites_left=$total_invites-$used_invites;
+	$content="<h1>Invite a New User</h1>
+	<strong>$invites_left invites left. <br />
+	Enter the name and email address of your invitee. <form action='/scripts/form_shim.php' method='get'><br />email: <input type='text' name='email' /><br />
+	name: <input type='text' name='name' /><input type='submit' value='invite' /><input type='hidden' name='action' value='invite' /> <input type='hidden' name='inviter' value='$_SERVER[USER]' /></form>";
+	output("Invite a User",$content);
+	break;
+
+case "delete":
+	if (user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass'])
+		&& ($urlarray[3]==$_SERVER['USER'] || user_is_administrator()))
+	echo "
+	<h1>Are you <u>SURE</u> you want to delete $urlarray[3]?<br />
+	You won't be able to undo this, and you'll lose all your old
+	updates if you had a local plan and didn't back it up.<br /><br />
+	By the way, you can click <a href='$_SERVER[WEB_ROOT]/user/backup/plan.tgz'>here</a>
+	to download a backup copy of your plan.</h1><br /><h1>
+	<a href='$_SERVER[WEB_ROOT]/' title=\"click here and we'll pretend it never happened.\">NO</a></h1>
+	<br /><a href='$_SERVER[WEB_ROOT]/user/deleteforreal/$urlarray[3]' title=\"a bad idea\">yes</a>\n";
+	else echo "you aren't logged in.";
+	break;
+
+case "deleteforreal":
+	if (user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass'])
+		&& ($urlarray[3]==$_SERVER['USER'] || user_is_administrator()))
+	echo "
+	<h1>Are you <u>REALLY REALLY SURE</u> you want to delete $urlarray[3]?
+	Seriously. Think about it. You won't be able to undo this.
+	THIS IS YOUR LAST CHANCE.<br /><br />click <a href='$_SERVER[WEB_ROOT]/backup/plan.tgz'>here</a>
+	to download a backup copy of your plan.</h1><br /><h1>
+	<a href='$_SERVER[WEB_ROOT]/' title=\"click here and we'll pretend it never happened.\">NO</a></h1>
+	<br /><a href='$_SERVER[WEB_ROOT]/user/deleteforreallyreal/$urlarray[3]' title=\"a bad idea, but we won't ask you again\">yes</a>";
+	else echo "you aren't logged in.";
+	break;
+
+case "deleteforreallyreal":
+	include_once('users.php');
+	
+	if (user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass'])
+		&& ($urlarray[3]==$_SERVER['USER'] || user_is_administrator())
+		)
+	{
+		user_delete($urlarray[3]);
+		if (user_is_administrator()) redirect('/lists/registered_users');
+		else redirect('/logout');
+	}
+	break;
+
+case "backup_cat":
+	
+	break;
+
+case "backup":
+	if (user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass']))
+	{
+		output("Making your backup","<h1>Making your backup</h1>This will only take a minute... <img src='/resources/graphics/loading.gif' alt='loading...' id='spinner' /><br /><iframe src='/user/backup_process' style='width: 1px; height: 1px; border: 0px;' onload=\"document.getElementById('spinner').style.display='none';\"></iframe>");
+	}
+	else output("Backup failed","<h1>You aren't logged in.</h1> or something else went wrong. <a href='/feature'>Report a bug</a> if you don't know why this didn't work.");
+	break;
+
+case "backup_process":
+		$backup_filename="$_SERVER[FILE_ROOT]/temp/$_SERVER[USER].$file_tc.tar";
+		$file_tc=date("Y-m-d_g-i-s");
+		header("Content-type: application/x-gzip");
+		header("Content-Disposition: attachment; filename=\"$_SERVER[USER]-plan-archive.$file_tc.tgz\"");
+		passthru("tar -cvvz --directory /home/planwatc $_SERVER[USER_ROOT] ");
+/*		if(file_exists($backup_filename))
+		{
+			readfile($backup_filename);
+			header("Content-type: application/x-tar");
+			header("Content-Disposition: attachment; filename=\"$_SERVER[USER]-plan-archive.$file_tc.tar\"");
+		}
+		else { header("Content-type: text/plain"); echo "failed to create backup"; }
+*/		exit;
+		break;
+
+endswitch;
+?>

@@ -1,0 +1,21 @@
+<?php
+$title='Hidden and Deleted Entries';
+$body="
+If you have a journaling plan, you can hide or delete any specific entry.<br><br>
+
+<h3>hidden entries</h3>
+sometimes you write something, and then sorta wish you hadn't, but you don't want to delete 
+it, you just don't want to see it (or have anyone else see it). if you click the 'hide' link 
+at the bottom of the entry, it will become a 'hidden entry' which isn't visible on your plan 
+(even to you). hidden entries are moved, but not deleted. if you download a backup of your 
+plan (strongly recommended), your hidden entries will be intact. you can unhide entries 
+individually from the <a href='/view/all_hidden'>show hidden entries</a> page linked from the 
+<a href='/tools'>tools</a> page.
+<br><br>
+
+<h3>deleted entries</h3>
+deleted entries are gone forever, never to return. only delete an entry if you're sure you'll
+never want to see it again.
+<br><br>
+";
+?>

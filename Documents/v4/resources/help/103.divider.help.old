@@ -1,0 +1,75 @@
+<?php
+	$title="Intro Formatting: The Plan Divider";
+	$body="If you have a journaling plan, your plan divider can be customized<br><br>
+<h2>private entry notation</h2>
+If you put the keyword <b>PRIVATE</b> in your divider (no formatting necessary), private entries will
+get the words \"private entry\" in their dividers
+<br><br>
+
+<h2>permanent link</h2>
+Putting <b>LINK[<i>something here</i>]</b> in your divider will create a permanent link to that 
+entry that anyone can save for later reference. whatever goes inside the brackets is the 
+text of the link.
+<br><br>
+
+<h2>color variables</h2>
+You can customize the colors of your divider, and make sure they still coordinate with whatever
+skin the reader is using, by using color variables. they are as follows (don't forget the $):
+<pre>
+
+<b>$textcolor</b> 		is the basic color of all text on the page, except links, 
+				titletext, and text in the plan lists. it should contrast
+				well with pagebgcolor and planbgcolor.
+
+<b>$titletextcolor</b>	is the text color for the text at the top of the page
+				(slogan, site name, toolbar, status text). it should contrast
+				well with headbgcolor.
+				
+<b>$navtextcolor</b>	is the color of plan times in the watched lists. it should
+				contrast well with listsbgcolor and be different from 
+				navlinkcolor.
+
+<b>$linkcolor</b> 		is the basic color of all links on the page, except as below
+
+<b>$alinkcolor</b>		is the text color of all links while you hold the mouse on them
+				
+<b>$vlinkcolor</b>		is the color of regular links that you've visited
+
+<b>$navlinkcolor</b>	is the color of links to other plans in the watched lists
+
+
+<b>$pagebgcolor</b>	is the color of the page background
+
+<b>$listsbgcolor</b>	is the background color of the watched lists
+
+<b>$headbgcolor</b>	is the background color of the header area of the page
+
+<b>$planbgcolor</b>	is the background color of the area of the page which contains the
+				actual content
+</pre>	
+<br><br>
+
+<h2>the date and time stamp</h2>
+	Date/time of update should always be enclosed in this string: <b>DATE[datecode]</b><br>
+	The specific parts of datecode are as follows:
+
+	<ul>
+	<li>a - 'am' or 'pm' 
+	<li>B - Swatch Internet time 
+	<li>F - month, textual, long; i.e. 'January' 
+	<li>g - hour, 12-hour format without leading zeros; i.e. '1' to '12' 
+	<li>G - hour, 24-hour format without leading zeros; i.e. '0' to '23' 
+	<li>i - minutes; i.e. '00' to '59' 
+	<li>j - day of the month without leading zeros; i.e. '1' to '31' 
+	<li>l (lowercase 'L') - day of the week, textual, long; i.e. 'Friday' 
+	<li>r - RFC 822 formatted date; i.e. 'Thu, 21 Dec 2000 16:01:07 +0200' 
+	<li>s - seconds; i.e. '00' to '59' 
+	<li>S - English ordinal suffix, textual, 2 characters; i.e. 'th', 'nd' 
+	<li>Y - year, 4 digits; i.e. '1999' 
+	<li>y - year, 2 digits; i.e. '99' 
+	</ul>
+
+	For more possible date codes, visit <a href='http://php.net/date'>the date() function
+	definition at php.net</a>.
+";
+	?>

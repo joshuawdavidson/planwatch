@@ -1,0 +1,27 @@
+<?php
+/*
+MASQ.case
+user masquerading
+*/
+
+if (user_is_administrator() || $_COOKIE['mau'])
+{
+	$cookie_fp_name='mau';
+	$host=getenv('HTTP_HOST'); if (substr_count($host,'.') < 2) $host=".".$host;
+
+	if (strstr($host,'www')) $host=str_replace('www','',$host);
+
+	if ($urlarray[2]=='off')
+	{
+		setcookie($cookie_fp_name,'',0,$_SERVER['WEB_ROOT']."/",".planwatch.org");
+	}
+
+	if ($urlarray[2]=='on')
+	{
+		parse_str(user_read_info($urlarray[3]));
+		$cookie_fp_data=user_get_fingerprint($username,$userpass);
+		setcookie($cookie_fp_name,$cookie_fp_data,$time,$_SERVER['WEB_ROOT']."/",".planwatch.org");
+	}
+}
+
+redirect('/');

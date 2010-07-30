@@ -1,0 +1,61 @@
+<?php
+/*
+USERFILES.case
+
+handles the file functions
+*/
+
+switch($urlarray[2]):
+
+	case "view":
+		$urlarray[4]=urldecode($urlarray[4]);
+		$filename="$_SERVER[PWUSERS_DIR]/$urlarray[3]/files/$urlarray[4]";
+		$content_type=shell_exec("file -ib ".str_replace(" ","\\ ",$filename));
+		if (strpos($content_type,'rtf'))
+		{
+			$output=shell_exec("$_SERVER[FILE_ROOT]/resources/unrtf $filename");
+			$content_type='text/html';
+			echo $output;
+			exit;
+		}
+		else
+		{
+			if (strstr($filename,'.mp3')) $content_type='audio/mpeg3';
+			Header("Content-type: $content_type");
+			readfile("$filename");
+			exit;
+		}
+		
+
+		break;
+	
+	case "list":
+		include_once('userfiles.php');
+		echo userfiles_build_menu();
+		break;
+	
+	case "delete":
+		if (file_exists("$_SERVER[PWUSERS_DIR]/$urlarray[3]/files/$urlarray[4]"))
+			unlink("$_SERVER[PWUSERS_DIR]/$urlarray[3]/files/$urlarray[4]");
+		if ($urlarray[5]=='menu') redirect('/userfiles/list');
+		else redirect("/userfiles/manage/$urlarray[3]");
+		break;
+	
+	case "manage":
+		include_once('userfiles.php');
+		if (trim($urlarray[3])) $files_user=trim(urldecode($urlarray[3]));
+		else $files_user=$_SERVER['USER'];
+		$content=userfiles_manage($files_user);
+		output("$urlarray[3] Managing Files",$content);
+		break;
+
+	default:
+		include_once('userfiles.php');
+		$files_lists=userfiles_prepare($urlarray[3]);
+		output("$urlarray[3]'s Files",implode("<br />",$files_lists));
+		break;
+
+endswitch;
+		
+
+?>

@@ -1,0 +1,47 @@
+<?php
+	$title="Help with the Watched List";
+	$body="Plans you read regularly should go in your watched list so you know when they've been
+updated.  
+Local, Amherst, and planworld.net plans can all live in your watched list alongside livejournals, xanga pages, myspace blogs, and anything that generates an RSS or Atom feed. If a plan name (like an RSS feed) is too long, you can use <a href='#aliases'>an alias</a> to make it shorter (see below).
+
+When you first add a plan to your watched list, it might take as long as 20 minutes for the update time to start appearing. We're working on this...
+
+
+##Adding a Plan to your Watched List
+If someone's plan isn't on your watched list, you can add one of two ways:
+
+  1. using the <a href='/tools'>tools</a> page, click the <a href='/edit/lists/watched'>edit your watched list</a> link. Enter the plans you want to watch in the list in one of these formats:
+    * username
+    * username@planworld_node (@note or @planworld.net for instance)
+    * http://www.wherever.edu/path/to/username.rss
+  
+  and then choose how you want your watched list sorted, and click 'Save Changes'.
+  
+  2. You can also watch anyone by clicking on 'watch' at the top of a plan when you're reading it (this area is called &quot;the reader toolbar&quot;).
+
+
+##Sorting your Watched List
+You can sort your watched list alphabetically by name, by time, or not at all. In any sorting mode, you can use headers to separate parts of your watched list. The entries will then be sorted in groups as they appear between the headers.
+
+
+##Automatic Pruning and 'Only New' Options
+If you don't want to see a bunch of old plans on your watched list, you can set it to automatically prune plans that haven't been updated in the last <i>x</i> days, weeks, months, or other unit of time.
+If you want to only see new plans (those that have been updated since the last time you read them) you can check the box to only show new plans. The only new directive overrides a time-limited pruning, so 
+if you select both, it's the same as just selecting only new.
+
+
+##Adding Headers to your Watched List
+You can break up your watched list into groups using headers. Simply insert a line containing the name of your header and starting with # wherever you want a header to appear in the list. Entries before the first header will not have a header, and other entries will be under the heading that comes before them.
+
+
+##Watched List Aliases {#aliases}
+If a plan or RSS feed you want to watch has a very long name, or one you just don't like, you can use aliases to change how the name appears in your watched list. Aliases use the same `&#33;username:description!` format as plan links. For example, this line would put an item in your watched list called 'slashdot':
+
+>    &#33;http://slashdot.org/slashdot.rss:slashdot&#33;  (becomes !http://slashdot.org/slashdot.rss:slashdot!)
+
+This one would link to jwdavidson's plan, but the link would read 'josh'
+
+>    &#33;jwdavidson:josh&#33; (becomes !jwdavidson:josh!)
+
+You can refer to the aliases you've defined when you're <a href='/help/links'>linking to plans</a> from your own.";
+	?>

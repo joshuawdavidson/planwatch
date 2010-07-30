@@ -1,0 +1,12 @@
+<?php
+
+/*
+STYLESHEET.case
+*/
+
+//var_dump($urlarray);
+if ($urlarray[2] && $urlarray[2]!='standard' && !strstr($urlarray[2],'planwatch_')) $_GET['skin']=str_replace('.css','',$urlarray[2]);
+else $_GET['skin']='normal';
+include_once('stylesheet.php');
+
+?>

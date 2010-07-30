@@ -1,0 +1,43 @@
+<?php
+$title="
+
+How Do I Add a Side Column to my Plan? 
+
+";
+
+
+$body="
+
+In order to get that column of links and whatnot down the side of your plan (like <a href='/read/jwdavidson'>jwdavidson</a> has), you need to enter some HTML tags in your header. First you need to set styles for the floating boxes, like so:
+
+<blockquote style='font-family: monospace;'>&lt;style>
+.linkbox { border: 1px solid gray; color: $textcolor; font-family: serif; font-size: 10pt; margin-bottom: 20px; background: white; }
+&lt;/style></blockquote>
+
+You can change anything here to fit your style preferences. this just makes all the boxes look the same.
+Next, you need to create a division ( <DIV> ) to hold all the boxes:
+
+<blockquote style='font-family: monospace;'>
+&lt;div style='float: right; text-align: center; width: 144px; font-size: small; border: none; padding: 3px; margin: 2px; z-index: 10;'>
+</blockquote>
+
+The important parts of this one are the <em>z-index</em> (it must be a positive number, because that's what puts it in front of other things) and the <em>float: right</em>. if you want it to run along the left side of your plan, you would say <em>float: left</em> instead.
+If you want to make the column wider or narrower, the <em>width: 144px</em> can be changed. px stands for pixels, and any number from 100 (quite narrow) to 200 (rather wide) should work pretty well. you can also specify this as a percentage of window width. 15% is a good starting point.
+You can change anything else without worrying whether it will affect the overall function.
+
+Next, you want to make some boxes. They look like this:
+<blockquote style='font-family: monospace;'>
+&lt;div class='linkbox'>
+link here&lt;br>
+link here&lt;br>
+link here&lt;br>
+&lt;/div>
+</blockquote>
+
+You can put whatever you want in these boxes. Any text or valid HTML will work.
+
+Finally, you need to close the whole column off with another <em>&lt;/div></em>.
+
+You should be able to copy and paste stuff from this page into your <a href='/write/header'>header</a> to get you started.
+";
+?>

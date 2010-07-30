@@ -1,0 +1,67 @@
+<?php
+
+/*
+SNITCH.case
+displays snitch page
+*/
+
+	if ($_SERVER['USER'])
+	{
+		if (!$urlarray[2] && $_SERVER['USERINFO_ARRAY']['snitch_default_days']) $urlarray[2]="r".$_SERVER['USERINFO_ARRAY']['snitch_default_days']."d";
+
+		include_once('snitch.php');
+
+		$snitch_list=snitch_read($_SERVER['USER'],$urlarray[2]);
+
+		if ($_SERVER['OUTPUT_MODE']!='IPHONE')
+		$content="				<h1>snitch</h1>
+
+				<span class='edit_links'>
+					<img src='$_SERVER[WEB_ROOT]$GLOBALS[helpicon]' /> [
+					<a href='$_SERVER[WEB_ROOT]/help/snitch'>snitch help</a> |
+					<a href='$_SERVER[WEB_ROOT]/help/privacy'>what does 'block' do?</a>
+					]
+				</span>
+
+				<br/><br/>
+
+				<form action='$_SERVER[WEB_ROOT]/scripts/form_shim.php' method='post' class='archive_form'>
+						history: 
+						<input type='text' name='threshhold' value='$threshvalue' size='3'/>
+						<select name='units'>
+							<option value='w' $weeks_selected>weeks</option>
+							<option value='d' $days_selected>days</option>
+							<option value='h' $hours_selected>hours</option>
+							<option value='m' $minutes_selected>minutes</option>
+						</select>
+						<select name='reverse'>
+							<option value='r' $newest_first>newest first</option>
+							<option value='' $oldest_first>oldest first</option>
+						</select>
+						<input type='hidden' name='action' value='snitch_archive'/>
+						<input type='submit' value='view'/>
+				</form>
+
+				<br/><br/>\n";
+			$snitch_list=str_replace("Anonymous Coward","AC",$snitch_list);
+			$content.="<ul class='snitch_list' selected='true'>$snitch_list</ul>";
+
+		if ($_SERVER['OUTPUT_MODE']=='IPHONE')
+		{
+			$content=str_replace("Anonymous Coward from ","AC: ",$content);
+			
+		}
+
+		if (!$_SERVER['USERINFO_ARRAY']['showsnoop'] && $_SERVER['OUTPUT_MODE']!='IPHONE') 
+		{
+			include_once('snoop.php');
+			$content="<h1>snoop</h1><ul id='snoop' class='snitch_list'><li><em>not an exact science</em></li>$snoop".snoop_list()."</ul>$content";
+		}
+		output("snitch: $user",$content);
+	}
+	else
+	{
+		$content="You're not logged in, so you can't view your snitch";
+		output('error: no snitch',$content,''," has no snitch");
+	}
+?>

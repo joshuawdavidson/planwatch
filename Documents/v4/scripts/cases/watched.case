@@ -1,0 +1,166 @@
+<?php
+/*
+cases/WATCHED.php
+
+produces the RSS watched list feed
+
+function list_format_html($list,$sortby='inorder',$navlinkcolor='',$sep=" &nbsp;&nbsp;&nbsp; ")
+*/
+
+if (strstr($_SERVER['OUTPUT_MODE'],'ATOM'))
+{
+	Header("Content-type: application/atom+xml");
+	include_once('formatting_atom.php');
+	if (strstr($urlarray[2],'advertised')) $advertised=TRUE;
+	if ($urlarray[2]=='registered' && user_is_valid($urlarray[3],$urlarray[4])) $registered=TRUE;
+	
+	if ($_SERVER['USER'] && $urlarray[2]!='advertised' && $urlarray[2]!='registered')
+	{
+		$list_fn="$_SERVER[USER_ROOT]/watchedlist.txt";	// reads in the user's watched list
+		if (file_exists($list_fn))
+		{
+			$list=file($list_fn);
+			if ($list[0]=="sort by time\n") $sortby='time';
+			elseif ($list[0]=="sort by name\n") $sortby='name';
+			elseif ($list[0]=="sort by none\n") $sortby='inorder';
+			else $sortby='inorder';
+			if (strpos($list[0],'sort by ')!==FALSE) unset($list[0]);
+		}
+		else $list=array();
+	
+		$content="<link rel=\"self\" href=\"http://planwatch.org$_SERVER[REQUEST_URI]\" type=\"application/atom+xml\"/>\n".list_format_atom($list);
+		$title = "$_SERVER[USER]'s Watched List";
+	}
+	
+	if ($advertised)
+	{
+		$list_fn="$_SERVER[FILE_ROOT]/stats/advertised.txt";	// reads in the user's watched list
+		$list=file($list_fn);
+	
+		$content="<link rel=\"self\" href=\"http://planwatch.org$_SERVER[REQUEST_URI]\" type=\"application/atom+xml\"/>\n".list_format_atom($list);
+	
+		$title='Advertised Plans';
+	}
+	
+	if ($registered)
+	{
+		Header("Content-type: text/xml");
+		$list=array();
+		exec("ls -d $_SERVER[PWUSERS_DIR]/*/",$ulist);
+		foreach($ulist as $listuser)
+		{
+			if (!file_exists("$_SERVER[PWUSERS_DIR]/".basename($listuser)."/.dontlist")) $list[]=basename($listuser);
+		}
+	
+		$content="<link rel=\"self\" href=\"http://planwatch.org$_SERVER[REQUEST_URI]\" type=\"application/atom+xml\"/>\n".list_format_atom($list);
+		$title='Registered Plans';
+	}
+
+	output($title,"<!-- FEED_DIVIDER -->$content");
+}
+
+
+if ($_SERVER['OUTPUT_MODE']=='RSS')
+{
+	include_once('formatting_rss.php');
+	if (strstr($urlarray[2],'advertised')) $advertised=TRUE;
+	if ($urlarray[2]=='registered' && user_is_valid($urlarray[3],$urlarray[4])) $registered=TRUE;
+	
+	if ($_SERVER['USER'] && $urlarray[2]!='advertised' && $urlarray[2]!='registered')
+	{
+		$list_fn="$_SERVER[USER_ROOT]/watchedlist.txt";	// reads in the user's watched list
+		if (file_exists($list_fn))
+		{
+			$list=file($list_fn);
+			if ($list[0]=="sort by time\n") $sortby='time';
+			elseif ($list[0]=="sort by name\n") $sortby='name';
+			elseif ($list[0]=="sort by none\n") $sortby='inorder';
+			else $sortby='inorder';
+			if (strpos($list[0],'sort by ')!==FALSE) unset($list[0]);
+		}
+		else $list=array();
+	
+		$content=list_format_rss($list,$sortby);
+		$title = "$_SERVER[USER]'s Watched List";
+	}
+	
+	if ($advertised)
+	{
+		$list_fn="$_SERVER[FILE_ROOT]/stats/advertised.txt";	// reads in the user's watched list
+		$list=file($list_fn);
+	
+		$content=list_format_rss($list,'time');
+	
+		$title='Advertised Plans';
+	}
+	
+	if ($registered)
+	{
+		Header("Content-type: text/xml");
+		$list=array();
+		exec("ls -d $_SERVER[PWUSERS_DIR]/*/",$ulist);
+		foreach($ulist as $listuser)
+		{
+			if (!file_exists("$_SERVER[PWUSERS_DIR]/".basename($listuser)."/.dontlist")) $list[]=basename($listuser);
+		}
+	
+		$content=list_format_rss($list,'time');
+		$title='Registered Plans';
+	}
+
+	output($title,$content);
+
+}
+
+// this is for AJAX watched list reloading
+if ($_SERVER['OUTPUT_MODE']=='AJAX')
+{
+	$key=$urlarray[4];
+	if ($_SERVER['WATCHED_KEY']==$key) output("Nothing New","IGNORE.NULL");
+	else
+	{
+		include_once('formatting_html.php');
+		if ($_SERVER['USER'])
+		{
+			$content=format_watched_list_html();
+		}
+		else
+		{
+			if (!$urlarray[2]) $content=format_watched_list_html();
+			else $content="<style>#planwatch { display: none; }</style><li class='listheader'>Login failed.</li>
+			<li>
+			<form action='/scripts/form_shim.php'>
+			user: <input type='text' id='watched_user' name='user' value='' style='width: 100px;' onclick=\"if (this.value=='user') this.value='';\"/><br/>
+			pass: <input type='password' id='watched_pass' name='pass' value=''  style='width: 100px;' onclick=\"if (this.value=='pass') this.value='';\"/><br/>
+			<input type='checkbox' id='watched_remember' value='1' id='remember'/><label for='remember'>remember me</label><br/>
+			<input type='hidden' id='watched_action' name='action' value='login_ajax'/>
+			<input type='button' onclick=\"
+				loadXMLDoc('http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/scripts/form_shim.php?action=login_ajax&user=' + element('watched_user').value + '&pass=' + element('watched_pass').value + '&remember=' + element('watched_remember').value,'','planwatch',
+					'processReqChangeGET');
+				void(null);
+				\"
+				value='Login Ajax'/>
+			</form></li>\n";
+	
+		}
+
+		output("Ajax Watched List",$content);
+	}
+}
+
+// this is for mobile devices
+if ($_SERVER['OUTPUT_MODE']=='IPHONE')
+{
+	include_once('formatting_html.php');
+	$lastwatched=file_get_contents("$_SERVER[USER_ROOT]/lastwatched.dat");
+	if ($_SERVER['USER'])
+	{
+$content="<ul title='Watched List' id='planwatch' selected='true' class='flicklist'>".format_watched_list_html(FALSE)."</ul>";
+			//$content=str_replace('<li ',"<li onclick='this.className.=\"read\";' ",$content);
+	}
+
+	file_put_contents("$_SERVER[USER_ROOT]/lastwatched.dat",$content);
+	output("planwatch",$content."<a href='/home/desktop_version'>switch to desktop version</a>");
+}
+
+?>

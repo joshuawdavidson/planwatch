@@ -1,0 +1,41 @@
+<?php
+/*
+SAINTPATS_..BY_MADVANI....SKIN
+this skin was automatically created on 16 Mar 2004, 09:27:04 am GMT
+from madvani's color and font prefs
+*/
+
+$pagebgimage="";
+$listsbgimg="";
+$planbgimg="";
+$headbgimg="";
+$pwlogo="/resources/graphics/patslogo.gif";
+$writeicon="/resources/graphics/pencil.gif";
+$toolsicon="/resources/graphics/hammer.gif";
+$snitchicon="/resources/graphics/eye.gif";
+$prefsicon="/resources/graphics/smiley.gif";
+$helpicon="/resources/graphics/help.gif";
+$logouticon="/resources/graphics/x.gif";
+$navtextcolor="#002255";
+$textcolor="#ffffff";
+$linkcolor="#00CC66";
+$navlinkcolor="#003366";
+$vlinkcolor="white";
+$alinkcolor="white";
+$planlinkcolor="";
+$pagebgcolor="#007733";
+$listsbgcolor="#00CC66";
+$headbgcolor="#ffffff";
+$planbgcolor="#007733";
+$titletextcolor="#002255";
+$nfonts="trebuchet ms, verdana, helvetica, arial, sans-serif ";
+$sfonts="trebuchet ms, verdana, helvetica, arial, sans-serif ";
+$hfonts="trebuchet ms, verdana, helvetica, sans-serif";
+$pfonts="trebuchet ms, verdana, helvetica, arial, sans-serif ";
+$nfsize="1";
+$sfsize="1";
+$hfsize="1";
+$pfsize="1";
+$sitename="";
+$viewicon="/resources/graphics/read.gif";
+?>

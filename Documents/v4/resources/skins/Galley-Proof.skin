@@ -1,0 +1,55 @@
+<?php
+/*
+GALLEY-PROOF.SKIN
+skin created on 22 May 2005 by jwdavidson
+skin updated 10 september 2005 by jwdavidson
+*/
+
+$viewicon="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/view.gif";
+$writeicon="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/write.gif";
+$toolsicon="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/tools.gif";
+$snitchicon="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/snitch.gif";
+$prefsicon="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/prefs.gif";
+$helpicon="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/help.gif";
+$logouticon="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/logout.gif";
+$navtextcolor="#222";
+$textcolor="#111";
+$linkcolor="#900";
+$navlinkcolor="#200";
+$vlinkcolor="#660";
+$alinkcolor="#770";
+$listsbgcolor="#fec";
+$headbgcolor="";
+$planbgcolor="#fff";
+$titletextcolor="#202";
+$sfonts="monospace";
+$nfonts="monospace";
+$hfonts="monospace";
+$pfonts="monospace";
+$nfsize="10pt";
+$sfsize="10pt";
+$hfsize="0";
+$pfsize="10pt";
+$pwlogo="$_SERVER[WEB_ROOT]/resources/skins/galleyproof/sitelogo.gif";
+$sitename="";
+$skin_css = "
+	.planwatch { border-left: dashed 1px #600; border-right: dashed 1px #006; border-bottom: dashed 1px #006; margin: 2px; margin-top: 10px; border-top: 1px dashed #999; }
+	body { background: repeat-y white url($_SERVER[WEB_ROOT]/resources/skins/galleyproof/page-background.gif); }
+	.linkbox:first-line { font-family: sans-serif; letter-spacing: 0.2em; text-transform: uppercase; font-size: 10pt; background: #ffe; }
+	.planwatch .listheader { font-variant: small-caps; text-transform: lowercase; }
+	.content { border-top: 1px dashed #999; margin-top: 10px; padding-left: 20px; }
+	#slogan { font-size: 8pt; top: 23px; left: 22px; color: #bbb; } #slogan a { display: none; }
+	#sitename { z-index: 100; }
+	.header { height: 30px; }
+	#navbar { padding-left: 20px; }
+	#navbar li.menuicon { font: 0px $nfonts; }
+	#navbar li ul { font: $nfsize $nfonts; }
+	@media (max-device-width: 960px)
+	{
+		.flicklist > li { margin-left: -20px !important; padding-left: 20px !important;  -webkit-box-sizing: border-box; }
+		.main_content { padding-left: 20px !important; -webkit-box-sizing: border-box; }
+		#reader_toolbar { margin-left: -20px !important; padding-left: 20px !important;  -webkit-box-sizing: border-box; }
+		.plan_entry { margin-top: 0px; }
+	}
+";
+?>

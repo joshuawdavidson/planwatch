@@ -1,0 +1,384 @@
+<?php
+/*
+CASES/CAL.case
+
+the case handler for calendar calls. this will eventually be merged
+with standard archive views in cases/read.php
+*/
+//	include_once('phpcal.php');
+	$_PHPCAL = array("handler" => "print_day");
+	$caluser=$urlarray[2];
+
+	if (plan_is_local($caluser))
+	{
+		$link_style='PWO';
+	}
+	else
+	{
+		$caluser=file_get_contents("$_SERVER[FILE_ROOT]/temp/$urlarray[2].calauth");
+		if (strstr(base64_decode($urlarray[2]),'@note')  || strstr($caluser,'@amherst')) $link_style='NOTE';
+		if (strstr(base64_decode($urlarray[2]),'@planworld')) $link_style='PWN';
+	}
+
+	if (plan_has_archives($caluser) &&
+		(user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass'])
+		 || $link_style=='NOTE' || $link_style=='PWN' )
+	   )
+	{
+		if (!$urlarray[3]) $urlarray[3]=date("Y-m-01");
+		if (!$urlarray[4]) $urlarray[3]=date("Y-m-t");
+		printcal($urlarray[3],$urlarray[4]);
+	}
+	else output("Unauthorized","<div class='alert'>You must log in to view $caluser's archives.</div>");
+
+/*
+PHPCAL.PHP
+This file contains the global definitions for the PHPCal Calendar Website System.
+heavily edited by jwdavidson
+
+TODO:(v5) rewrite this to conform with standards for other files	
+*/
+	class CalDate{
+		//Private! Mine!!!
+		var $year;
+		var $month;
+		var $day;
+
+		function CalDate(){
+			$this->year = strftime('%Y', time());
+			$this->month = strftime('%m', time());
+			$this->day = strftime('%d', time());
+		}
+
+		function getYear(){ return $this->year; }
+		function getMonth(){ return $this->month; }
+		function getDay(){ return $this->day;}
+		function getStamp(){ return mktime(0,0,0, $this->month, 
+			$this->day, $this->year); }
+
+		function getWeekday(){
+			return strftime("%w", $this->getStamp());
+		}
+
+		function lastDayOfMonth()
+		{
+			if( ($this->month <= 7 && $this->month % 2) || ($this->month > 7 && !($this->month % 2)) ){
+				return 31;
+			} else if($this->month == 2){
+				if( ($this->year % 4) ){
+					return 28;
+				} else {
+					return 29;
+				} 
+			} else {
+				return 30;
+			}
+		}
+
+		function isLastDayOfMonth()
+		{
+			if( ($this->month <= 7 && $this->month % 2) || ($this->month > 7 && !($this->month % 2)) ){
+				if($this->day == 31){
+					return 1;
+				}else{
+					return 0;
+				}
+			} else if($this->month == 2){
+				if( ($this->year % 4) && $this->day == 28){
+					return 1;
+				} else if( $this->day == 29){
+					return -1;
+				} else {
+					return 0;
+				}
+			} else {
+				if($this->day == 30){
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		}
+
+		function setYear($val){
+			if($val < 1970 || $val > 9999){
+				return -1;
+			}else {
+				$this->year = $val;
+				return 0;
+			}
+		}
+		
+		function setMonth($val){
+			if($val < 1 || $val > 12){
+				return -1;
+			} else {
+				$this->month = $val;
+				return 0;
+			}
+		}
+		
+		function setDay($val){
+			if($val < 1) return -1;
+		
+			if( ($this->month <= 7 && $this->month % 2) || ($this->month > 7 && !($this->month % 2)) ){
+				if($val > 31){
+					return -1;
+				}else{
+					$this->day = $val;
+					return 0;
+				}
+			} else if($this->month == 2){
+				if( ($this->year % 4) && $val > 28){
+					return -1;
+				} else if( $val > 29){
+					return -1;
+				} else {
+					$this->day = $val;
+					return 0;
+				}
+			} else {
+				if($val > 30){
+					return -1;
+				} else {
+					$this->day = $val;
+					return 0;
+				}
+			}
+		}
+
+		function incrementDate(){
+			if($this->setDay($this->day + 1)){
+				if($this->setMonth($this->month +1)){
+					if($this->setYear($this->year +1)) return -1;
+					else {
+						$this->setMonth(1);
+						$this->setDay(1);
+					}
+				} else {
+					$this->setDay(1);
+				}
+				
+			} 
+
+			return 0;
+		}
+
+	}
+	
+/*****************************************************************************/
+/* PRINTCAL -- The Major Function                                            */
+/*****************************************************************************/
+
+	function printcal($startdate, $enddate)
+	{
+		//TEST BOTH DATES
+		list($syear, $smonth, $sday) = split('-', $startdate);
+		$sdate = new CalDate;
+		if($sdate->setYear($syear) ||
+		   $sdate->setMonth($smonth) ||
+		   $sdate->setDay($sday)) return -1;
+
+		//--------
+		list($eyear, $emonth, $eday) = split('-', $enddate);
+		$edate = new CalDate;
+		if($edate->setYear($eyear) ||
+		   $edate->setMonth($emonth) ||
+		   $edate->setDay($eday)) return -1;
+
+		$tmp = $sdate;
+
+		if($edate->getStamp() <= $sdate->getStamp()) return -2;
+		if($edate->getStamp() - $sdate->getStamp() > 31624400) return -2; //Too many days (366 days, 1 Year and One day)
+
+		$items = phpcal_item_query($sdate, $edate);
+
+		if($tmp->getDay() != 1)
+			openMonth($tmp);
+
+		for($tmp; $tmp->getStamp() < ($edate->getStamp()+86400); $tmp->incrementDate()){
+			if($tmp->getDay() == 1){
+				
+				openMonth($tmp);
+			}
+			else if($tmp->getWeekday() == 0){
+				openWeek();
+				for($i = $tmp->getWeekday() - 1; $i >= 0; $i--){
+					openDay(NULL); print "&nbsp;"; closeDay();
+				}
+			}
+
+			openDay($tmp->getStamp());
+			$tmp_datestring=date("Y-m-d",$tmp->getStamp());
+			print_day($items[$tmp_datestring],$tmp->getStamp());
+			closeDay();
+
+			if($tmp->isLastDayOfMonth())
+				closeMonth($tmp);
+			else if($tmp->getWeekday() == 6)
+				closeWeek($tmp);
+		}
+		if( $tmp->getDay() != 1 )
+			closeCalendar($tmp);
+
+		echo "</body></html>";
+
+		return 0;
+	}
+
+/*****************************************************************************/
+/* QUERY FUNCTION                                                             */
+/*****************************************************************************/
+
+	function phpcal_item_query($sdate, $edate)
+	{
+		$c =& $_SERVER[_PHPCAL];
+
+ 		$start=$sdate->getStamp();
+		$end=$edate->getStamp();
+
+		$planlist=files_list("$_SERVER[PWUSERS_DIR]/$GLOBALS[caluser]/plan","plan*");
+		exec("ls $_SERVER[PWUSERS_DIR]/$GLOBALS[caluser]/plan/plan*",$planlist);
+		foreach($planlist as $i=>$plan)
+		{
+			$plan_ts=str_replace(array('plan.','.txt','.p','txt','.'),'',basename($plan));
+			if (($plan_ts >= $start) && ($plan_ts <= $end))
+			{
+				$retlist[date("Y-m-d",$plan_ts)][$plan_ts]=array($plan_ts,"$_SERVER[WEB_ROOT]/read/$GLOBALS[caluser]/.$plan_ts");
+			}
+		}
+		return $retlist;
+	}
+	
+/*****************************************************************************/
+/* HTML FORMATTING                                                           */
+/*****************************************************************************/
+
+	function print_day($events,$daystamp)
+	{
+		global $caluser,$nfont,$nfonts,$nfsize_css,$navlinkcolor,$link_style;
+		if ($events)
+		{
+			if(plan_is_journaling($caluser))
+			{
+				if ($link_style=='PWO') echo "<a href='$_SERVER[WEB_ROOT]/read/$caluser/r1d/".date("Y/m/d/0:00",$daystamp)."' style='color:$navlinkcolor; font-size:$nfsize_css; font-family:$nfont,$nfonts;' target='_blank'>".date("j",$daystamp)."</a><br />\n";
+				if ($link_style=='NOTE') echo "<a href='http://note.amherst.edu/planworld/?id={$caluser}___r1d/".date("Y/m/d/0:00",$daystamp)."@planwatch.org' style='color:$navlinkcolor; font-size:$nfsize_css; font-family:$nfont,$nfonts;' target='_blank'>".date("j",$daystamp)."</a><br />\n";
+				if ($link_style=='PWN') echo "<a href='http://planworld.net/?id={$caluser}___r1d/".date("Y/m/d/0:00",$daystamp)."@planwatch.org' style='color:$navlinkcolor; font-size:$nfsize_css; font-family:$nfont,$nfonts;' target='_blank'>".date("j",$daystamp)."</a><br />\n";
+			}
+			else
+			{
+				if (count($events)>1)
+				{
+					echo date("j",$daystamp)."<br />";
+					foreach($events as $i=>$event)
+					{
+						echo "<a href='$event[1]' target='_blank' style='color:$navlinkcolor; font-size:$nfsize_css; font-family:$nfont,$nfonts;'>".date("g:ia",$event[0])."</a><br />\n";
+					}
+				}
+				else
+				{
+					$events=array_values($events);
+					echo "<a href='".$events[0][1]."' style='color:$navlinkcolor; font-size:$nfsize_css; font-family:$nfont,$nfonts;' target='_blank'>".date("j",$daystamp)."</a><br />\n";
+				}
+
+			}
+		}
+		else echo "<span style='color:#CCCCCC; font-size:$nfsize_css; font-family:$nfont,$nfonts;'>".date('j',$daystamp)."</span>";
+
+	}
+
+	function openMonth($first){
+		global $urlarray,$caluser;
+
+		$now=$first->getStamp();
+
+		$last_month=mktime(1,1,1,date("m",$now)-1,1,date("Y",$now));
+		$next_month=mktime(1,1,1,date("m",$now)+1,1,date("Y",$now));
+		
+		$last_year_link="<a href='$_SERVER[WEB_ROOT]/$urlarray[1]/$urlarray[2]/".(date("Y",$now)-1).date("-m-01",$now)."/".(date("Y",$now)-1).date("-m-t",$now)."/'>&lt;&lt;</a>";
+		$last_month_link="<a href='$_SERVER[WEB_ROOT]/$urlarray[1]/$urlarray[2]/".date("Y-m-01",$last_month)."/".date("Y-m-t",$last_month)."/'>&lt;</a>";
+		$next_month_link="<a href='$_SERVER[WEB_ROOT]/$urlarray[1]/$urlarray[2]/".date("Y-m-01",$next_month)."/".date("Y-m-t",$next_month)."/'>&gt;</a>";
+		$next_year_link="<a href='$_SERVER[WEB_ROOT]/$urlarray[1]/$urlarray[2]/".(date("Y",$now)+1).date("-m-01",$now)."/".(date("Y",$now)+1).date("-m-t",$now)."/'>&gt;&gt;</a>";
+
+		$calendar.="	
+			<html>
+			<head>
+			<style type='text/css'>
+				a { color: $headbgcolor; text-decoration: none; }
+				TH { background-color: $GLOBALS[headbgcolor]; color: $GLOBALS[titletextcolor]; font-weight: bold; text-align: center; text-transform: uppercase; font-family: $GLOBALS[pfont],$GLOBALS[pfonts]; font-size: $GLOBALS[pfsize_css]; }
+				TD { background-color: $GLOBALS[listsbgcolor]; color: $GLOBALS[navtextcolor]; text-align: center; font-family: $GLOBALS[nfont],$GLOBALS[nfonts]; font-size: $GLOBALS[nfsize_css]; }
+				TD.off { background-color: $GLOBALS[navtextcolor]; border: $GLOBALS[navlinkcolor] solid 1px; color: $GLOBALS[navlinkcolor]; text-align: center; font-family: $GLOBALS[nfont],$GLOBALS[nfonts]; font-size: $GLOBALS[nfsize_css]; }
+				TD a { color: $GLOBALS[navlinkcolor]; font-weight: bold; }
+				BODY { background-color: $GLOBALS[navtextcolor]; color: $GLOBALS[listsbgcolor]; }
+			</style>
+			</head>
+			<body>
+			<span style='font-family: $GLOBALS[pfonts],$GLOBALS[pfont]; text-transform: uppercase; letter-spacing: 1pt; font-size: 10pt; font-weight: bold;'>
+			$last_year_link | $last_month_link | ".date("F Y",$first->getStamp())." | $next_month_link | $next_year_link
+			</span>
+			<table width='100%' height='100%'>
+			<tr>
+				<th>S</th>
+				<th>M</th>
+				<th>T</th>
+				<th>W</th>
+				<th>T</th>
+				<th>F</th>
+				<th>S</th>\n";
+
+		if (plan_is_journaling($caluser))
+			$calendar.="<th>Week</th>\n";
+	
+		$calendar.= "</tr>\n<tr>\n";
+
+
+		for($i = $first->getWeekday() - 1; $i >= 0; $i--)
+		{
+			$calendar.="<td class='off'>&nbsp;</td>\n";
+		}
+		
+		echo $calendar;
+	}
+	
+	function openWeek()
+	{
+		echo "<tr>\n";	
+	}
+	
+	function openDay($timestamp=FALSE)
+	{
+		if ($timestamp) echo "<td>\n";
+		else echo "<td class='off'>\n";
+	}
+
+	function closeDay()
+	{
+		echo "</td>\n";
+	}
+
+	function closeWeek($now) {
+		global $caluser;
+		if (plan_is_journaling($caluser)) echo "<td><a href='$_SERVER[WEB_ROOT]/read/$caluser/r7d/".date("Y/m/d",($now->getStamp()-(7*24*3600)))."/0:00' target='_blank'>w</a></td>\n";
+		echo "</tr>\n\n";
+	}
+		
+	function closeMonth($now){
+		for($i = $now->getWeekday(); $i < 6; $i++){
+			openDay(NULL); print "&nbsp;"; closeDay();
+		}
+		closeWeek($now);
+		print('</table>');
+	}
+	
+	function closeCalendar($later)
+	{
+		if($later->getWeekday() != 0){
+			for($i = $later->getWeekday(); $i <= 6; $i++){
+				openDay(NULL); print "&nbsp;"; closeDay();
+			}
+		}
+		closeWeek($later);
+		print('</table>');
+	}
+
+?>

@@ -1,0 +1,145 @@
+<?php
+/*
+cases/TOOLS.php
+
+displays the tools page. 
+
+TODO:(v5) make the tools page a registry
+*/
+
+if ($_SERVER['OUTPUT_MODE']!='IPHONE') $content.="<h1><img src='$GLOBALS[toolsicon]' />tools</h1>";
+
+	if ($_SERVER['USER'])
+	{
+		$content.="
+		<ul class='linkbox flicklist'>
+		<li class='listheader'>Contribute</li>
+		<li><a href='$_SERVER[WEB_ROOT]/feature' title='file a bug report or add a feature request'>report a bug</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/feature' title='file a bug report or add a feature request'>request a feature</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/help/edit/new' title='write a help file'>write a help file</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/contribute' title='tip a dollar'>donate to planwatch.org</a></li>
+		</ul>
+
+		<ul class='linkbox flicklist'>
+		<li class='listheader'>Your Plan</li>
+		<li><a href='$_SERVER[WEB_ROOT]/logout' title='so soon?'>logout</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/write/bio/$user' title='tell us more about yourself. or less.'>edit your bio</a></li>
+		";
+
+	if (plan_is_local($user)) $content.="		
+		<li><a href='$_SERVER[WEB_ROOT]/write/css' title='change what appears at the top of your plan'>change your plan styles</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/write/header' title='change what appears at the top of your plan'>change your plan header</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/write/footer' title='change what appears at the bottom of your plan'>change your plan footer</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/write' title='update your plan'>update your plan</a></li>
+	    ";
+
+	if(plan_is_journaling($user)) $content.="	
+		<li><a href='$_SERVER[WEB_ROOT]/write/divider' title='change what appears between plan entries (journaling plans only)'>change your plan divider</a></li>
+	    ";
+
+
+if (plan_is_local($_SERVER['USER']))
+$content.="
+		<li><a href='$_SERVER[WEB_ROOT]/view/all_hidden' title='show all hidden entries, so they can be deleted or unhidden'>show hidden entries</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/view/all_private' title='show all private entries, so they can be deleted or made public'>show private entries</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/user/backup/plan.tgz' title='download a compressed copy of your user directory. you can uncompress this with aladdin expander or winzip.'>back up your plan</a></li>";
+
+$content.="
+		</ul>";
+
+$content.="
+		<ul class='linkbox flicklist'>
+		<li class='listheader'>Fun Stuff</li>
+		<li><a href='$_SERVER[WEB_ROOT]/read/invite@planwatch.org'>invite a friend</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/slogans/add' title='add your own pw.o slogan to the random selection'>add a new slogan</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/slogans/list' title='list every slogan, along with info on who submitted it and its ranking'>list all slogans</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/slogans/list_mine' title='list all slogans that belong to you'>view my slogans</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/slogans/list_inactive' title='list all slogans that have been modded below zero'>view inactive slogans</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/smileys/add' title='upload a new smiley for people to use on their plans'>add a new smiley</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/help/smileys' title='see a list of all smileys and the codes to make them appear'>list all smileys</a></li>
+		</ul>
+		
+		<ul class='linkbox flicklist'>
+		<li class='listheader'>Preferences</li>
+		<li><a href='$_SERVER[WEB_ROOT]/prefs/userinfo' title='change your user info'>edit your user info</a></li>";
+
+if ($_SERVER['OUTPUT_MODE']!=='IPHONE')
+$content.="
+		<li><a href='$_SERVER[WEB_ROOT]/prefs/interface' title='change your user info'>edit interface preferences</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/prefs/skin' title='choose a set of colors and fonts for planwatch.org'>choose a skin</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/prefs/styles' title='change the colors of planwatch.org'>customize your colors</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/prefs/fonts' title='change the fonts of planwatch.org'>customize your fonts</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/prefs/custom_css' title='add custom css'>customize interface with css</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/prefs/makeskin' title='turn your custom fonts, colors, and images into a skin for anyone to use'>make a skin with your settings</a></li>
+		";
+
+$content.="
+		</ul>
+		";
+
+$content.="
+		<ul class='linkbox flicklist'>
+		<li class='listheader'>Watch Tools</li>
+		<li><a href='$_SERVER[WEB_ROOT]/lists/edit/watched' title='change which plans you watch'>edit your watched list</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/lists/planwatch_mark_all_read' title='mark all plans as read -- does not affect snitch'>planwatch update</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/lists/planwatch_mark_all_unread' title='mark all plans as unread -- does not affect snitch'>planwatch reset</a></li>\n";
+
+$content.="		</ul>";
+
+$content.="
+	    <ul class='linkbox flicklist'>
+		<li class='listheader'>Privacy Tools</li>
+		<li><a href='$_SERVER[WEB_ROOT]/lists/edit/allowed' title='change who can read your private entries'>edit your allowed list</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/lists/edit/blocked' title='change who is prevented from reading you'>edit your blocked list</a></li>
+		<li><a href='$_SERVER[WEB_ROOT]/write/blockedmessage' title='edit the message people who do not have access to your plan see'>edit blocked message</a></li>
+		</ul>";
+
+
+	if (user_is_administrator() 
+		|| (user_verify_fingerprint($_COOKIE['mau'],FALSE) && user_verify_fingerprint($_COOKIE[$_SERVER['AUTH_COOKIE']],FALSE))
+		)
+	{
+		$content.="<ul class='linkbox flicklist'><li class='listheader'>Admin Tools</li>\n";
+
+		$content.="<li>Masquerade as <select id='masq'>\n";
+		$list=users_get_list();
+		foreach($list as $pwuser)
+		{
+			$pwuser=trim($pwuser);
+			$content.="\t<option value='$pwuser'>$pwuser</option>\n";
+		}
+		$content.="</select><input type='submit' value='go' onclick='
+		window.location.href=\"http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/masq/on/\" + document.getElementById(\"masq\").value;
+		'/></li>\n";
+
+		if (user_verify_fingerprint($_COOKIE['mau'],FALSE))
+		{
+			$content.="<li><a href='$_SERVER[WEB_ROOT]/masq/off'>End the Masquerade!</a></li>";
+		}
+
+if ($_SERVER['OUTPUT_MODE']!=='IPHONE')
+{
+		$content.="<li><a href='$_SERVER[WEB_ROOT]/admin/function_list'>Function List</a></li>";
+		$content.="<li><a href='$_SERVER[WEB_ROOT]/admin/todo_list'>TODO List</a></li>";
+		$content.="<li><a href='http://planwatch.org:2082/'>CPanel</a></li>";
+		$content.="<li><a href='$_SERVER[WEB_ROOT]/admin/sitebackup.tgz'>Full Site Backup</a></li>";
+}
+		$content.="<li><a href='$_SERVER[WEB_ROOT]/admin/phpinfo'>PHP Info</a></li>";
+		$content.="
+		</ul>\n";
+
+	}
+
+if ($_SERVER['OUTPUT_MODE']!=='IPHONE')
+$content.="
+		<ul class='linkbox flicklist'>
+		<li class='listheader'>Bad Ideas</li>
+		<br /><li><a href='$_SERVER[WEB_ROOT]/user/delete/$user' title='if you want to delete your user, click here. we do not recommend this. you should at least back your user info up first, in case you ever want back in.'>delete your user</a></li>
+	    </ul>
+		";
+
+	}
+	else $content="<div class='alert'>Authentication Error<br/> You have to be logged in to have access to your account tools.</div>";
+
+	output('Tools',$content);
+?>

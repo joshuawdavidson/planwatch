@@ -1,0 +1,236 @@
+<?php
+/*
+cases/LISTS.php
+
+this handles the url cases starting with "lists"
+*/
+
+switch($urlarray[2]):
+
+	case "edit":
+		include_once('lists.php');
+		$content=list_edit($urlarray[3]);
+		output("edit $_SERVER[USER]'s $urlarray[3] list",$content);
+		break;
+
+	case "edit_ajax":
+		echo "<form action='/scripts/lists.php' method='post'>
+		<textarea style='width: 98%; height: 90%;'></textarea>
+		<input type='submit' value='save'>
+		</form>";
+		break;
+
+	case "unread":
+		user_update_lastread($urlarray[3],TRUE);
+		redirect();
+		break;
+
+	case "resort":
+		include_once('lists.php');
+		list_resort('watched',$urlarray[3]);
+		if ($_SERVER['OUTPUT_MODE']=='AJAX') output("Ajax Watched List",format_watched_list_html());
+		else redirect('/');
+		break;
+
+	case "mail_toggle":
+	    $mailing_list=file_get_contents("$_SERVER[FILE_ROOT]/resources/mailinglist.dat");
+	    if (strpos($mailing_list,$user)!==FALSE)
+	    {
+	     $mailing_list=str_replace("$user\n","",$mailing_list);
+	     $message="You will no longer receive daily email updates of your watched list.";
+	    }
+	    else
+	    {
+	     $mailing_list.="\n$user\n";
+	     $message="You will now receive daily email updates of your watched list.";
+	    }
+	    $mailing_list=str_replace("\n\n","\n",$mailing_list);
+	    file_put_contents("$_SERVER[FILE_ROOT]/resources/mailinglist.dat",$mailing_list);
+	    redirect("/alert/".urlencode($message));
+	    break;
+
+	case "move":
+		include_once('users.php');
+		if ($urlarray[4]=='left') change_one_pref("wlpos",2);
+		if ($urlarray[4]=='right') change_one_pref("wlpos",3);
+		if ($urlarray[4]=='top') change_one_pref("wlpos",0);
+		if ($urlarray[4]=='bottom') change_one_pref("wlpos",1);
+		break;
+
+	case "registered_users":
+		if (user_is_administrator())
+		{
+			$content="<h1>Registered Users</h1>";
+			$list=users_get_list();
+			foreach($list as $reguser)
+			{
+				$printlist[plan_get_last_login($reguser)]="<tr><td>$reguser</td><td>".date("Y-m-d",plan_get_last_update($reguser))."</td><td>".date("Y-m-d",plan_get_last_login($reguser))."</td></tr>";
+			}
+			krsort($printlist);
+			$content="<table><tr><td>user</td><td>update</td><td>login</td></tr>".implode("\n",$printlist)."</table>\n";
+//			$registeredlist=list_format_html(users_get_list(),'time');
+			output("registered users list",$content);
+		}
+		else redirect('/');
+		break;
+		
+	case "advertised_users":
+			$list_fn="$_SERVER[FILE_ROOT]/stats/advertised.txt";	// reads in the advertised plans list
+			if (file_exists($list_fn))
+			{
+				$advplanwatchlist="<h1>Advertised Plans</h1>";
+				$list=file($list_fn);
+				$advplanwatchlist.="<ul id='advertised'>".list_format_html($list,'time')."</ul>\n";
+			}
+			$advplanwatchlist="$advplanwatchlist";
+			output("Advertised Plans","$advplanwatchlist",'');
+		break;
+	
+	case "blogs":
+		$feedslist=array_unique(unserialize(file_get_contents("$_SERVER[FILE_ROOT]/stats/times_feeds.dat")));
+		arsort($feedslist);
+		if (user_is_administrator())
+		{
+			include_once('simplepie.inc');
+			foreach($feedslist as $url=>$time)
+			{
+				if ($time && ((!strstr($url,'livejournal') && !strstr($url,'myspace') && !strstr($url,'craigslist')) || strstr($url,'jwz')))
+				{
+					$feed = new SimplePie();
+					$feed->feed_url($url);
+					$feed->init();
+					$feed->handle_content_type();
+				
+				
+					$title=$feed->get_feed_title();
+					$link=$feed->get_feed_link();
+					$content.="<a href='$link'>$title</a> updated ".formattime($time)." [ <a href='/read/$url'>try</a> ] [ <a href='/lists/add/$url'>watch</a> ]<br />";
+				}
+			}
+			output("Feeds",$content);
+		}
+		else header("Location: http://planwatch.org/");
+		break;
+		
+	case "planwatch_mark_all_read":
+		include_once('lists.php');
+		planwatch_mark_all_read();
+		break;
+	
+	case "planwatch_mark_all_unread":
+		include_once('lists.php');
+		planwatch_mark_all_unread();
+		break;
+	
+	case "add":
+		// if the thing to be added is a URL, make sure it's all sewn up
+		if ($urlarray[4]=='http:' || $urlarray[4]=='!http:') 
+		{
+			$urlarray[4]=str_replace("/lists/$urlarray[2]/$urlarray[3]/",'',implode('/',$urlarray));
+		}
+
+		// append it to the existing list file
+		if ($urlarray[3] && $urlarray[4] && user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass']))
+		{
+			$list_fn="$_SERVER[USER_ROOT]/$urlarray[3]list.txt";
+			file_put_contents($list_fn,"$urlarray[4]\n",FILE_APPEND);	
+			redirect('/');
+		}
+		else redirect($_SERVER["HTTP_REFERER"]);
+		break;
+		
+	case "add_ajax":
+		// if the thing to be added is a URL, make sure it's all sewn up
+		if ($urlarray[4]=='http:' || $urlarray[4]=='!http:') 
+		{
+			$urlarray[4]=str_replace("/lists/$urlarray[2]/$urlarray[3]/",'',implode('/',$urlarray));
+		}
+
+		// append it to the existing list file
+		if ($urlarray[3] && $urlarray[4] && user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass']))
+		{
+			$list_fn="$_SERVER[USER_ROOT]/$urlarray[3]list.txt";
+			file_put_contents($list_fn,"$urlarray[4]\n",FILE_APPEND);
+			echo format_watched_list_html();
+		}
+		else echo format_watched_list_html();
+		break;
+
+	case "remove":
+		// if the thing to be removed is a URL, make sure it's all sewn up
+		if ($urlarray[4]=='http:' || $urlarray[4]=='!http:') 
+		{
+			$urlarray[4]=str_replace("/lists/$urlarray[2]/$urlarray[3]/",'',implode('/',$urlarray));
+		}
+
+		if ($urlarray[3] && $urlarray[4] && user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass']))
+		{
+			$list_fn="$_SERVER[USER_ROOT]/$urlarray[3]list.txt";
+			$data=file_get_contents($list_fn);
+
+			// detect any line containing the planowner as the first half of an alias, if found
+			// don't remove multifeeds just because the planowner is the first member
+			if (strstr($data,"!$urlarray[4]:"))
+			{
+				preg_match("|(!$urlarray[4]:.*!)|",$data,$matches);
+				$remove=$matches[0];
+			}
+			// otherwise, detect all lines that are just the planowner
+			else $remove="\n$urlarray[4]\n";
+		
+			// remove whatever we found
+			$data=str_replace($remove,"\n",$data);
+
+			// break down multiple linebreaks so the list doesn't look weird in the edit view
+			$data=str_replace("\n\n","\n",$data);
+
+			// write out the new, improved list file
+			file_put_contents($list_fn,$data);
+
+			// send the user to the homepage
+			// we don't want to reload the previous page because of double-snooping
+			// issues.
+			redirect();
+		}
+		else redirect($_SERVER["HTTP_REFERER"]);
+		break;
+
+	case "remove_ajax":
+		// if the thing to be removed is a URL, make sure it's all sewn up
+		if ($urlarray[4]=='http:' || $urlarray[4]=='!http:') 
+		{
+			$urlarray[4]=str_replace("/lists/$urlarray[2]/$urlarray[3]/",'',implode('/',$urlarray));
+		}
+
+		if ($urlarray[3] && $urlarray[4] && user_is_valid($_SERVER['USERINFO_ARRAY']['username'],$_SERVER['USERINFO_ARRAY']['userpass']))
+		{
+			$list_fn="$_SERVER[USER_ROOT]/$urlarray[3]list.txt";
+			$data=file_get_contents($list_fn);
+
+			// detect any line containing the planowner as the first half of an alias, if found
+			// don't remove multifeeds just because the planowner is the first member
+			if (strstr($data,"!$urlarray[4]:"))
+			{
+				preg_match("|(!$urlarray[4]:.*!)|",$data,$matches);
+				$remove=$matches[0];
+			}
+			// otherwise, detect all lines that are just the planowner
+			else $remove="\n$urlarray[4]\n";
+		
+			// remove whatever we found
+			$data=str_replace($remove,"\n",$data);
+
+			// break down multiple linebreaks so the list doesn't look weird in the edit view
+			$data=str_replace("\n\n","\n",$data);
+
+			// write out the new, improved list file
+			file_put_contents($list_fn,$data);
+
+			echo format_watched_list_html();
+		}
+		else echo format_watched_list_html();
+		break;
+
+endswitch;
+
+?>

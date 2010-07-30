@@ -1,0 +1,15 @@
+<?php
+
+/*
+TRACE.case
+
+performs a traceroute on passed URL
+*/
+
+	exec("/usr/sbin/tracepath $urlarray[2]",$tracelist);
+	$content.="<h1>Route to Coward from $urlarray[2]</h1>\n\n";
+	$list=implode("<br />\n",$tracelist);
+	if ($tracelist[1]) $content.=$list; else $content.="no route to host.";
+	output("Coward From $urlarray[2]",$content,$username,"tracing a coward at $urlarray[2]");
+
+?>

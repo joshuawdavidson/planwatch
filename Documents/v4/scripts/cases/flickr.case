@@ -1,0 +1,116 @@
+﻿<?php
+
+/*
+FLICKR.case
+
+populates the flickr insert box for plan updates
+*/
+
+if ($urlarray[2][0]=='?') parse_str(substr($urlarray[2],1,strlen($urlarray[2])-1));
+if ($flickr_info)
+{
+	if (strpos('@',$flickr_info))
+	{
+		$nsid=flickr_get_id_from_email($flickr_info);
+	}
+	else
+	{
+		$nsid=flickr_get_id_from_username($flickr_info);
+	}
+}
+else
+{
+
+	if ($nsid=@file_get_contents("$_SERVER[USER_ROOT]/flickr_nsid.dat"))
+	{
+		$has_nsid=TRUE;
+	}
+	else
+	{
+		if ($_SERVER['USERINFO_ARRAY']['email'])
+		{
+			$nsid=flickr_get_id_from_email($_SERVER['USERINFO_ARRAY']['email']);
+		}
+		else
+		{
+			$nsid=flickr_get_id_from_username($_SERVER['USER']);
+		}
+	}
+	
+	if (!$nsid) echo "
+		<li>
+		<form action='$_SERVER[WEB_ROOT]/flickr/' method='get'>
+		Flickr Username or Email: <input type='text' value='' name='flickr_info'>
+		<input type='submit' value='Get Flickr User ID'>
+		</form>
+		</li>";
+}
+
+if ($nsid)
+{
+
+	if (!file_exists("$_SERVER[USER_ROOT]/flickr_nsid.dat"))
+		file_put_contents("$_SERVER[USER_ROOT]/flickr_nsid.dat",$nsid);
+
+	$content.= "<li class='listheader'>Flickr</li>";
+//	$flickr_feed_url="http://flickr.com/services/feeds/photos_public.gne?id=$nsid&format=atom";
+//	$flickr_feed_url="http://picasaweb.google.com/data/feed/base/user/joshuawdavidson?alt=rss&kind=album&hl=en_US";
+	$flickr_feed_url="http://picasaweb.google.com/data/entry/base/user/joshuawdavidson/albumid/5420091850058195969?alt=rss&hl=en_US";
+	include_once('simplepie.inc');
+	$feed = new SimplePie($flickr_feed_url);
+	$items=$feed->get_items();
+//	$result=fetch_rss($flickr_feed_url);
+//	echo "feed"; exit;
+	foreach($items as $item)
+	{
+//		print_r($item);
+		$sub_feed_urls[]=$item->get_id();
+
+
+//		preg_match("|http://farm.*\.static\.flickr\.com.*\.jpg|",$item['atom_content'],$match);
+//		$photo_url=$match[0];
+//		$thumb_url=str_replace('_m.jpg','_s.jpg',$photo_url);
+//		$photosize=getimagesize($photo_url);
+//		$photo_link="<img src=\'$photo_url\' alt=\'$item[title]\' title=\'$item[title]\' width=\'$photosize[0]\' height=\'$photosize[1]\' />";
+		
+		$content.= "
+		<li style='width: 50px; display: inline; margin: 2px;'><a  href=\"javascript:insertTag('textbox',' $photo_link ',''); window.parent.document.getElementById('flickr').style.display='none'; void(0);\">
+			<img src='$thumb_url' style='width: 50px; height: 50px;'/>
+		</a></li>\n";
+
+	}
+
+	print_r($sub_feed_urls);
+	$subfeeds = new SimplePie($sub_feed_urls);
+	$subitems=$subfeeds->get_items();
+	foreach($subitems as $subitem)
+	{
+		echo $subitem->get_content();
+	}
+	if(!$subitems) echo "no subitems";
+
+
+ exit;	
+	output("$_SERVER[USER]'s Flickr Photostream",$content);
+//	echo "</body></html>";
+}
+
+function flickr_get_id_from_email($email)
+{
+	$api_key="4038142368f7aee684284406e0db6eda";
+	$flickr_getid_stream=file_get_contents("http://www.flickr.com/services/rest/?method=flickr.people.findByEmail&find_email=$email&api_key=$api_key");
+	preg_match("|nsid=\\\"(.+)\\\">|",$flickr_getid_stream,$matches);
+	$nsid=$matches[1];
+	return $nsid;
+}
+
+function flickr_get_id_from_username($username)
+{
+	$api_key="4038142368f7aee684284406e0db6eda";
+	$flickr_getid_stream=file_get_contents("http://www.flickr.com/services/rest/?method=flickr.people.findByUsername&username=$username&api_key=$api_key");
+	preg_match("|nsid=\\\"(.+)\\\">|",$flickr_getid_stream,$matches);
+	$nsid=$matches[1];
+	return $nsid;
+}
+
+?>

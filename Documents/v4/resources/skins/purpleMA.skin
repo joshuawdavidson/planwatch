@@ -1,0 +1,41 @@
+<?php
+/*
+PURPLE_..BY_MADVANI....SKIN
+this skin was automatically created on 17 Apr 2002, 11:27:28 pm GMT
+from madvani's color and font prefs
+*/
+
+$pagebgimage="";
+$listsbgimg="";
+$planbgimg="";
+$headbgimg="";
+$pwlogo="";
+$writeicon="/resources/skins/canwatch/pencil.gif";
+$toolsicon="/resources/skins/canwatch/hammer.gif";
+$snitchicon="/resources/skins/canwatch/eye.gif";
+$prefsicon="/resources/skins/canwatch/smiley.gif";
+$helpicon="/resources/skins/canwatch/help.gif";
+$logouticon="/resources/skins/canwatch/x.gif";
+$navtextcolor="#996699";
+$textcolor="#ffffff";
+$linkcolor="#ffccff";
+$navlinkcolor="#773377";
+$vlinkcolor="#eeddff";
+$alinkcolor="#ffffff";
+$planlinkcolor="";
+$pagebgcolor="#440044";
+$listsbgcolor="#ddccff";
+$headbgcolor="#ddccff";
+$planbgcolor="#663366";
+$titletextcolor="#663366";
+$nfonts="trebuchet ms, verdana, helvetica, arial, sans-serif ";
+$sfonts="";
+$hfonts="trebuchet ms, verdana, helvetica, sans-serif";
+$pfonts="";
+$nfsize="1";
+$sfsize="1";
+$hfsize="5";
+$pfsize="1";
+$sitename="planwatch.org";
+$viewicon="/resources/skins/canwatch/read.gif";
+?>

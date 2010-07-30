@@ -1,0 +1,68 @@
+<?php
+/*
+cases/VIEW.php
+
+allows views of lists of hidden and private entries
+as well as specific files
+*/
+
+	switch($urlarray[2]):
+
+	case "all_hidden":
+		exec("ls $_SERVER[USER_ROOT]/plan/hidden*",$hiddenlist);
+		$content="<h1>Hidden Plan Entries</h1>";
+		if (!$hiddenlist[0]) $content.="<br />none available<br /><br /><br />";
+		foreach($hiddenlist as $hiddenentry)
+		{
+			$hiddenentry=basename($hiddenentry);
+			$he_array=explode('.',$hiddenentry);
+			$he_time=date("jS F Y, h:ia",$he_array[2]);
+			$content.="<a href='$_SERVER[WEB_ROOT]/view/$hiddenentry'>$he_time</a><br />";
+		}
+		output("hidden entries",$content,'','viewing hidden entries');
+		break;
+
+	case "all_private":
+		exec("ls $_SERVER[USER_ROOT]/plan/*.p",$privatelist);
+		$content="<h1>Private Plan Entries</h1>";
+		if (!$privatelist[0]) $content.="<br />none available<br /><br /><br />";
+		foreach($privatelist as $privateentry)
+		{
+			if (!strstr($privateentry,'rem'))
+			{
+				$privateentry=basename($privateentry);
+				$pe_array=explode('.',$privateentry);
+				$pe_time=date("jS F Y, h:ia",$pe_array[1]);
+				$content.="<a href='$_SERVER[WEB_ROOT]/read/$_SERVER[USER]/.$pe_array[1]'>$pe_time</a> \n [ <a href='$_SERVER[WEB_ROOT]/entry/publicize/.$pe_array[1]'>publicize</a> | <a href='$_SERVER[WEB_ROOT]/entry/hide/.$pe_array[1]'>hide</a> | <a href='$_SERVER[WEB_ROOT]/entry/delete/.$pe_array[1]'>delete</a> ]<br/>\n";
+				$content.=substr(file_get_contents("$_SERVER[PWUSERS_DIR]/$_SERVER[USER]/plan/$privateentry"),0,512);
+				$content.="<hr/>\n";
+			}
+		}
+		output("private entries",$content,'','viewing private entries');
+		break;
+
+	default:
+		if ($urlarray[2])
+		{
+			include_once('plan_read.php');
+			$content="<b>entry from ".formattime(str_replace(array('.','plan','hidden','txt','p'),'',$urlarray[2]))."</b><hr>";
+			$content.=smart_nl2br(plan_add_user_links(stripslashes(stripslashes(file_get_contents("$_SERVER[PWUSERS_DIR]/$_SERVER[USER]/plan/$urlarray[2]")))));
+			if (strstr($urlarray[2],'hidden'))
+			{
+				$he_array=explode('.',$urlarray[2]);
+				$entrytc=".".$he_array[2];
+				$content.="<hr>[ <a href='$_SERVER[WEB_ROOT]/entry/unhide/$entrytc'>unhide</a> | <a href='$_SERVER[WEB_ROOT]/entry/delete/$entrytc'>delete</a> ]";
+			}
+			if (strstr($urlarray[2],'txt.p'))
+			{
+				$he_array=explode('.',$urlarray[2]);
+				$entrytc=".".$he_array[1];
+				$content.="<hr>[ <a href='$_SERVER[WEB_ROOT]/entry/publicize/$entrytc'>publicize</a> | <a href='$_SERVER[WEB_ROOT]/entry/delete/$entrytc'>delete</a> ]";
+			}
+			output('entry from '.date("jS F Y, h:ia",$he_array[2]),$content,'','viewing a hidden entry');
+		}
+		else redirect("/read/$_SERVER[USER]");
+		break;
+
+	endswitch;
+?>

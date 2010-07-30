@@ -1,0 +1,87 @@
+<html lang=en>
+<head>
+        <title>$title | $titlesitename</title>
+        <meta charset=utf-8 />
+		<meta name="robots" content="noindex, nofollow, noarchive" />
+        <link rel='shortcut icon' href='/favicon$subimage.ico' />
+        <link rel='icon' href='/resources/graphics/pwo$subimage.png' type='image/png' />
+        <script type='text/javascript'>var web_root="$_SERVER[WEB_ROOT]";var http_host="$_SERVER[HTTP_HOST]";var wlpos="{$_SERVER['USERINFO_ARRAY']['wlpos']}";var user="$_SERVER[USER]";</script>
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		$extracss
+        $extrajs
+        $copyright
+        $alternate
+        <link rel='stylesheet' type='text/css' href='$_SERVER[WEB_ROOT]/stylesheet/planwatch_{$_SERVER[USERINFO_ARRAY][wlpos]}.css' title='Standard' />
+        <link rel='microsummary' type='text/plain' href='http://planwatch.org/home/micro' />
+    </head>
+    <body onload='constrainImages()' onresize='constrainImages()'>
+
+<!-- HEADER AREA BEGINS HERE -->
+
+    <header id="header" class='header'>
+        <nav>
+        <ul id='navbar' class='menubar'>
+            <!-- TOPLINKS AREA BEGINS HERE -->
+            $toplinks
+            <!-- TOPLINKS AREA ENDS HERE -->
+        </ul>
+        </nav>
+        <div id='sitelogo'>
+            <!-- LOGO AREA BEGINS HERE -->
+            $sitename
+            <!-- LOGO AREA ENDS HERE -->
+        </div>
+        <div id='slogan'>
+            <!-- SLOGAN AREA BEGINS HERE -->
+            $slogan
+            <!-- SLOGAN AREA ENDS HERE -->
+        </div>
+    </header>
+
+<!-- HEADER AREA ENDS HERE -->
+<section id='body'>
+<!-- PLANWATCH AREA BEGINS HERE -->
+
+    $planwatch_anchor
+    <nav>
+    <ul class='planwatch' id='planwatch' ondblclick="window.location.href='http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/lists/edit/watched';">
+        $planwatchlist
+    </ul>
+    </nav>
+
+<!-- PLANWATCH AREA ENDS HERE -->
+
+<!-- CONTENT AREA BEGINS HERE -->
+
+    <section class='content' id='content'>
+        <div id='message_bar'>
+        $message
+        </div>
+        <ul id='reader_toolbar'>
+        $readertoolbar
+        </ul>
+        $content
+    </section>
+<!-- CONTENT AREA ENDS HERE -->
+
+$altplanwatchlist
+
+$menus
+
+<div id='menu_holder'>
+</div>
+
+<div id='hidden_response'>
+</div>
+
+</section> <!-- end of section id='body' -->
+<!--ERRORS-->
+<!--DEBUG-->
+
+<script type='text/javascript' src='$_SERVER[WEB_ROOT]/resources/javascript/ajax.js'></script>
+<script type='text/javascript'>watched_list_refresh();</script>
+$analytics
+</body>
+</html>

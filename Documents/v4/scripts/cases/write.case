@@ -1,0 +1,68 @@
+<?php
+
+/*
+WRITE.case
+
+handles plan writing URLs
+*/
+
+include_once('plan_update.php');
+switch($urlarray[2]):
+
+case "list_drafts":
+	echo plan_list_drafts();
+	break;
+
+case "draft":
+	include_once('plan_update.php');
+	$content=plan_update('draft',$urlarray[6]);
+	$edit="from ".date("F jS h:ia",substr($urlarray[3],1,strlen($urlarray[3])-1));
+	output("Updating $_SERVER[USER]'s plan $edit",$content);
+	break;
+
+case "blockedmessage":
+	include_once('lists.php');
+	plan_edit_blocked_message();
+	break;
+
+case "bio":
+	include_once('bios.php');
+	bio_edit($user);
+	break;
+
+default:
+	if (!file_exists("$_SERVER[PWUSERS_DIR]/$_SERVER[USER]/unconfirmed"))
+	{
+		$edit=$urlarray[2];
+		$action='none';
+		if ($urlarray[2][0]=='?') 
+		{
+			$autocontent=urldecode(substr($urlarray[2],13,strlen($urlarray[2])-12));
+			$autocontent=str_replace('%10',"\n",$autocontent);
+			$urlarray[2]='';
+			$edit='';
+		}
+//		if ($urlarray[2]=='tiny' || $_SERVER['OUTPUT_MODE']=='IPHONE')
+//		{
+//			output("Write","<div title='Write'>".plan_update('tiny')."</div>");
+//		}
+	
+		if ($edit!='system') $content=plan_update($edit);
+		else $content=plan_update($urlarray[3],'system');
+		if ($edit && $edit!='system' && !strstr($edit,'ss')  && !strstr($edit,'er')) $edit="from ".date("F jS h:ia",substr($edit,1,strlen($edit)-1));
+		output("Updating $_SERVER[USER]'s plan $edit",$content);
+	}
+	else
+	{
+		$unconfirmed_alert="You have not confirmed your email address.
+		You can't update your plan until we have a confirmed email address on file.
+		If it's been more than 5 minutes and you still haven't recieved your 
+		confirmation email, please send a message to
+		<a href='mailto:help@planwatch.org&subject=$_SERVER[USER]+confirmation+problem'>help@planwatch.org</a>.";
+	
+		redirect("/alert/".urlencode($unconfirmed_alert));
+		exit;
+	}
+break;
+endswitch;
+?>

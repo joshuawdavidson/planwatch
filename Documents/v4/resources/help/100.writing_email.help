@@ -1,0 +1,27 @@
+<?php
+	$title="Posting by Email";
+	$body="Posting to planwatch by email is easy!<br />
+<br />
+1. set up a secret word on your <a href='http://planwatch.org/prefs/userinfo'>user settings</a> page (the last option).  it doesn't have to be a real word, it just can't have any spaces or special characters in it<br />
+<br />
+2. send to that email address when you want to post a plan. you can change your secret word as often as you like.<br />
+<br />
+email posts support multipart mime messages (like from webmail clients or whatever), preferring the html version over the plaintext version where available.<br />
+<br />
+eventually, i'll figure out what i ought to be doing with attachments. for now, they just get dumped.<br />
+<br />
+the following keywords work in the subject line:<br />
+<br />
+<b>nofeed</b> prevents the post from appearing in the rss version of your plan (this would, for instance, keep it off facebook if you have planwatch/facebook integration set up)<br />
+<br />
+<b>private</b> marks the post as a private entry, viewable only to your allowed list<br />
+<br />
+<b>formatted</b> prevents planwatch from adding extra linebreaks when processing your complicated html-in-plaintext posts. probably not all that useful in most cases. you get this automatically in real rich-text html email posts.<br />
+<br />
+<b>markdown</b> tells planwatch to apply markdown formatting to your post<br />
+<br />
+other stuff from the subject line gets stored with your post as comments, so this is a good place to put keywords or hashtags or what-have-you if you habitually search your archives.<br />
+<br />
+<br />
+in all other respects, mail-posted entries are just normal entries. if you want things to work a little differently, or you have questions, send or email me. i'm happy to help as i have time.";
+	?>

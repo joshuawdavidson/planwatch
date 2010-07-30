@@ -1,0 +1,29 @@
+<?php
+	$title="Advanced Formatting: Side Column";
+	$body="In order to get that column of links and whatnot down the side of your plan (like <a href='/read/jwdavidson'>jwdavidson</a> has), you need to make a few changes to your <a href='/write/css'>plan styles</a> and <a href='/write/header'>header</a>. 
+
+## Plan Styles Changes
+<a href='/write/css'>edit your plan styles here</a>
+(If you're on NOTE or planworld.net, you'd want to put these in the actual body of your plan, between `<style>` and `</style>` tags.) Please note that &quot;yourusername&quot; refers to your actual user name (e.g. 'jwdavidson')
+
+first, set your header to appear at the side of your plan and be narrow enough for both mobile and desktop users. you can also put other styling details in this statement.
+> `#plan_header_yourusername { float: right; width: 170px; } /* display it on the right-hand side, 170 pixels wide  (this is about 2 inches on a standard screen) */`
+
+then you'll want to standardize the style of the boxes in your sidebar (if you plan to have multiple boxes). if you're setting a background color, be sure to also set your text and link colors. otherwise people using a different skin might not be able to see your text.
+>  `#plan_header_yourusername div { border: 1px solid gray;  background: white; color: black; font: 10pt sans-serif; margin-bottom: 20px; } /* thin gray border, black text, small sans-serif font, some space at the bottom */`
+  
+>    `#plan_header_yourusername div a { color: red; } /* this sets the link color to red. */`
+
+You can change anything here to fit your style preferences. this just makes all the boxes look the same and spaces them out a bit. One thing to avoid: specifying width as a percentage of window size. For some reason this seems to cause lots of formatting problems.
+
+Okay. That's it for the styles.
+
+## Plan Header Changes
+<a href='/write/header'>edit your header here</a>
+(If you're on NOTE or planworld.net, you'd want to put these in the actual body of your plan, between `<div class='plan_header' id='plan_header_yourusername'>` and `</div>` tags.)
+
+Now you want to make some boxes. Or just put in a list of links, or whatever. 
+You can put whatever you want here, any text or valid HTML will work. I suggest embedding widgets from various other sites you use and want planworld people to know about (flickr, posterous, etc.) <a href='http://www.hashemian.com/tools/rss-atom-widget.htm'>Here's a good one to import any RSS feed</a>.
+
+You should be able to copy and paste stuff from this page into your <a href='/write/header'>header</a> to get you started.";
+	?>

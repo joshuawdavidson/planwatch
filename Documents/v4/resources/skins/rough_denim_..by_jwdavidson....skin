@@ -1,0 +1,41 @@
+<?php
+/*
+ROUGH_DENIM_..BY_JWDAVIDSON....SKIN
+this skin was automatically created on 06 Mar 2002, 04:29:44 pm GMT
+from jwdavidson's color and font prefs
+*/
+
+$pagebgimage="/resources/skins/rough_denim/denim_dark.jpg";
+$listsbgimg="/resources/skins/rough_denim/denim_light.jpg";
+//$planbgimg="/resources/skins/rough_denim/denim.jpg";
+$headbgimg="/resources/skins/rough_denim/denim_light.jpg";
+$pwlogo="/resources/skins/rough_denim/rough_denim_logo.jpg";
+$writeicon="/resources/skins/canwatch/pencil.gif";
+$toolsicon="/resources/skins/canwatch/hammer.gif";
+$snitchicon="/resources/skins/canwatch/eye.gif";
+$prefsicon="/resources/skins/canwatch/smiley.gif";
+$helpicon="/resources/skins/canwatch/help.gif";
+$logouticon="/resources/skins/canwatch/x.gif";
+$navtextcolor="#002255";
+$textcolor="#ffffff";
+$linkcolor="#99ccff";
+$navlinkcolor="#003366";
+$vlinkcolor="#aaddff";
+$alinkcolor="#ffffff";
+$planlinkcolor="";
+$pagebgcolor="#000066";
+$listsbgcolor="#aaddff";
+$headbgcolor="#aaddff";
+$planbgcolor="#336699";
+$titletextcolor="#002255";
+$nfonts="trebuchet ms, verdana, helvetica, arial, sans-serif ";
+$sfonts="";
+$hfonts="trebuchet ms, verdana, helvetica, sans-serif";
+$pfonts="";
+$nfsize="2";
+$sfsize="2";
+$hfsize="5";
+$pfsize="2";
+$sitename="";
+$viewicon="/resources/skins/canwatch/read.gif";
+?>

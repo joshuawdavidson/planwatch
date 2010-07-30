@@ -1,0 +1,32 @@
+<?php
+/*
+cases/FEATURE.php
+
+*/
+	include_once('featurecreep.php');
+	switch($urlarray[2]):
+
+	case "edit":
+		if (!$urlarray[3]) $urlarray[3]='new';
+		output("Edit Feature/Bug: $urlarray[3]",editfeature($urlarray[3]));
+		break;
+	
+	case "new":
+		output("Submit New Feature/Bug",editfeature('new'));
+		break;
+	
+	case "description":
+		if (!$urlarray[3]) { redirect("/feature"); exit; }
+		output("Feature/Bug: $urlarray[3]",displayfeature($urlarray[3]));
+		break;
+
+	default:
+		if (!$urlarray[2]) $urlarray[2]='2d';
+	    if (!$urlarray[3]) $urlarray[3]='featuretime';
+	    if (!$urlarray[4]) $urlarray[4]='down';
+		if (strstr($_SERVER['OUTPUT_MODE'],'ATOM')) output("Feature Request and Bug Tracking",getfeatures_atom($urlarray[2],$urlarray[3],$urlarray[4],$urlarray[5]));
+		else output("Feature Request and Bug Tracking",getfeatures($urlarray[2],$urlarray[3],$urlarray[4],$urlarray[5]));
+		break;
+
+	endswitch;
+?>

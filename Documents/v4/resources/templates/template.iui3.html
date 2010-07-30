@@ -1,0 +1,35 @@
+<html manifest='/resources/cache.manifest' lang='en'>
+<head>
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta charset="utf-8" />
+<title>
+$title
+</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0;"/>
+<link rel='stylesheet' type='text/css' href='/stylesheet/2$version.css' title='Standard' />
+<script type='application/x-javascript'>
+http_host="{$_SERVER['HTTP_HOST']}";
+web_root='';
+user="{$_SERVER[USER]}";
+</script>
+$extracss
+
+
+</head>
+<body>
+    <div class="toolbar">
+    	<h1 id='pageTitle'></h1>
+        <!--<a id="backButton" class="button" href="#" style='font-size: 9px;'></a>-->
+		$tabbar
+    </div>
+	<div class='main_content' selected="true" title='$title'>
+	$readertoolbar
+	$content
+	</div>
+
+<script type="application/x-javascript" src="/includes/$version/iui3_ajax.js"></script>
+$analytics
+</body>
+</html>

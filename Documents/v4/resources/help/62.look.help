@@ -1,0 +1,8 @@
+<?php
+$title='Help with Planwatch Look';
+$body="
+read all your watched plans at once, on any device!<br><br>
+
+you can read all the new plans on your watched list by typing <a href='http://planwatch.org/look'>planwatch.org/look</a> into your web browser. if you aren't logged in (or can't log in, in the case of AvantGo), you can do <b>planwatch.org/look/%user%/<i>password</i></b> instead to get your fix.
+";
+?>

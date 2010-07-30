@@ -1,0 +1,31 @@
+<?php
+
+/*
+FIRSTLOGIN.case
+
+the first login help page
+*/
+
+output("welcome, new user $_SERVER[USER]","
+<h1>Welcome, $_SERVER[USER]!</h1>
+<p>An email has been sent to the email address you provided.
+Once you get your confirmation email, you should click the link to confirm that the email address
+is valid. If you entered an invalid email address, please send a message to
+<a href='mailto:help@planwatch.org'>help@planwatch.org</a> with your username and real email
+address, and we'll get it fixed.</p>
+
+<p>Since this is your first time logging in, you might want to
+<a href='$_SERVER[WEB_ROOT]/edit/bio'>write your bio</a>, <a href='$_SERVER[WEB_ROOT]/prefs'>set your preferences</a>, or
+<a href='$_SERVER[WEB_ROOT]/edit/lists/watched'>edit your watched list</a>.<br /><br />
+Of course, you could always consult the <a href='$_SERVER[WEB_ROOT]/help'>help</a> first, if you'd like, or even
+<a href='$_SERVER[WEB_ROOT]/edit/skin'>choose a skin</a> to make planwatch look better.
+</p>
+<p>Once you get settled, you should consider <a href='$_SERVER[WEB_ROOT]/edit/slogan'>submitting a slogan</a> or
+<a href='$_SERVER[WEB_ROOT]/edit/smiley/'>a new smiley</a>.
+</p>
+Check out the buttons at the top and the <a href='$_SERVER[WEB_ROOT]/tools'>tools</a> page for more stuff to do
+to personalize your experience. Be sure to <a href='$_SERVER[WEB_ROOT]/feature'>file a bug</a> or <a href='mailto:help@planwatch.org'>email for help</a> if
+something doesn't work the way you think it should.
+</div>");
+
+?>

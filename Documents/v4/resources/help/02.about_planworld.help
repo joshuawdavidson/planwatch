@@ -1,0 +1,116 @@
+<?php
+$title="About Planworld";
+$body="
+<pre>
+
+Welcome to planworld.
+
+This little text file, labeled 'about', is supposed to tell you what
+planworld is. The problem, though, is that the moment I tell you what
+planworld is, I have destroyed it. Planworld began accidentally, is
+littered with accidents, and if it is to continue it will continue
+accidentally.
+
+I can tell you what planworld is not. It is not a chat room, or a message
+board, or a clique--although it may encompass all of these things. Nor is
+it a place for anonymity. Indeed, many of its inhabitants feel free enough
+here to write down the conversations they only have in their own heads.
+This is a place where the things of the self and the oustide-self mingle
+and the private and public lose their identities. Most paradoxically, no
+matter how active you are within it, it not a place that you are but a
+place you have been.
+
+The best way to know what planworld means as a noun is to read plans.  
+Plans of people you know. Plans of people they know. Plans of people who
+cannot possibly exist. And then you write a plan of your own. Write what
+you want to write, whether it is yours alone, or a response to someone
+else, or stolen.
+
+One thing I must warn you: Planworld is about words. It began as text, and
+text is its life and soul. Pictures and colors and hyperlinks are all well
+and good, but they are outsiders. They are artifice and facade. When all
+else ends the text will remain, stuck in your head and the heads of those
+who read you. Write. Write what you will, but put it down honestly.
+
+If you are to live here, then you should know a little history. Not a lot,
+because I have bored more patient folks than yourself with the full epic
+of planworld. But enough to get by. If you want to know more you can
+always e-mail me at jlodom00@alumni.amherst.edu.
+
+Planwriting began in the days when computers were big enough and costly
+enough that they had to be shared by many people, usually scientists or
+academics or soldiers. Every user on a mainframe was given an account with
+a couple of kilobytes of disk space. Because computing power was limited,
+users needed to know something about one another in order to figure out
+how best to share the system. A 'plan' file was a small text file that a
+user wrote to explain their current projects. Other users could read the
+plan by 'fingering' the user.
+
+In the early 1980s, Amherst College go a VAX computer. VAX was actually
+the name of the processor (and eventually it used the ALPHA processor
+instead) and the operating system was called VMS. But everyone called it
+the VAX anyway. It had a whopping 30MB of hard disk space for roughly 2000
+users. It also had tons of cool features like word processing and
+spreadsheets. And, if they knew what they were doing students could also
+write plans on it. Two of those students were jwmanly (John Many '85) and
+jhwelch (Jonathan Welch '84). This pair became so proficient in the
+administration and programming of the system that they were employed to
+run it after their graduation.
+
+
+As time went on, the VAX became more powerful and more students used it to
+write term papers and send e-mail. They discovered that by writing plans
+they could keep each other company during all-nighters--writing back and
+forth between boughts of wrestling with essays. Some adventurous souls
+even kept plans on the college's new UNIX machine.
+
+Jwmanly heard about this activity and started to read plans himself. But
+he could never keep track of who had written a new plan, and so he would
+often reread plans that hadn't been changed for weeks. So one night he
+used the DCL programming language to hack up the program that would make
+him famous ... planwatch. Nothing else jwmanly did--even when he was
+Director of IT for Amherst--would ever bring him so much notoriety. As you
+can imagine, this disappoints him somewhat.
+
+Students used planwatch to keep track of when their friends' plans
+changed. It could also be used to read a bunch of plans at once. It was
+with this program that 'planworld' was really born. But there was an
+element missing. Plans only worked one way. You could read someone's plan,
+but you could not know who read yours, and thus you could not know to read
+theirs. Jhwelch solved this problem in 1999 when he stepped down as VAX
+administrator. SNITCH was his final gift to the students of Amherst
+College. It allowed users to see who had fingered them--but only if they
+in turn were willing to be visible to those whose plans they fingered.
+
+The VAX was a great system, but after a while, students stopped wanting to
+explore it. It became arcane and difficult to maintain. Amherst hackers
+were interested only in UNIX-based systems, and new users wanted the
+friendlier world of the World Wide Web. The VAX was slated to be turned
+off. For some time it seemed as if planworld would die with it. If so,
+then the world would fade away at the height of its glory. Programs had
+been written to allow non-Amherst users like madvani (Meeta Advani of
+UPenn)  and jwdavidson (Josh Davidson of UWF) to be part of it. It was at
+its height.
+
+In the end it was saved by the diverse efforts of many individuals,
+including snfitzsimmon (Seth Fitsimmons), anhochron (Alexander Hochron),
+jwdavidson, and madvani who worked hard to port it to the web at
+Amherst and beyond. Here it is, translated but intact, for the graphical
+Internet.
+
+Let me close by again saying 'welcome.' This is a special place, one of
+the last enclaves of what 'cyberspace' (degraded term!) used to be, when
+the command line was all. I came late here, only in 1998, but even since
+then there have been planworld field trips, planworld romances, planworld
+breakups, even planworld proposals. And on one memorable occasion not so
+long ago, someone was mistakenly declared dead. Which is to say, this is a
+real world. It is full of human beings.
+
+And that's about it.
+
+--jlodom
+  at vax2.amherst.edu
+  13-MAR-2001
+</pre>
+";
+?>

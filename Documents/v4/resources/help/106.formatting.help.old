@@ -1,0 +1,33 @@
+<?php
+	$title="Advanced Formatting: Stylesheets";
+	$body="You can use cascading style sheets to do all sorts of weird formatting stuff to your plan. 
+<br /><br />
+Just go to <a href='/write/css'>edit your plan styles</a> and type away (you can copy and paste this into your header to scare yourself):
+<br />
+<blockquote style='font-family: monospace;'>
+#content { background: green; color: fuchsia; } /* makes the content area background green, with magenta text */<br />
+#content a { color: blue; font-weight: bold; } /* makes links within the content area blue and bold */<br />
+</blockquote><br />
+
+<h3>colors</h3>
+If you prefer more control, you can use hexadecimal color codes instead of English color names (there's more <a href='/help/color'>help about color</a>).
+
+to adjust background colors, you use &quot;background: <i>colorname</i>;&quot;. to adjust text colors, you use &quot;color: <i>colorname</i>;&quot;  to adjust border colors you use &quot;border-color: <i>colorname</i>;&quot;
+
+so: a black box with white text and a red border:<blockquote><tt>div.blackbox { background: black; border-color: red; color: white; }</tt></blockquote>
+
+then in your plan, you'd have<blockquote><tt>&lt;div class='blackbox'&gt;text here&lt;/div&gt;</blockquote>
+
+and the result would be:
+<div style='background: black; border: thin solid red; color: white; '>text here</div>
+
+<h3>fonts</h3>
+Using <tt>font-family: name of font;</tt> you can specify fonts for your readers.<br /><br /><br />
+You can also specify a style for any html tag, so you could have all <tt>&lt;b></tt> tags be red by using the line <tt>B { color: red; }</tt>. Please be courteous to your readers and put #content on the line before styling other html tags so you don't mess up their watched list formatting.
+<br /><br />
+Further, if you want to style your divider, you can surround the divider text with a &lt;div class='divider'> and &lt;/div> and then make a rule like<br />
+<tt>.divider { font-family: script mt bold, fantasy; font-size: larger; background: black; color: white; }</tt><br />
+to make it look really funny. I use something like this to accomplish the lines at the top of each of <a href='/~josh/pwo/read/jwdavidson'>my</a> entries, and the first-line-is-larger thing.
+<br /><br />
+You probably want to avoid doing anything as scary-ugly as the style sheet given above, since it will make people want to scream and run instead of reading your plan. But you <i>can</i> do some nice presentation formatting without upsetting anyone. ";
+	?>

@@ -1,0 +1,38 @@
+<?php
+
+/*
+WIKKA.case
+
+populates wikka cookies
+*/
+
+if ($urlarray[2][0]=='?') $wikka_info=parse_str(substr($urlarray[2],1,strlen($urlarray[2])-1));
+
+if (!$wikka_info)
+{
+	if ($wikka_credentials=@file_get_contents("$_SERVER[USER_ROOT]/wikka_credentials.dat"))
+	{
+		$has_wc=TRUE;
+		parse_str($wikka_credentials);
+	}
+
+}
+else
+{
+	file_put_contents("$_SERVER[USER_ROOT]/wikka_credentials.dat",substr($urlarray[2],1,strlen($urlarray[2])-1));
+	$accepted="<div class='alert'>Credentials Accepted</div>";
+	setcookie("wikka_user_name",$wikka_info['wikka_user_name'],99999999999,"/",".planwatch.org");
+	setcookie("wikka_pass",md5($wikka_info['wikka_pass']),9999999999999,"/",".planwatch.org");
+}
+
+
+output("Wikka Credentials","
+		$accepted
+		<h1>Wikka Credentials</h1>
+		<form action='$_SERVER[WEB_ROOT]/wikka/' method='get'>
+		Wikka Username: <input type='text' value='' name='wikka_user_name'>
+		Wikka Pass: <input type='password' value='' name='wikka_pass'>
+		<input type='submit' value='Store Credentials'>
+		</form>");
+
+?>

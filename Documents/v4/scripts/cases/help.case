@@ -1,0 +1,30 @@
+<?php
+/*
+cases/HELP.php
+*/
+
+	include_once('help.php');
+
+switch($urlarray[2]):
+
+case "edit":
+	$helpname=$urlarray[3];
+	include_once('help.php');
+	help_edit($helpname);
+	break;
+
+default:
+	if (!$content=help_display($urlarray[2]))
+	{
+		$content.="\n<h1><img src='$GLOBALS[helpicon]' /> How can we help you?</h1>".help_display_list();
+	}
+//	$content.="\n<br /><br /><div class='edit_links'>if you'd like to contribute to the help documents, or you think we left something out, email <a href='mailto:help@planwatch.org'>help@planwatch.org</a>.</div>\n";
+	$titlebegin=strpos($content,'<h1>');
+	$titleend=strpos($content,'</h1>');
+	$title=substr($content,$titlebegin+4,($titleend)-($titlebegin+4));
+
+	output($title,$content);
+	break;
+
+endswitch;
+?>

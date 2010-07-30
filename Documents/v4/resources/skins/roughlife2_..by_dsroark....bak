@@ -1,0 +1,41 @@
+<?php
+/*
+ROUGHLIFE2_..BY_DSROARK....SKIN
+this skin was automatically created on 02 Mar 2003, 09:51:47 pm GMT
+from dsroark's color and font prefs
+*/
+
+$pagebgimage="";
+$listsbgimg="http://www.thesacredone.f2s.com/bg-index.jpg";
+$planbgimg="";
+$headbgimg="http://www.thesacredone.f2s.com/bg-index.jpg";
+$pwlogo="http://www.thesacredone.f2s.com/pwo.jpg";
+$writeicon="/graphics/pencil.gif";
+$toolsicon="/graphics/hammer.gif";
+$snitchicon="/graphics/eye.gif";
+$prefsicon="/graphics/smiley.gif";
+$helpicon="/graphics/help.gif";
+$logouticon="/graphics/x.gif";
+$navtextcolor="#888888";
+$textcolor="#000000";
+$linkcolor="#993399";
+$navlinkcolor="#993300";
+$vlinkcolor="#ff3333";
+$alinkcolor="#ff0033";
+$planlinkcolor="";
+$pagebgcolor="#ffcc99";
+$listsbgcolor="#ffcc66";
+$headbgcolor="#FFFFCC";
+$planbgcolor="#CC9933";
+$titletextcolor="#444444";
+$nfont="Comic Sans BT, sans-serif, verdana";
+$sfont="Uncial ATT, maiandra GD, David";
+$hfont="Humanist 521 Light BT, Artistik, Verdana";
+$pfont="Verdana, Arial";
+$nfsize="2";
+$sfsize="2";
+$hfsize="2";
+$pfsize="2";
+$sitename="";
+$viewicon="/graphics/read.gif";
+?>
