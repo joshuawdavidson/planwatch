@@ -1,0 +1,41 @@
+<?php
+/*
+UNDERWATER_..BY_RLWEISS....SKIN
+this skin was automatically created on 25 Feb 2003, 10:43:28 pm GMT
+from rlweiss's color and font prefs
+*/
+
+$pagebgimage="";
+$listsbgimg="";
+$planbgimg="";
+$headbgimg="";
+$pwlogo="";
+$writeicon="/resources/skins/canwatch/pencil.gif";
+$toolsicon="/resources/skins/canwatch/hammer.gif";
+$snitchicon="/resources/skins/canwatch/eye.gif";
+$prefsicon="/resources/skins/canwatch/smiley.gif";
+$helpicon="/resources/skins/canwatch/help.gif";
+$logouticon="/resources/skins/canwatch/x.gif";
+$navtextcolor="#000000";
+$textcolor="#000000";
+$linkcolor="#000066";
+$navlinkcolor="#000066";
+$vlinkcolor="#000066";
+$alinkcolor="#000066";
+$planlinkcolor="";
+$pagebgcolor="#33ccff";
+$listsbgcolor="#0099ff";
+$headbgcolor="#33ccff";
+$planbgcolor="#0000ee";
+$titletextcolor="#000000";
+$nfonts="Kristen ITC, Kristen ITC, Kristen ITC, Kristen ITC";
+$sfonts="Kristen ITC";
+$hfonts="Kristen ITC, Kristen ITC, Kristen ITC, Kristen ITC";
+$pfonts="Kristen ITC";
+$nfsize="2";
+$sfsize="2";
+$hfsize="5";
+$pfsize="3";
+$sitename="planwatch.org";
+$viewicon="/resources/skins/canwatch/read.gif";
+?>

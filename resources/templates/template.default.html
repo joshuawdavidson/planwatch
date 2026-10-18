@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+        <title>$title | $titlesitename</title>
+		<meta name="robots" content="noindex, nofollow, noarchive" />
+		<link rel='shortcut icon' href='/favicon$subimage.ico' />
+        <link rel='icon' href='/resources/graphics/pwo$subimage.png' type='image/png' />
+        <script type='text/javascript'>
+            /* variables passed from PHP */
+            var web_root  = "$_SERVER[WEB_ROOT]";
+            var http_host = "$_SERVER[HTTP_HOST]";
+            var wlpos     = "{$_SERVER['USERINFO_ARRAY']['wlpos']}";
+            var user      = "$_SERVER[USER]";
+
+			try {
+				req = new XMLHttpRequest();
+			} catch (trymicrosoft) {
+				try {
+					req = new ActiveXObject("Msxml2.XMLHTTP");
+				} catch (othermicrosoft) {
+					try {
+						req = new ActiveXObject("Microsoft.XMLHTTP");
+					} catch (failed) {
+						req = false;
+					}
+				}
+			}
+        </script>
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		$encoding
+		$extracss
+        $extrajs
+        $copyright
+        $alternate
+        <link rel='stylesheet' type='text/css' href='$_SERVER[WEB_ROOT]/stylesheet/planwatch_{$_SERVER[USERINFO_ARRAY][wlpos]}.css' title='Standard' />
+        <link rel='microsummary' type='text/plain' href='http://planwatch.org/home/micro' />
+    </head>
+    <body onload='constrainImages()' onresize='constrainImages()'>
+
+<!-- HEADER AREA BEGINS HERE -->
+
+    <div id="header" class='header'>
+        <ul id='navbar' class='menubar'>
+            <!-- TOPLINKS AREA BEGINS HERE -->
+            $toplinks
+            <!-- TOPLINKS AREA ENDS HERE -->
+        </ul>
+        <div id='sitelogo'>
+            <!-- LOGO AREA BEGINS HERE -->
+            &nbsp;$sitename
+            <!-- LOGO AREA ENDS HERE -->
+        </div>
+        <div id='slogan'>
+            <!-- SLOGAN AREA BEGINS HERE -->
+            $slogan
+            <!-- SLOGAN AREA ENDS HERE -->
+        </div>
+    </div>
+
+<!-- HEADER AREA ENDS HERE -->
+<div id='body'>
+<!-- PLANWATCH AREA BEGINS HERE -->
+
+    $planwatch_anchor
+    <ul class='planwatch' id='planwatch' ondblclick="window.location.href='http://$_SERVER[HTTP_HOST]$_SERVER[WEB_ROOT]/lists/edit/watched';">
+        $planwatchlist
+    </ul>
+
+<!-- PLANWATCH AREA ENDS HERE -->
+
+<!-- CONTENT AREA BEGINS HERE -->
+
+    <div class='content' id='content'>
+        <div id='message_bar'>
+        $message
+        </div>
+        <ul id='reader_toolbar'>
+        $readertoolbar
+        </ul>
+        $content
+    </div>
+<!-- CONTENT AREA ENDS HERE -->
+
+$altplanwatchlist
+
+$menus
+<div id='styleswitcher' class='menubox'>
+	$stylesheet_switcher_links
+</div>
+
+<div id='menu_holder'>
+</div>
+
+<div id='hidden_response'>
+</div>
+
+</div> <!-- end of div id='body' -->
+<!--ERRORS-->
+<!--DEBUG-->
+
+<script type='text/javascript' src='$_SERVER[WEB_ROOT]/resources/javascript/ajax.js'></script>
+<script type='text/javascript'>watched_list_refresh();</script>
+$analytics
+</body>
+</html>

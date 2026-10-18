@@ -1,0 +1,39 @@
+<?php
+
+
+switch($urlarray[2]):
+
+	case "3.0":
+		$_SERVER["API_VERSION"]=3;
+		break;
+	
+	case "latest":
+		$_SERVER["API_VERSION"]=3;
+		break;
+
+	default: 
+		$_SERVER["API_VERSION"]=3;
+		break;
+
+endswitch;
+
+if(pw_client_token_authorize())
+	include_once("/scripts/client_cases/$_SERVER[API_VERSION]/$urlarray[3].case");
+
+else { header("HTTP/1.1 401 Unauthorized"); echo "You do not have a valid access token."; }
+
+function pw_client_token_authorize()
+{
+	$success=FALSE;
+
+	$token_fn="$_SERVER[FILE_ROOT]/temp/tokens/$_REQUEST[tokenid]";
+	if(file_exists($token_fn))
+	{
+		$tokendata=file_get_contents($token_fn);
+		$success=fingerprint_verify($tokendata);
+	}
+
+	return $success;
+}
+
+?>

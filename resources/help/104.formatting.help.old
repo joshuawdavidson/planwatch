@@ -1,0 +1,24 @@
+<?php
+	$title="Help Formatting Your Plan";
+	$body="You can use a combination of divider, header, footer stuff to do all sorts of weird formatting to your plan. the reason i suggested the other method is that i couldn't think of how to explain that simply, and i figured that you'd prefer to have your text somewhere that was easier for you to control look-wise.
+<br /><br />
+the trick is to put cascading stylesheet stuff in your header, which looks something like this (you can copy and paste this into your header to scare yourself):
+<br />
+<blockquote style='font-family: monospace;'>&lt;style><br />
+#planwatch { background: #FF0000; } /* makes the watched list background red */<br />
+#content { background: #00FF00; color: #FF00FF; } /* makes the content area background green, with magenta text */<br />
+#content a { color: #0000FF; font-weight: bold; } /* makes links within the content area blue and bold */<br />
+&lt;/style>
+</blockquote><br />
+
+you can use english color names (there's more <a href='/help/color'>help about color</a>) instead of the hex color stuff.
+<br/><br />
+using <tt>font-family: name of font;</tt> you can specify fonts for your readers.<br /><br /><br />
+other elements of the page you can style are #header (the stuff at the top) and #trailer (the stuff at the bottom) and BODY (the overall page). you can also specify a style for any html tag, so you could have all <tt>&lt;b></tt> tags be red by using the line <tt>B { color: red; }</tt>.
+<br /><br />
+further, if you want to style your divider, you can surround the divider text with a &lt;div class='divider'> and &lt;/div> and then make a rule like<br />
+<tt>.divider { font-family: script mt bold, fantasy; font-size: larger; background: black; color: white; }</tt><br />
+to make it look really funny. i use something like this to accomplish the lines at the top of each of <a href='/read/jwdavidson'>my</a> entries, and the first-line-is-larger thing.
+<br /><br />
+you probably want to avoid doing anything as scary-ugly as the stylesheet above, since it will make people want to scream and run instead of reading your plan (if that's what you're after, get a <a href='http://deadjournal.com'>deadjournal</a>). but you can do some nice presentation formatting without upsetting anyone. ";
+	?>

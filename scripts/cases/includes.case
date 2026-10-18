@@ -1,0 +1,71 @@
+<?php
+
+/*
+INCLUDES.case
+this may be a bad idea
+*/
+
+$includename=str_replace("/includes/$urlarray[2]/",'',$_SERVER['REQUEST_URI']);
+if (stristr($includename,'.js'))
+{
+	header("Content-type: application/x-javascript");
+	$include_dir="$_SERVER[DOCUMENT_ROOT]/resources/javascript";
+}
+if (stristr($includename,'.css'))
+{
+	header("Content-type: text/css");
+	$include_dir="$_SERVER[DOCUMENT_ROOT]/temp";
+}
+
+if (strstr($includename,'css') && strstr($includename,'codemirror'))
+{
+	$include_dir="$_SERVER[DOCUMENT_ROOT]resources/javascript/codemirror65/css";
+}
+
+if (strstr($includename,'js') && strstr($includename,'codemirror'))
+{
+	$include_dir="$_SERVER[DOCUMENT_ROOT]resources/javascript/codemirror65/js";
+}
+
+$include_filename="$include_dir/".basename($includename);
+
+// just dump out for older clients.
+if (!stristr($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip'))
+{
+	readfile($include_filename);
+	exit;
+}
+
+
+// get our headers in order to prevent expiration since we version the files
+$expiresdate=date("r",time()+31536000);
+header("http/1.1 200 OK");
+header("Content-Encoding: gzip");
+header("Expires: $expiresdate");
+header("Cache-Control: max-age=31536000");
+
+
+// make sure our cached version is up to date
+$version=filemtime("$include_dir/$includename");
+$include_gz_filename="$_SERVER[FILE_ROOT]/resources/cached_includes/".str_replace(".","_gz_$version.",basename($includename));
+
+// do we have it cached? just spit it out
+
+if (file_exists($include_gz_filename) && filemtime($include_gz_filename) > filemtime($include_filename))
+{
+	readfile($include_gz_filename);
+	exit;
+}
+
+// otherwise we need to generate it
+else
+{
+	$includedata=strip_whitespace(file_get_contents("$include_filename"));
+	$includedata_gz=gzencode($includedata);
+	file_put_contents($include_gz_filename,$includedata_gz);
+	echo $includedata_gz;
+	exit;
+}
+
+
+?>

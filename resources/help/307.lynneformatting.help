@@ -1,0 +1,269 @@
+<?php
+	$title="Formatting tips from lebaer00@note";
+	$body="<h2>simple color changes</h2>
+
+<p>to make text go red, you would type:
+
+<br><br><xmp><span style='color: red'>i am red text</span></xmp>
+
+which results in:
+
+<br><br><span style='color: red'>i am red text</span>
+
+<br><br>to change the background color of a specific text-passage, you 
+would type:
+
+<br><br><xmp><span style='background-color: yellow'>i have a yellow 
+highlight</span></xmp>
+
+which results in:
+
+<br><br><span style='background-color: yellow'>i have a yellow 
+highlight</span>
+
+</p>
+
+<h2>more complex color changes</h2>
+
+<p>a lot of this stuff is planworld specific! i mean, it's applicable to 
+css in general, but the implementation is planworld-specific.</p>
+
+<p>also, Very Important Note: when i do all this, i make sure my plan
+content type is set to TEXT. *not* html. <small>this is because i am lazy
+and don't want to have to put &lt;p></p> tags around everything;
+i was raised that way through years of writing .plans and it's just even
+more firmly engrained in me after two years of LJ. If you &quot;need&quot; to keep
+your content-type as html, well, um, someone else who's done their styling
+with their content-type as html will have to help you :)</small></p>
+
+<p>at the very top of your plan, insert:
+
+<xmp></pre>
+<style type=&quot;text/css&quot;>
+
+</style>
+<pre></xmp>
+
+<p>all your style overrides will go in between those two style tags. the 
+rest of your plan starts after the final &lt;pre> tag.</p>
+
+<p>before we really get started, one recommendation. for the eyesight of 
+your readers, please, please specify EVERY element. not everyone uses the 
+same default stylesheet, so it can make it really hard to see things if 
+your stylesheet specifies a background that blends or clashes with a 
+non-default stylesheet. override absolutely EVERYTHING.</p>
+
+<p>a basic class looks like this:</p>
+
+<xmp>.myclass {
+	color: #ff0000;
+	background-color: #ffcccc;
+	font-size: 12px;
+	font-family: &quot;Trebuchet MS&quot;, arial, helvetica, sans-serif;
+}</xmp>
+
+<p>this means that anything in your HTML document that you specifically 
+declare to be of class &quot;myclass&quot; will take on these attributes. so:</p>
+
+<xmp><div class=&quot;myclass&quot;>this paragraph will be red text on a pink 
+background, set in the font Trebuchet MS unless you don't have that, in 
+which case it will be in Arial ... or Helvetica ... or worst-case 
+scenario, your computer's default for a &quot;sans-serif&quot; font. And it will be 
+at size 12px.</div></xmp>
+
+<p>results in:</p>
+
+<span style=&quot;color:#f00; background-color:#fcc; font-size: 12px; 
+font-family: 'trebuchet ms', arial, helvetica, sans-serif;&quot;>this paragraph 
+will be red text on a pink background, set in the font Trebuchet MS unless 
+you don't have that, in which case it will be in Arial ... or Helvetica 
+... or worst-case scenario, your computer's default for a &quot;sans-serif&quot; 
+font. And it will be at size 12px.</span>
+
+<p>snfitzsimmon, pakupfer and befranke defined quite a few classes when 
+they created the original planworld stylesheet. all i'm gonna do is point 
+out what applies where, and how you can modify it to your liking.</p>
+
+<p>these classes are: .navbar, .border, .title, .subtitle, .small, 
+.header, .trailer, .content, .new, .columnheader, .entry, .planwatch, 
+.description, and .error.</p>
+
+
+<h3>i just wanna change all my fonts, dammit!</h3>
+<p>okay, okay. insert the following chunk between the style tags:</p>
+
+<h4>to change the font-family, font-size and color of the text of your 
+plan:</h4>
+
+<xmp>pre, tt {
+	color: #009;
+	font-family: &quot;lucida sans unicode&quot;, sans-serif;
+	font-size: 11px;
+}</xmp>
+
+<p>change the color and the font family and font-size to suit your wishes.  
+personally, i'd recommend staying between 10px and 14px to ensure both
+people on macs and pcs can read it, yet it remains non-horizontal-scroll. 
+also note: most forms of courier 11px and below are illegible.</p>
+
+<p>so when all is said and done, the top of your plan should look like 
+this:</p>
+
+<xmp></pre>
+<style type=&quot;text/css&quot;>
+
+pre, tt {
+font-family: &quot;lucida sans unicode&quot;, sans-serif;
+font-size: 11px;
+}
+
+</style><pre></xmp>
+
+<h4>to change the font-family and font-size of most of the rest of the 
+text:</h4>
+
+<xmp>body, p, td {
+	font-family: &quot;trebuchet ms&quot;, sans-serif;
+	font-size: 11px;
+}</xmp>
+
+<p>i highly recommend against trying to use this method to change the 
+colors of all your fonts - you will end up with some royally fux0red 
+results. use the classes listed below to mess with coloring.</p>
+
+<h3>.navbar</h3>
+
+<p>the .navbar class affects stuff in the section where it says &quot;home | 
+stats &quot; etc. if you put in for class .navbar:
+
+<xmp>.navbar {
+	color: #f00;
+	background-color: #fcc;
+	font-size: 10px;
+	font-family: &quot;Lucida Sans Unicode&quot;, &quot;Trebuchet MS&quot;, sans-serif;
+}</xmp>
+
+<li>the text that says &quot;your plan&quot; will turn red.
+<li>all your links will now have a pink background.
+<li>however, the links will not have changed color, and most of your 
+&quot;navbar&quot; will still be the default (grey).
+
+<p>to make your navbar the pink color, you will need to specify styles for 
+td.navbar - or all &quot;td&quot;s with class &quot;navbar.&quot;</p>
+
+<xmp>td.navbar {
+	color: #f00;
+	background-color: #fcc;
+	font-size: 10px;
+	font-family: &quot;Lucida Sans Unicode&quot;, &quot;Trebuchet MS&quot;, sans-serif;
+}</xmp>
+
+<p>tada! if you want to change the color of your links on the navbar, you 
+can access those using a.navbar:</p>
+
+<xmp>a.navbar {
+	color: #f00;
+	background-color: #fcc;
+	font-size: 10px;
+	font-family: &quot;Lucida Sans Unicode&quot;, &quot;Trebuchet MS&quot;, sans-serif;
+}</xmp>
+
+<p>you can even combine these all to make your life easier:</p>
+
+<xmp>.navbar, a.navbar, td.navbar {
+	color: #f00;
+	background-color: #fcc;
+	font-size: 10px;
+	font-family: &quot;Lucida Sans Unicode&quot;, &quot;Trebuchet MS&quot;, sans-serif;
+}</xmp>
+
+
+<h3>.border</h3>
+
+<p>there's not much to change about this class. the .border class is just 
+the little 1 pixel wide lines dividing the .header from the .navbar and 
+the .planwatch and the .content and the .trailer. </p>
+
+<xmp>.border {
+	background-color: #00f;
+}</xmp>
+
+<p>gives you a nice bright blue border where those lines are that i 
+mentioned above.</p>
+
+<h3>.title</h3>
+
+<p>unused.</p>
+
+<h3>.subtitle</h3>
+
+<p>this is for the word &quot;planwatch&quot; on your planwatch sidebar.</p>
+
+<h3>.small</h3>
+
+<p>.small is specifically for the word EDIT in your planwatch sidebar. 
+yes, just that. :)</p>
+
+<xmp>.small {
+	color: #00f;
+	background-color: #def;
+	text-transform: lowercase;
+}</xmp>
+
+<p>... yes, you can get EDIT to be &quot;edit&quot;. heck, you can even use
+&quot;uppercase&quot; and make everything as if it were being yelled. though that
+won't make you very popular, as allcaps are rather hard on the eyes.</p>
+
+<h3>.header</h3>
+
+<p>this is the bar where the &quot;planworld&quot; graphic resides. for starters, 
+i'd leave this bar alone, simply because most changes you'd want to make 
+to it involve image-layering; you'd need to make a replacement image 
+anyway, and you need somewhere online to host said image. skip it for 
+now.</p>
+
+<h3>.trailer</h3>
+
+<p>simply the very bottom bit of the page with the copyright notice and 
+NOTE links. also note that a.trailer and td.trailer exist; play around 
+with these like you did with .navbar and a.navbar and td.navbar. :)</p>
+
+<h3>.content</h3>
+
+<p>the area where your actual plan sits.</p>
+
+<p>please note that for some reason, you can only change the background 
+color for .content within the .content class. you *can* change your plan's 
+font-color, but that comes in a different section.</p>
+
+<xmp>.content {
+	background-color: #fff;
+}</xmp>
+
+<h3>.new</h3>
+
+<p>the &quot;NEW&quot;s beside the people on your planwatch who've newly updated 
+their plans.</p>
+
+<p>yes, you can use text-transform on .new as well:</p>
+
+<xmp>.new {
+	text-transform: lowercase;
+}</xmp>
+
+
+<h3>.welcome</h3>
+
+<p>the bit in the .header where it says &quot;Welcome, lebaer00 | Logout&quot;. (or 
+your username, whoever you may be. :) )</p>
+
+<h3>.columnheader, .entry, .description</h3>
+
+<p>more dead classes. ignore them.</p>
+
+<h3>.planwatch</h3>
+
+<p>like .navbar and .trailer before them, .planwatch also has td.planwatch 
+and a.planwatch.</p>.
+";
+	?>

@@ -1,0 +1,41 @@
+<?php
+/*
+CHALKBOARD_..BY_JWDAVIDSON....SKIN
+this skin was automatically created on 11 Nov 2002, 04:28:47 pm GMT
+from jwdavidson's color and font prefs
+*/
+
+$pagebgimage="";
+$listsbgimg="/resources/skins/chalk/greychalk.jpg";
+$planbgimg="/resources/skins/chalk/planchalk.jpg";
+$headbgimg="/resources/skins/chalk/headbg.jpg";
+$pwlogo="/resources/skins/chalk/chalklogo.gif";
+$writeicon="/graphics/pencil.gif";
+$toolsicon="/graphics/hammer.gif";
+$snitchicon="/graphics/eye.gif";
+$prefsicon="/graphics/smiley.gif";
+$helpicon="/graphics/help.gif";
+$logouticon="/graphics/x.gif";
+$navtextcolor="#ffffff";
+$textcolor="#006600";
+$linkcolor="#00AA00";
+$navlinkcolor="#00FF00";
+$vlinkcolor="#006600";
+$alinkcolor="#FFFF00";
+$planlinkcolor="";
+$pagebgcolor="#000000";
+$listsbgcolor="#676767";
+$headbgcolor="#25992E";
+$planbgcolor="#C6CBAB";
+$titletextcolor="#ffffff";
+$nfonts="georgia";
+$sfonts="georgia";
+$hfonts="";
+$pfonts="georgia";
+$nfsize="2";
+$sfsize="2";
+$hfsize="5";
+$pfsize="3";
+$sitename=" ";
+$viewicon="/graphics/read.gif";
+?>

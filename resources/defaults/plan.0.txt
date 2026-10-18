@@ -1,0 +1,3 @@
+This is your first entry. You can !link:http://planwatch.org/write/.0:edit it!, or !link:http://planwatch.org/write:write a 
+new one!. 
+If you !link:http://planwatch.org/write:write a new one!, this one will disappear.

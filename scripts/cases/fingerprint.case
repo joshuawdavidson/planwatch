@@ -1,0 +1,14 @@
+<?php
+
+/*
+FINGERPRINT.case
+
+displays a user's fingerprint
+*/
+
+
+	output(
+		"planwatch fingerprint",
+		"No longer supported.");
+
+?>

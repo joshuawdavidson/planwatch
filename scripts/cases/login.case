@@ -1,0 +1,49 @@
+<?php
+/*
+cases/LOGIN.case
+
+handles the login processing
+*/
+
+
+	if (isset($urlarray[2]) && !empty(trim($urlarray[2])))
+	{
+		echo "go to function"; exit;
+		$user=$urlarray[2];
+		$pass=$urlarray[3];
+		$remember=$urlarray[4];
+
+		login($user,$pass,$remember,"/$urlarray[5]");
+	}
+	else
+	{
+		$failuremessage='';
+		if($urlarray[1]=='failed')
+		{
+			$failuremessage="<div style='background: red; color: white; text-align: center;'>Login failed. Please try again. You might want to <a href='/user/recover_passphrase'>recover your passphrase</a> if you've forgotten it. <a href='mailto:help@planwatch.org'>Email Josh for help</a> if you think there's a bug.</div>";
+		}
+		$content="
+		<style>div.toolbar { display: none; } div.main_content { top: 0px !important; }</style>
+		<div style='min-height: 100%; padding-top: 20vh; text-align: center;'>
+		<h1>planwatch.org</h1>
+		<p>I have to admit<br>It's getting better...</p>
+		<form action='$_SERVER[WEB_ROOT]/scripts/form_shim.php' method='post'><br />
+		<label for='user' style='font-weight: bold;'>username</label><br />
+		<input style='width: 90%; padding: 1rem; display: block; margin: auto; font-size: 4rem; border: thin solid black;' autocapitalize='off' id='user' type='text' name='user' /><br /><br />
+		<label for='pass' style='font-weight: bold;'>passphrase</label><br />
+		<input style='width: 90%; padding: 1rem; display: block; margin: auto; font-size: 4rem; border: thin solid black;' autocapitalize='off' id='pass' type='password' name='pass' /><br /><br />
+		<label for='remember'> <input type='checkbox' name='remember' id='remember' style='width: 40px; height: 40px; value='1' /> remember me</label>
+		<input type='submit' value='login' id='submit_button' style='float: right;' />
+		$failuremessage
+		<input type='hidden' name='action' value='login' />
+		</form><br /><br /><br /><br />
+		(read invite@planwatch.org for an invitation)
+		<a style='display: block; position: absolute; bottom: 0px; left: 0px; right: 0px; width: 100%; height: 50px; text-align: center; background: #ffc; font-size: 40px;'
+		target='_self' href='/home/desktop_version'>switch to desktop view</a>
+		</div>";
+
+		header("Cache-control: no-cache");
+		output('planwatch.org login',$content);
+	}
+
+?>

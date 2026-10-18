@@ -1,0 +1,16 @@
+[30-Jul-2010 18:56:33] PHP Fatal error:  Call to undefined function:  user_verify_fingerprint() in /home/planwatc/public_html/v4/scripts/essential.php on line 118
+[30-Jul-2010 18:57:40] PHP Fatal error:  Call to undefined function:  files_list() in /home/planwatc/public_html/v4/scripts/essential.php on line 59
+[30-Jul-2010 18:58:02] PHP Warning:  opendir() [<a href='function.opendir'>function.opendir</a>]: open_basedir restriction in effect. File(//scripts/standard_library/) is not within the allowed path(s): (/home/planwatc:/usr/lib/php:/usr/local/lib/php:/tmp) in /home/planwatc/public_html/v4/scripts/standard_library/file_functions.php on line 85
+[30-Jul-2010 18:58:02] PHP Warning:  opendir(//scripts/standard_library/) [<a href='function.opendir'>function.opendir</a>]: failed to open dir: Operation not permitted in /home/planwatc/public_html/v4/scripts/standard_library/file_functions.php on line 85
+[30-Jul-2010 18:58:02] PHP Warning:  readdir(): supplied argument is not a valid Directory resource in /home/planwatc/public_html/v4/scripts/standard_library/file_functions.php on line 86
+[30-Jul-2010 18:58:02] PHP Warning:  closedir(): supplied argument is not a valid Directory resource in /home/planwatc/public_html/v4/scripts/standard_library/file_functions.php on line 92
+[30-Jul-2010 18:58:02] PHP Warning:  Invalid argument supplied for foreach() in /home/planwatc/public_html/v4/scripts/essential.php on line 62
+[30-Jul-2010 18:58:02] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/planwatc/public_html/v4/scripts/standard_library/file_functions.php:85) in /home/planwatc/public_html/v4/scripts/essential.php on line 75
+[30-Jul-2010 18:58:02] PHP Fatal error:  Call to undefined function:  user_verify_fingerprint() in /home/planwatc/public_html/v4/scripts/essential.php on line 120
+[30-Jul-2010 18:58:30] PHP Fatal error:  Cannot redeclare cache_clear() (previously declared in /home/planwatc/public_html/v4/scripts/essential.php:292) in /home/planwatc/public_html/v4/scripts/essential.php on line 292
+[30-Jul-2010 18:59:46] PHP Fatal error:  Cannot redeclare is_mobile() (previously declared in /home/planwatc/public_html/v4/scripts/essential.php:300) in /home/planwatc/public_html/v4/scripts/essential.php on line 298
+[30-Jul-2010 19:05:44] PHP Fatal error:  Call to undefined function:  plan_read() in /home/planwatc/public_html/v4/test/lookstripping.php on line 3
+[30-Jul-2010 19:12:32] PHP Parse error:  syntax error, unexpected '}' in /home/planwatc/public_html/v4/test/lookstripping.php on line 54
+[30-Jul-2010 19:25:26] PHP Parse error:  syntax error, unexpected '*' in /home/planwatc/public_html/v4/test/lookstripping.php on line 17
+[30-Jul-2010 19:25:28] PHP Parse error:  syntax error, unexpected '*' in /home/planwatc/public_html/v4/test/lookstripping.php on line 17
+[30-Jul-2010 19:29:55] PHP Parse error:  syntax error, unexpected ')' in /home/planwatc/public_html/v4/test/lookstripping.php on line 16

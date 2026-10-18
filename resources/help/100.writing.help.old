@@ -1,0 +1,34 @@
+<?php
+	$title="How To Write A Plan";
+	$body="<style type='text/css'>   h3 { color: ; } h4 { color: #000066; } </style>
+<h3>General Information</h3>
+If you have a local plan, you'll see a <img src='$GLOBALS[writeicon]'> write button at the top of the page. When you click on it, you are taken to <a href='/write'>the write page</a>, which has a form that allows you to edit your plan.<br><br>
+If you have a <i>traditional</i> plan, the write button allows you to edit the entire contents of your plan at once.  If you have a <i>journaling</i> plan, the write button allows you to post a new update that will be displayed at the top of your plan, above older entries. 
+<br><br>
+
+<h3>Traditional and Journaling Plans</h3>
+A traditional plan is all a single text block. When you edit it, the entire old one moves into your archives.  However, you have more control with a traditional plan because it isn't chronological.
+<br><br>
+A journaling plan is formatted like a blog or a diary, in that each entry you write is independent, and has a date attached. You can delete, hide, or make private a single entry without affecting the rest of your plan, and old entries automatically move into your archives after a period of time, usually two days.
+<br><br>
+Whether you have a journaling plan or a traditional plan is something you can set on your user info page.  The number of days to display for a journaling plan is also set on this page.
+<br><br>
+
+<h3>Headers, footers, and dividers</h3>
+Every plan has a <i>header</i> that goes at the top and a <i>footer</i> at the bottom. Headers and footers are don't change unless you change them, so they're a good place to put information you want to always be on your plan.  These will not disappear when old entries are archived.
+<br><br>
+Journaling plans also have a divider, which separates each entry.  The divider has a wide variety of formatting options, and is explained <a href='/~josh/pwo/help/divider'>in its own help file</a>. 
+<br><br>
+
+<h3>Formatting Options</h3>
+You can use any HTML or javascript you want in your entries, header, and footer. You can also add color using <a href='/~josh/pwo/help/color'>HTML color codes</a>.
+<h4>Quick Formatting</h4>
+There are two popup menus next to the writing textarea that allow you to insert <a href='/smiley'>smileys</a> and other HTML formatting, but you're not limited by these if you want to do more. 
+<h4>Links</h4>
+You can also link to other people's plans, to web pages, and to email addresses when you're writing. Check out <a href='/help/links'>help with links</a> for more information.
+<h4 id='linebreaks' name='linebreaks'>What's that 'no linebreaks' checkbox all about?</h4>
+Normally when you write a plan, planwatch.org attempts to keep linebreaks where you put them. This can mess up certain advanced formatting and pasted HTML (like images from quizzes), so if you're doing something where the linebreaks are interfering, or you want even more minute control over formatting, you can check this box. Generally, you shouldn't check it unless you have a specific reason to do so.
+
+<h4 id='linebreaks' name='linebreaks'>What's that 'not in feed' checkbox all about?</h4>
+If you have a journaling plan, there's automatically an RSS feed of your plan available. This feed is restricted by whatever <a href='/help/privacy'>privacy settings</a> you have applied to your regular plan, but you can additionally remove individual entries from the feed by checking this box. These entries will still appear to readers of your plan who visit the website or connect through another planworld node.";
+	?>

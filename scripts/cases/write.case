@@ -1,0 +1,97 @@
+<?php
+
+/*
+WRITE.case
+
+handles plan writing URLs
+*/
+
+include_once('plan_update.php');
+if(!isset($urlarray[2])) { $urlarray[2]=' '; }
+if(!isset($urlarray[3])) { $urlarray[3]=''; }
+switch($urlarray[2]):
+
+case "list_drafts":
+	$_SERVER['OUTPUT_MODE']='AJAX';
+	output("$_SERVER[USER]'s drafts",plan_list_drafts());
+	break;
+
+case "draft":
+	$content=plan_update('draft',$urlarray[6]);
+	$edit="from ".date("F jS h:ia",substr($urlarray[3],1,strlen($urlarray[3])-1));
+	output("Updating $_SERVER[USER]'s plan $edit",$content);
+	break;
+
+case "blockedmessage":
+	include_once('lists.php');
+	plan_edit_blocked_message();
+	break;
+
+case "bio":
+	include_once('bios.php');
+	bio_edit($_SERVER['USER']);
+	break;
+
+case "header":
+	$content=plan_update("header");
+	output("Updating $_SERVER[USER]'s plan $urlarray[2]",$content);
+	break;
+
+
+case "footer":
+	$content=plan_update("footer");
+	output("Updating $_SERVER[USER]'s plan $urlarray[2]",$content);
+	break;
+
+case "divider":
+	$content=plan_update("divider");
+	output("Updating $_SERVER[USER]'s plan $urlarray[2]",$content);
+	break;
+
+case "css":
+	$content=plan_update("css");
+	output("Updating $_SERVER[USER]'s plan $urlarray[2]",$content);
+	break;
+
+
+default:
+	if (!file_exists("$_SERVER[PWUSERS_DIR]/$_SERVER[USER]/unconfirmed"))
+	{
+		$edit=$urlarray[3];
+		$action='none';
+		if(isset($urlarray[2]) && !empty($urlarray[2]))
+		{
+			$writer=$urlarray[2];
+		}
+		else
+		{
+			$writer=$_SERVER['USER'];
+		}
+		if (isset($urlarray[2]) && !empty($urlarray[2]) && $urlarray[2][0]=='?')
+		{
+			$autocontent=urldecode(substr($urlarray[2],13,strlen($urlarray[2])-12));
+			$autocontent=str_replace('%10',"\n",$autocontent);
+			$urlarray[2]='';
+			$edit='';
+		}
+
+//		if (!array_search(users_get_list(),$urlarray[2])) $content=plan_update($urlarray[2]);//$edit!='system')
+		$content=plan_update($urlarray[3],$urlarray[2]);
+
+		if (is_numeric(substr($edit,1,strlen($edit)-1))) $edit="from ".date("F jS h:ia",substr($edit,1,strlen($edit)-1));
+		output("$_SERVER[USER] Updating $writer's plan $edit",$content);
+	}
+	else
+	{
+		$unconfirmed_alert="You have not confirmed your email address.
+		You can't update your plan until we have a confirmed email address on file.
+		If it's been more than 5 minutes and you still haven't recieved your
+		confirmation email, please send a message to
+		<a href='mailto:help@planwatch.org&subject=$_SERVER[USER]+confirmation+problem'>help@planwatch.org</a>.";
+
+		redirect("/alert/".urlencode($unconfirmed_alert));
+		exit;
+	}
+break;
+endswitch;
+?>

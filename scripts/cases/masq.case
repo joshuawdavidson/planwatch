@@ -1,0 +1,31 @@
+<?php
+/*
+MASQ.case
+user masquerading
+*/
+
+	$cookie_fp_name='mau';
+	$host=getenv('HTTP_HOST'); if (substr_count($host,'.') < 2) $host=".".$host;
+
+	if (strstr($host,'www')) $host=str_replace('www','',$host);
+
+	if ($urlarray[2]=='off')
+	{
+		if($_COOKIE[$cookie_fp_name])
+			setcookie($cookie_fp_name,'',0,$_SERVER['WEB_ROOT']."/",".planwatch.org");
+	}
+
+	if ($urlarray[2]=='on')
+	{
+		if (user_is_administrator())
+		{
+				$cookie_fp_data=user_set_sessionkey($urlarray[3]);
+//				$cookie_fp_data=$username;
+				setcookie($cookie_fp_name,$cookie_fp_data,time()+3600,$_SERVER['WEB_ROOT']."/",".planwatch.org");
+		}
+		else output("You're not an adminstrator","Only admins can masquerade");
+	}
+
+
+
+redirect('/');

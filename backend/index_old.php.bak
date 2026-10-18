@@ -1,0 +1,1070 @@
+<?php
+/*
+backend/INDEX.php -- part of the planwatch.org codebase
+
+implements the planworld xml-rpc spec as written by snfitzsimmon@note.amherst.edu
+
+this implementation written by josh@planwatch.org (Josh Davidson) using code from
+usefulinc.com
+
+xml-rpc is a relative of SOAP. more information can be found at www.xml-rpc.com, a
+UserLand Software site.
+
+update 9 feb 2003: includes preliminary blogger API support and metaWebLog api support
+for posting updates. this code is written from scratch by josh@planwatch.org using api
+docs at http://plant.blogger.com/api/index.html and http://www.xmlrpc.com/metaWeblogApi
+
+todo:
+* finish blogger API support
+* finish mWL API support
+* update to planworld 2.0 api
+*/
+
+include_once("xmlrpc.inc");
+include_once("xmlrpcs.inc");
+
+$_SERVER['XML_REQUEST']=TRUE;
+
+////////////////////// UTILITY FUNCTIONS //////////////////////////////////////
+
+//performs a name-to-id hash
+function getuserid($username)
+{
+	foreach($username as $letter)
+	{
+		$userid.=ord($letter)-54;	
+	}
+return "1".$userid;
+}
+
+//undoes the name-to-id hash
+function getusername($userid)
+{
+	$str=substr($userid,1);
+	for ($i=0;$i<(strlen($userid)/2);$i+=2)
+	{
+		$username.=chr(($userid[$i].$userid[$i+1])+54);
+	}
+return $username;
+}
+
+//////////////////// BLOGGER API //////////////////////////////////////////////
+
+/*
+blogger.newPost: Makes a new post to a designated blog. Optionally, will publish the blog after making the post.
+blogger.editPost: Edits a given post. Optionally, will publish the blog after making the edit.
+blogger.getUsersBlogs: Returns information on all the blogs a given user is a member of.
+blogger.getUserInfo: Authenticates a user and returns basic user info (name, email, userid, etc.).
+
+(see blogger api notes in this directory for more info)
+*/
+$blogger_newPost_sig=array(array($xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcBoolean));
+$blooger_newPost_doc='Supports the blogger.newPost function for posting a plan update.
+returns post id on success. see the Blogger API docs at http://plant.blogger.com/api/index.html
+for more information.';
+
+
+function blogger_newPost($m)
+{
+  $appkey=$m->getParam(0); // discarded
+  $blogid=$m->getParam(1); // this should equal $username
+  $username=$m->getParam(2);
+  $password=$m->getParam(3);
+  $content=$m->getParam(4);
+  $publish=$m->getParam(5); // the inverse of $privacy on pw.o
+
+  unset($appkey); // this is just to drive the point home that we aren't using appkey.
+                  // i suppose we could log the appkeys just for the heck of it.
+
+  $blogid=$blogid->scalarval();
+  $username=$username->scalarval();
+  $password=$password->scalarval();
+  $content=$content->scalarval();
+  $publish=$publish->scalarval();
+  
+  if (!$publish) $update_privacy='.p';
+  else $update_privacy='';
+  // authentication stuff. this should get simpler one day.
+  fingerprint_verify(fingerprint_get($username,$password));
+  global $pwuserinfo,$userinfo,$preferences,$user,$pass;
+  $pwuserinfo=getenv('PWUSERINFO');
+  parse_str($pwuserinfo,$userinfo);
+  parse_str($pwuserinfo,$preferences);
+  $user=$username;
+  $pass=$password;
+
+  // the actual writing of the update
+  include_once('setplan.php');
+  putenv('BLOGPOST=TRUE');
+
+  $postid=''.time();
+  if(updateplan(".".$postid,$content,$update_privacy,0,$blogid));
+
+  // if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	return new xmlrpcresp(new xmlrpcval($postid,'string'));
+    }
+}
+
+$blogger_editPost_sig=array(array($xmlrpcBoolean, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcBoolean));
+$blooger_editPost_doc='Supports the blogger.editPost function for posting a plan update.
+returns TRUE on success. see the Blogger API docs at http://plant.blogger.com/api/index.html
+for more information.';
+
+
+function blogger_editPost($m)
+{
+  $appkey=$m->getParam(0); // discarded
+  $postid=$m->getParam(1); // this is the post to edit
+  $username=$m->getParam(2);
+  $password=$m->getParam(3);
+  $content=$m->getParam(4);
+  $publish=$m->getParam(5); // the inverse of $privacy on pw.o
+
+  unset($appkey); // this is just to drive the point home that we aren't using appkey.
+                  // i suppose we could log the appkeys just for the heck of it.
+
+  $postid=".".$postid->scalarval();
+  $username=$username->scalarval();
+  $password=$password->scalarval();
+  $content=$content->scalarval();
+  $publish=$publish->scalarval();
+
+  
+  if (!$publish) $update_privacy='.p';
+  else $update_privacy='';
+  // authentication stuff. this should get simpler one day.
+  fingerprint_verify(fingerprint_get($username,$password));
+  global $pwuserinfo,$userinfo,$preferences,$user,$pass;
+  $pwuserinfo=getenv('PWUSERINFO');
+  parse_str($pwuserinfo,$userinfo);
+  parse_str($pwuserinfo,$preferences);
+  $user=$username;
+  $pass=$password;
+  
+  // the actual writing of the update
+  include_once('setplan.php');
+  putenv('BLOGPOST=TRUE');
+//  $postid=time();
+  if(updateplan($postid,$content,$update_privacy,0,$blogid));
+
+  // if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	return new xmlrpcresp(new xmlrpcval(TRUE,$xmlrpcBoolean));
+    }
+}
+
+/*
+blogger.getUsersBlogs: Returns information on all the blogs a given user is a member of.
+returns struct (1=>('blogid'=>$blogid, 'blogName'=>$blogName, 'url'=>$url))
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# username (string): Login for the Blogger user who's blogs will be retrieved.
+# password (string): Password for said username. 
+*/
+$blogger_getUsersBlogs_sig=array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+$blogger_getUsersBlogs_doc='blogger.getUsersBlogs returns a struct containing all the plans for which valid user username, password
+has write privs. for more info, consult the blogger API docs.';
+
+function blogger_getUsersBlogs($m)
+{
+	$appkey=$m->getParam(0); // discarded
+	$username=$m->getParam(1);
+	$password=$m->getParam(2);
+
+	unset($appkey);	// this is just to drive the point home that we aren't using appkey.
+					// i suppose we could log the appkeys just for the heck of it.
+
+	$username=$username->scalarval();
+	$password=$password->scalarval();
+
+	if (isvaliduser($username,$password))
+    {
+       $planlist_a['blogid']=$username;
+       $planlist_a['blogName']="$username's plan";
+       $planlist_a['url']="http://planwatch.org/read/$username";
+       $xmlarray= new xmlrpcval(array(xmlrpc_encode($planlist_a)),'array');
+       $returnval=new xmlrpcresp($xmlarray);
+    }
+    else $err='not a valid user.';
+  // if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	return $returnval;
+    }
+}
+
+/*
+blogger.getUserInfo: Authenticates a user and returns basic user info (name, email, userid, etc.).
+returns a struct containing user's userid, firstname, lastname, nickname, email, and url.
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# username (string): Login for the Blogger user who's blogs will be retrieved.
+# password (string): Password for said username. 
+*/
+$blogger_getUserInfo_sig=array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+$blogger_getUserInfo_doc='struct blogger.getUsersBlogs(string appkey, string username, string password) returns a struct containing user info
+associated with valid username, password';
+
+function blogger_getUserInfo($m)
+{
+	$appkey=$m->getParam(0); // discarded
+	$username=$m->getParam(1);
+	$password=$m->getParam(2);
+
+	unset($appkey);	// this is just to drive the point home that we aren't using appkey.
+					// i suppose we could log the appkeys just for the heck of it.
+
+	$username=$username->scalarval();
+	$password=$password->scalarval();
+
+    if (isvaliduser($username,$password))
+    {
+       parse_str(readuser($username),$userinfo);
+    }
+
+	list($firstname,$lastname)=explode(' ',$userinfo['real_name']);
+	$returnlist['nickname']=new xmlrpcval($username,'string');
+	$returnlist['userid']=new xmlrpcval($username,'string');
+	$returnlist['firstname']=new xmlrpcval($firstname,'string');
+	$returnlist['lastname']=new xmlrpcval($lastname,'string');
+	$returnlist['nickname']=new xmlrpcval($userinfo['email'],'string');
+	$returnlist['url']=new xmlrpcval("http://planwatch.org/read/$username",'string');
+
+	$xmlarray= new xmlrpcval(array(xmlrpc_encode($returnlist)),'array');
+	$returnval=new xmlrpcresp($xmlarray);
+
+  // if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	return $returnval;
+    }
+}
+
+/*
+blogger.getTemplate: Returns the main or archive index template of a given blog.
+returns text of template as string or base64
+params: appkey, blogid, username, password, templateType
+# templateType (string): Determines which of the blog's templates will be returned. Currently, either "main" or "archiveIndex". 
+
+blogger.setTemplate: Edits the main or archive index template of a given blog.
+returns TRUE
+params: appkey, blogid, username, password, template, templateType
+# template (string): The text for the new template (usually mostly HTML). Must contain opening and closing <Blogger> tags, since they're needed to publish.
+
+THESE ARE JUST DUMMY FUNCTIONS AT THE MOMENT.
+AND PROBABLY WILL BE FOREVER UNLESS THEY NEED TO BE OTHERWISE.
+*/
+$blogger_getTemplate_sig=array(array($xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+$blogger_getTemplate_doc='blogger.getTemplate returns an empty string.';
+
+function blogger_getTemplate()
+{
+ return new xmlrpcresp(' ','string');
+}
+
+$blogger_setTemplate_sig=array(array($xmlrpcBoolean, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+$blogger_setTemplate_doc='blogger.setTemplate returns bool TRUE';
+
+function blogger_setTemplate()
+{
+ return new xmlrpcresp(TRUE,'boolean');
+}
+
+
+$blogger_getPost_sig=array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+$blogger_getPost_doc='blogger.getPost returns struct';
+function blogger_getPost($m)
+{
+	$appkey=$m->getParam(0); // discarded
+	$postid=$m->getParam(1);
+	$username=$m->getParam(2);
+	$password=$m->getParam(3);
+
+	unset($appkey);	// this is just to drive the point home that we aren't using appkey.
+					// i suppose we could log the appkeys just for the heck of it.
+
+	$username=$username->scalarval();
+	$password=$password->scalarval();
+	$postid=$postid->scalarval();
+
+	if (isvaliduser($username,$password))
+	{
+		parse_str(readuser($username),$userinfo);
+	}
+
+	$returnlist['content']=new xmlrpcval(plan_read($username,".".$postid),'string');
+	$returnlist['userid']=new xmlrpcval($username,'string');
+	$returnlist['postid']=new xmlrpcval($postid,'string');
+	$returnlist['datecreated']=new xmlrpcval($postid,'string');
+
+	$xmlarray= new xmlrpcval(xmlrpc_encode($returnlist));
+	$returnval=new xmlrpcresp($xmlarray);
+
+  // if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	return $returnval;
+    }
+}
+
+$blogger_getRecentPosts_sig=array(array($xmlrpcBoolean, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcInt));
+$blogger_getRecentPosts_doc='blogger.getRecentPosts returns array of structs';
+function blogger_getRecentPosts($m)
+{
+	$appkey=$m->getParam(0); // discarded
+	$blogid=$m->getParam(1);
+	$username=$m->getParam(2);
+	$password=$m->getParam(3);
+	$numberOfPosts=$m->getParam(4);
+
+	unset($appkey);	// this is just to drive the point home that we aren't using appkey.
+					// i suppose we could log the appkeys just for the heck of it.
+
+	$blogid=$blogid->scalarval();
+	$username=$username->scalarval();
+	$password=$password->scalarval();
+	$numberOfPosts=$m->scalarval();
+
+	if (isvaliduser($username,$password))
+	{
+		parse_str(readuser($username),$userinfo);
+	}
+
+	$postlist=getfilelist("$_SERVER[FILE_ROOT]/pwusers/$username/plan/","plan*.txt*");
+	rsort($postlist);
+	for($i=0;$i<$numberOfPosts;$i++)
+	{
+		$returnlist['content'] = new xmlrpcval(plan_read($username,".".$postid),'string');
+		$returnlist['userid'] = new xmlrpcval($username,'string');
+		$returnlist['postid'] = new xmlrpcval($postid,'string');
+		$returnlist['datecreated'] = new xmlrpcval($postid,'string');
+	
+		$xmlarray[] = new xmlrpcval(xmlrpc_encode($returnlist));
+	}
+	$returnarray=new xmlrpcval($xmlarray,'array');
+	$returnval=new xmlrpcresp($returnarray);
+
+  // if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	return $returnval;
+    }
+}
+
+$blogger_deletePost_sig=array(array($xmlrpcBoolean, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcInt));
+$blogger_deletePost_doc='blogger.getRecentPosts returns array of structs';
+function blogger_deletePost($m)
+{
+	$appkey=$m->getParam(0); // discarded
+	$postid=$m->getParam(1);
+	$username=$m->getParam(2);
+	$password=$m->getParam(3);
+
+	unset($appkey);	// this is just to drive the point home that we aren't using appkey.
+					// i suppose we could log the appkeys just for the heck of it.
+
+	$postid=$postid->scalarval();
+	$username=$username->scalarval();
+	$password=$password->scalarval();
+
+	if (isvaliduser($username,$password))
+	{
+		parse_str(readuser($username),$userinfo);
+	}
+
+	$plan_dir="$_SERVER[FILE_ROOT]/pwusers/$username/plan";
+	if (file_exists("$plan_dir/plan.$postid.txt")) unlink("$plan_dir/plan.$postid.txt");
+	if (file_exists("$plan_dir/plan.$postid.txt.p")) unlink("$plan_dir/plan.$postid.txt.p");
+	
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	return new xmlrpcresp(TRUE,'boolean');
+    }
+}
+
+//---------------------------------------------------------------------------//
+//---------------------------------------------------------------------------//
+//---------------------------------------------------------------------------//
+//////////////////// PLANWORLD API ////////////////////////////////////////////
+//---------------------------------------------------------------------------//
+//---------------------------------------------------------------------------//
+//---------------------------------------------------------------------------//
+
+// an xml-rpc interface to plan_read()
+//
+// josh@planwatch.org
+// based on the planworld xml-rpc API authored by snfitzsimmon@note.amherst.edu
+
+$plan_gettext_sig=array(array($xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcBoolean),array($xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcBoolean, $xmlrpcString));
+
+$plan_gettext_doc='when passed a planwatch.org username in $localuser, along with a remote username
+in $remoteuser and a snitch value in the bool $snitch, a base64 response containing the plan of
+$localuser will be returned.';
+
+function plan_gettext($m) {
+	global $xmlrpcerruser;
+	include_once('plan_read.php');
+	$err="";
+	// get the param values (should add integrity checking here)
+	$lu=$m->getParam(0);
+	$ru=$m->getParam(1);
+	$sn=$m->getParam(2);
+	if ($m->getParam(3)) $ar=$m->getParam(3);
+
+	$localuser=$lu->scalarval();
+	$localuser=str_replace("@planwatch.org",'',$localuser);
+	if (strpos(':',$localuser))
+		list($localuser,$archivestring)=explode(':',$localuser);
+	$remoteuser=$ru->scalarval();
+	$snitch=$sn->scalarval();
+	if (is_object($ar)) $archivestring=$ar->scalarval();
+	
+	$localuser=str_replace("@planwatch.org",'',$localuser);
+	$planinfo=unserialize(file_get_contents("$_SERVER[FILE_ROOT]/pwusers/$localuser/userinfo.dat"));
+	putenv('DEFAULTDAYS='.$planinfo['defaultdays']);
+
+	putenv("REMOTESNITCH=$snitch");
+
+	if ($archivestring=='archives')
+	{
+		$plan='Not Implemented Yet. Stay Tuned.';
+	}
+	elseif(strstr($archivestring,'/'))
+	{
+		$archive_date_array=explode('/',$archivestring);
+		$begindate=mktime($hours=str_replace(array('%3A00',':00'),'',$archive_date_array[4]),0,0,$archive_date_array[2],$archive_date_array[3],$archive_date_array[1]);
+		$threshhold=$archive_date_array[0];
+	}
+	elseif($archivestring=='' || !isset($archivestring))
+	{
+		$threshhold='2d';
+		$begindate=FALSE;
+	}
+
+	if (!$plan)
+	{
+		$plan=plan_read($localuser,$threshhold,$remoteuser,$snitch,$begindate);
+	    $plan=plan_add_alias_links($plan,$localuser,TRUE);
+	}
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($plan,'base64'));
+	}
+}
+
+$planworld_whois_sig_a=array(array($xmlrpcString, $xmlrpcString));
+$planworld_whois_sig_b=array(array($xmlrpcString));
+$planworld_whois_sig=array($planworld_whois_sig_a,$planworld_whois_sig_b);
+
+$planworld_whois_doc='when passed a planwatch.org username in $localuser, along with a remote username
+in $remoteuser, a base64 response containing the bio of $localuser will be returned.';
+
+function planworld_whois($m) {
+	global $xmlrpcerruser;
+	include_once('bios.php');
+	$err="";
+	// get the param values (should add integrity checking here)
+	$lu=$m->getParam(0);
+	$ru=$m->getParam(1);
+
+	$localuser=$lu->scalarval();
+	$remoteuser=$ru->scalarval();
+
+	global $user; $user=$remoteuser;
+	$localuser=str_replace("@planwatch.org",'',$localuser);
+	$planinfo=unserialize(file_get_contents("$_SERVER[FILE_ROOT]/pwusers/$localuser/userinfo.dat"));
+
+	$bio=getbio($localuser,'both');
+    
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($plan,'base64'));
+	}
+}
+
+$getlastaction_sig_string=array($xmlrpcInt, $xmlrpcString);
+$getlastaction_sig_int=array($xmlrpcInt, $xmlrpcInt);
+$getlastaction_sig_array=array($xmlrpcArray, $xmlrpcArray);
+$getlastaction_sig_struct=array($xmlrpcStruct, $xmlrpcStruct);
+$getlastaction_sig=array($getlastaction_sig_array,$getlastaction_sig_string,$getlastaction_sig_int,$getlastaction_sig_struct);
+
+$getlastaction_doc='when passed a string localusername, returns a unix timestamp of the last time the
+given user read a plan (this is not strictly spec behavior, but this system doesn\'t track login
+times because many users (including the admin) stay logged in all the time). if passed an 
+array of usernames, it will return a matched array of last action times. Returns timecodes in eastern
+time as per the planworld/xmlrpc spec as written by snfitzsimmon@note.amherst.edu';
+
+//determines the last action of a user by looking at the last touch of their
+//lastact.txt file, or, if one doesn't exist (since i have users who don't
+//come by all that often and i'm writing this after months of collecting
+//users) the filemtime of the most recent lastread.username file in their
+//stats directory.
+
+function getlastaction($m) {
+	global $xmlrpcerruser;
+	$err="";
+	// get the param values (should add integrity checking here)
+	$ul=$m->getParam(0);
+
+	if ($ul->kindOf()=='struct')
+	{
+		$arr=xmlrpc_decode($ul);
+		foreach($arr as $i=>$username)
+		{
+			if (is_int($username)) $username=getusername($username);
+			$lastact_a[$username]=lastact($username);
+		}
+
+		$return_a=xmlrpc_encode($lastact_a);
+		$returnval=new xmlrpcresp($return_a);
+	}
+	if ($ul->kindOf()=='array')
+	{
+		$arr=xmlrpc_decode($ul);
+		foreach($arr as $i=>$username)
+		{
+			if (is_int($username)) $username=getusername($username);
+			$lastact_a[$i]=lastact($username);
+		}
+
+		$return_a=xmlrpc_encode($lastact_a);
+		$returnval=new xmlrpcresp(new xmlrpcval($return_a,'array'));
+	}
+	if ($ul->kindOf()=='scalar')
+	{
+		if ($ul->scalartyp()=='int') $username=getusername($ul->scalarval());
+		else $username=$ul->scalarval();
+		$lastact_val=lastact($username);
+		$returnval=new xmlrpcresp(new xmlrpcval($lastact_val,'int'));
+	}
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return $returnval;
+	}
+}
+
+
+$getlastupdate_sig_string=array($xmlrpcInt, $xmlrpcString);
+$getlastupdate_sig_int=array($xmlrpcInt, $xmlrpcInt);
+$getlastupdate_sig_array=array($xmlrpcArray, $xmlrpcArray);
+$getlastupdate_sig_struct=array($xmlrpcStruct, $xmlrpcStruct);
+$getlastupdate_sig=array($getlastupdate_sig_array,$getlastupdate_sig_string,$getlastupdate_sig_int,$getlastupdate_sig_struct);
+
+$getlastupdate_doc='takes a username, returns the last update time for that username';
+
+function getlastupdate($m) {
+	global $xmlrpcerruser;
+	$err="";
+	// get the param values (should add integrity checking here)
+	$ul=$m->getParam(0);
+
+	if ($ul->kindOf()=='struct' || $ul->kindOf()=='array')
+	{
+		$arr=xmlrpc_decode($ul);
+		foreach($arr as $i=>$username)
+		{
+			if (is_int($username)) $arr[$i]=getusername($username);
+		}
+		$lastupdate_a=getplantime($arr);
+
+		foreach($lastupdate_a as $i=>$update)
+		{
+			$returnarray[$arr[$i]]=$update;
+		}
+
+		$return_a=xmlrpc_encode($returnarray);
+		$returnval=new xmlrpcresp($return_a);
+	}
+/*
+	if ($ul->kindOf()=='array')
+	{
+		$arr=xmlrpc_decode($ul);
+		foreach($arr as $i=>$username)
+		{
+			if (is_int($username)) $arr[$i]=getusername($username);
+		}
+		$lastupdate_a=getplantime($arr);
+
+		foreach($lastupdate_a as $update)
+		{
+			$xmlarray[]=new xmlrpcval($update,'int');
+		}
+
+		$return_a=new xmlrpcval($xmlarray,'array'); //xmlrpc_encode($lastupdate_a);
+		$returnval=new xmlrpcresp($return_a);
+	}
+*/
+	if ($ul->kindOf()=='scalar')
+	{
+		if ($ul->scalartyp()=='int') $username=getusername($ul->scalarval());
+		else $username=$ul->scalarval();
+		$lastact_val=getplantime($username);
+		$returnval=new xmlrpcresp(new xmlrpcval($lastact_val,'int'));
+	}
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return $returnval;
+	}
+}
+
+$getnumusers_sig=array(array($xmlrpcInt, $xmlrpcString, $xmlrpcInt),array($xmlrpcInt, $xmlrpcString),array($xmlrpcInt, $xmlrpcInt),array($xmlrpcInt));
+
+$getnumusers_doc='will return the number of users (optionally those who have logged in in the last
+$recent seconds)';
+
+function getnumusers($m) {
+	global $xmlrpcerruser;
+	$_SERVER['FILE_ROOT']=getenv('DOCUMENT_ROOT');
+	$err="";
+	$usercount=0;
+
+	// get the param values (should add integrity checking here)
+	$allorloginstring=$m->getParam(0); // ignored, as all users who have been created have logged in
+	$recent=$m->getParam(1); // 
+
+	if ($recent) $threshhold=time()-($recent->scalarval());
+//	echo "$threshhold...".time();
+	$userlist=file("$_SERVER[FILE_ROOT]/stats/userlist_all.txt");
+	if (!$threshhold || $threshhold==time()) $usercount=count($userlist);
+	else
+	{
+		foreach($userlist as $user)
+		{
+			if (lastact(basename($user)) > $threshhold) $usercount+=1;
+		}
+	}
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($usercount,'int'));
+	}
+}
+
+$getnumplans_sig=array(array($xmlrpcInt, $xmlrpcInt),array($xmlrpcInt));
+
+$getnumplans_doc='will return the number of plans (optionally those who have updated in in the last
+$recent seconds)';
+
+function getnumplans($m) {
+	global $xmlrpcerruser;
+	$_SERVER['FILE_ROOT']=getenv('DOCUMENT_ROOT');
+	$err="";
+	$usercount=0;
+
+	// get the param values (should add integrity checking here)
+	$recent=$m->getParam(0); // 
+
+	if ($recent) $threshhold=time()-($recent->scalarval());
+	
+	$userlist=file("$_SERVER[FILE_ROOT]/stats/userlist_all.txt");
+	if (!$threshhold || $threshhold==time()) $returnval=count($userlist);
+	else
+	{
+		foreach($userlist as $i=>$userline)
+		{
+			$userlist[$i]=basename($userline);
+		}
+		$plantimes=getplantime($userlist);
+		foreach($plantimes as $i=>$updatetime)
+		{
+			if ($updatetime > $threshhold) $usercount+=1;
+		}
+		$returnval=$usercount;
+	}
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($returnval,'int'));
+	}
+}
+
+$users_getid_sig=array(array($xmlrpcInt, $xmlrpcString));
+
+$users_getid_doc='returns the userid of the user passed';
+
+function users_getid($m) {
+	global $xmlrpcerruser;
+	$err="";
+
+	// get the param values (should add integrity checking here)
+	$un=$m->getParam(0); // 
+	$username=$un->scalarval();
+	
+	if (strstr($username,':')) list($username,$junk)=explode(':',$username);
+	if (file_exists("$_SERVER[FILE_ROOT]/pwusers/$username/userinfo.dat")) $userid=getuserid($username);
+	else $userid=0;
+	
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($userid,'int'));
+	}
+}
+
+$planworld_online_sig=array(array($xmlrpcArray));
+$planworld_online_doc='returns a list of users that are currently online';
+
+function planworld_online($m) {
+	global $xmlrpcerruser;
+//	$_SERVER['FILE_ROOT']=getenv('DOCUMENT_ROOT');
+	$err="";
+	$onlineusers=array();
+		
+//	exec("ls -d $_SERVER[FILE_ROOT]/pwusers/*",$userlist);
+	$userlist=file("$_SERVER[FILE_ROOT]/stats/userlist_all.txt");
+
+	$threshhold=time()-(18600);
+
+	foreach($userlist as $user)
+	{
+		$user=ltrim(rtrim(basename($user)));
+		$last=lastact($user);
+		if ($last > $threshhold) $onlineusers[]=new xmlrpcval($user,'string');
+	}
+
+//	foreach($onlineusers as $user)
+//	{
+//		echo "$user...";
+//	}
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($onlineusers,'array'));
+	}
+}
+
+$planworld_user_list_sig=array(array($xmlrpcArray));
+$planworld_user_list_doc='returns a list of users that are currently online';
+
+function planworld_user_list($m) {
+	global $xmlrpcerruser;
+	$_SERVER['FILE_ROOT']=getenv('DOCUMENT_ROOT');
+	$err="";
+	$onlineusers=array();
+		
+	$userlist=file("$_SERVER[FILE_ROOT]/stats/userlist_all.txt");
+
+	$threshhold=time()-(18600);
+
+	foreach($userlist as $user)
+	{
+		$user=ltrim(rtrim(basename($user)));
+		$onlineusers[]=new xmlrpcval($user,'string');
+	}
+
+//	foreach($onlineusers as $user)
+//	{
+//		echo "$user...";
+//	}
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	return new xmlrpcresp(new xmlrpcval($onlineusers,'array'));
+	}
+}
+
+$snoopadd_sig=array(array($xmlrpcBoolean, $xmlrpcString, $xmlrpcString));
+
+$snoopadd_doc='adds a snoop reference from a remote node';
+
+function snoopadd($m) {
+	global $xmlrpcerruser;
+	include_once('snoop.php');
+	$err="";
+	// get the param values (should add integrity checking here)
+	$lu=$m->getParam(0);
+	$ru=$m->getParam(1);
+
+	$localuser=$lu->scalarval();
+	$remoteuser=$ru->scalarval();
+
+	$success=addsnoop_local($localuser,$remoteuser);
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	header("http/1.1 200 ok");
+	return new xmlrpcresp(new xmlrpcval($success,'boolean'));
+	}
+}
+
+$snooprem_sig=array(array($xmlrpcBoolean, $xmlrpcString, $xmlrpcString));
+
+$snooprem_doc='removes a snoop reference from a remote node';
+
+function snooprem($m) {
+	global $xmlrpcerruser;
+	include_once('snoop.php');
+	$err="";
+	// get the param values (should add integrity checking here)
+	$lu=$m->getParam(0);
+	$ru=$m->getParam(1);
+
+	$localuser=$lu->scalarval();
+	$remoteuser=$ru->scalarval();
+
+	$success=removesnoop_local($localuser,$remoteuser);
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	header("http/1.1 200 ok");
+	return new xmlrpcresp(new xmlrpcval($success,'boolean'));
+	}
+}
+
+$snoopclear_sig=array(array($xmlrpcBoolean));
+
+$snoopclear_doc='clears all snoop references from a specific node';
+
+function snoopclear($m) {
+	global $xmlrpcerruser;
+	include_once('snoop.php');
+	$err="";
+	// get the param values (should add integrity checking here)
+	$lu=$m->getParam(0);
+	$ru=$m->getParam(1);
+
+	$localuser=$lu->scalarval();
+	$remoteuser=$ru->scalarval();
+
+	$success=removesnoop_local($localuser,$remoteuser);
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	header("http/1.1 200 ok");
+	return new xmlrpcresp(new xmlrpcval($success,'boolean'));
+	}
+}
+
+$send_sig=array(array($xmlrpcString,$xmlrpcString,$xmlrpcString));
+
+$send_doc='receives planworld sends';
+
+function send_receive($m) {
+	global $xmlrpcerruser;
+	include_once('snoop.php');
+	$err="";
+	// get the param values (should add integrity checking here)
+	$lu=$m->getParam(0);
+	$ru=$m->getParam(1);
+	$msg=$m->getParam(2);
+
+	$localuser=$lu->scalarval();
+	$remoteuser=$ru->scalarval();
+	$message=$msg->scalarval();
+
+	include_once('send.php');
+	$success=send_addmessage($localuser,$remoteuser,$message);
+
+	// if we generated an error, create an error return response
+	if ($err) {
+	return new xmlrpcresp(0, $xmlrpcerruser, $err);
+	} else {
+	// otherwise, we create the right response
+	// with the state name
+	header("http/1.1 200 ok");
+	return new xmlrpcresp(new xmlrpcval($success,'boolean'));
+	}
+}
+
+//instantiate the server
+$s=new xmlrpc_server( array( 
+
+		// PLANWORLD API
+
+       "planworld.user.getPlan" => 
+							 array("function" => "plan_gettext",
+										 "signature" => $plan_gettext_sig,
+										 "docstring" => $plan_gettext_doc),
+       "planworld.plan.getContent" => 
+							 array("function" => "plan_gettext",
+										 "signature" => $plan_gettext_sig,
+										 "docstring" => $plan_gettext_doc),
+       "plan.getText" => 
+							 array("function" => "plan_gettext",
+										 "signature" => $plan_gettext_sig,
+										 "docstring" => $plan_gettext_doc),
+       "planworld.user.getLastLogin" => 
+							 array("function" => "getlastaction",
+										 "signature" => $getlastaction_sig,
+										 "docstring" => $getlastaction_doc),
+       "users.getLastLogin" => 
+							 array("function" => "getlastaction",
+										 "signature" => $getlastaction_sig,
+										 "docstring" => $getlastaction_doc),
+       "planworld.user.getLastUpdate" => 
+							 array("function" => "getlastupdate",
+										 "signature" => $getlastupdate_sig,
+										 "docstring" => $getlastaction_doc),
+       "users.getLastUpdate" => 
+							 array("function" => "getlastupdate",
+										 "signature" => $getlastupdate_sig,
+										 "docstring" => $getlastaction_doc),
+       "planworld.stats.getNumUsers" => 
+							 array("function" => "getnumusers",
+										 "signature" => $getnumplans_sig,
+										 "docstring" => $getlastaction_doc),						
+       "planworld.stats.getNumUsers" => 
+							 array("function" => "getnumusers",
+										 "signature" => $getnumplans_sig,
+										 "docstring" => $getlastaction_doc),						
+       "stats.getNumUsers" => 
+							 array("function" => "getnumusers",
+										 "signature" => $getnumplans_sig,
+										 "docstring" => $getlastaction_doc),						
+       "stats.getNumPlans" => 
+							 array("function" => "getnumplans",
+										 "signature" => $getnumplans_sig,
+										 "docstring" => $getnumplans_doc),
+       "users.getID" => 
+							 array("function" => "users_getid",
+										 "signature" => $users_getid_sig,
+										 "docstring" => $users_getid_doc),
+       "planworld.user.list" => 
+							 array("function" => "planworld_user_list",
+										 "signature" => $planworld_user_list_sig,
+										 "docstring" => $planworld_user_list_doc),
+       "planworld.user.online" => 
+							 array("function" => "planworld_online",
+										 "signature" => $planworld_online_sig,
+										 "docstring" => $planworld_online_doc),
+       "planworld.online" => 
+							 array("function" => "planworld_online",
+										 "signature" => $planworld_online_sig,
+										 "docstring" => $planworld_online_doc),
+       "planworld.snoop.add" => 
+							 array("function" => "snoopadd",
+										 "signature" => $snoopadd_sig,
+										 "docstring" => $snoopadd_doc),
+       "snoop.addReference" => 
+							 array("function" => "snoopadd",
+										 "signature" => $snoopadd_sig,
+										 "docstring" => $snoopadd_doc),
+       "planworld.snoop.remove" => 
+							 array("function" => "snooprem",
+										 "signature" => $snooprem_sig,
+										 "docstring" => $snooprem_doc),
+       "snoop.removeReference" => 
+							 array("function" => "snooprem",
+										 "signature" => $snooprem_sig,
+										 "docstring" => $snooprem_doc),
+       "planworld.snoop.clear" => 
+							 array("function" => "snoopclear",
+										 "signature" => $snoopclear_sig,
+										 "docstring" => $snoopclear_doc),
+       "snoop.clear" => 
+							 array("function" => "snoopclear",
+										 "signature" => $snoopclear_sig,
+										 "docstring" => $snoopclear_doc),
+       "planworld.whois" => 
+							 array("function" => "planworld_whois",
+										 "signature" => $planworld_whois_sig,
+										 "docstring" => $planworld_whois_doc),
+		// BLOGGER API
+		
+       "blogger.newPost" =>
+							 array("function" => "blogger_newPost",
+										 "signature" => $blogger_newPost_sig,
+										 "docstring" => $blogger_newPost_doc),
+       "blogger.editPost" => 
+							 array("function" => "blogger_editPost",
+										 "signature" => $blogger_editPost_sig,
+										 "docstring" => $blogger_editPost_doc),
+
+       "blogger.getUsersBlogs" => 
+							 array("function" => "blogger_getUsersBlogs",
+										 "signature" => $blogger_getUsersBlogs_sig,
+										 "docstring" => $blogger_getUsersBlogs_doc),
+
+       "blogger.getUserInfo" => 
+							 array("function" => "blogger_getUserInfo",
+										 "signature" => $blogger_getUserInfo_sig,
+										 "docstring" => $blogger_getUserInfo_doc),
+       "blogger.getTemplate" => 
+							 array("function" => "blogger_getTemplate",
+										 "signature" => $blogger_getTemplate_sig,
+										 "docstring" => $blogger_getTemplate_doc),
+       "blogger.setTemplate" => 
+							 array("function" => "blogger_setTemplate",
+										 "signature" => $blogger_setTemplate_sig,
+										 "docstring" => $blogger_setTemplate_doc),
+       "blogger.getPost" => 
+							 array("function" => "blogger_getPost",
+										 "signature" => $blogger_getPost_sig,
+										 "docstring" => $blogger_getPost_doc),
+       "blogger.getRecentPosts" => 
+							 array("function" => "blogger_getRecentPosts",
+										 "signature" => $blogger_setRecentPosts_sig,
+										 "docstring" => $blogger_setRecentPosts_doc),
+       "blogger.deletePost" => 
+							 array("function" => "blogger_deletePost",
+										 "signature" => $blogger_deletePost_sig,
+										 "docstring" => $blogger_deletePost_doc),
+	   ));
+?>

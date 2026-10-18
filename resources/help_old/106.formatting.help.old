@@ -1,0 +1,24 @@
+<?php
+	$title="Advanced Formatting: Stylesheets";
+	$body="You can use a combination of the divider, header, and footer to do all sorts of weird formatting stuff to your plan. 
+<br /><br />
+The trick is to put cascading style sheets in your header, which looks something like this (you can copy and paste this into your header to scare yourself):
+<br />
+<blockquote style='font-family: monospace;'>&lt;style><br />
+#planwatch { background: #FF0000; } /* makes the watched list background red */<br />
+#content { background: #00FF00; color: #FF00FF; } /* makes the content area background green, with magenta text */<br />
+#content a { color: #0000FF; font-weight: bold; } /* makes links within the content area blue and bold */<br />
+&lt;/style>
+</blockquote><br />
+
+If you prefer, you can use English color names (there's more <a href='/~josh/pwo/help/color'>help about color</a>) instead of the hexadecimal color codes.
+<br/><br />
+Using <tt>font-family: name of font;</tt> you can specify fonts for your readers.<br /><br /><br />
+Other elements of the page you can style are #header (the stuff at the top) and #trailer (the stuff at the bottom) and BODY (the overall page). you can also specify a style for any html tag, so you could have all <tt>&lt;b></tt> tags be red by using the line <tt>B { color: red; }</tt>.
+<br /><br />
+Further, if you want to style your divider, you can surround the divider text with a &lt;div class='divider'> and &lt;/div> and then make a rule like<br />
+<tt>.divider { font-family: script mt bold, fantasy; font-size: larger; background: black; color: white; }</tt><br />
+to make it look really funny. I use something like this to accomplish the lines at the top of each of <a href='/~josh/pwo/read/jwdavidson'>my</a> entries, and the first-line-is-larger thing.
+<br /><br />
+You probably want to avoid doing anything as scary-ugly as the style sheet given above, since it will make people want to scream and run instead of reading your plan. But you <i>can</i> do some nice presentation formatting without upsetting anyone. ";
+	?>

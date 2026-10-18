@@ -1,0 +1,36 @@
+<?php
+	$title="Advanced Formatting: Side Column";
+	$body="<br />
+In order to get that column of links and whatnot down the side of your plan (like <a href='/read/jwdavidson'>jwdavidson</a> has), you need to enter some HTML tags in your header. First you need to set styles for the floating boxes, like so:<br />
+<br />
+<blockquote style='font-family: monospace;'>&lt;style><br />
+.linkbox { border: 1px solid gray; color: ; font-family: serif; font-size: 10pt; margin-bottom: 20px; background: white; }<br />
+&lt;/style></blockquote> <br />
+<br />
+You can change anything here to fit your style preferences. this just makes all the boxes look the same.<br />
+Next, you need to create a division ( &lt;DIV> ) to hold all the boxes:<br />
+<br />
+<blockquote style='font-family: monospace;'> <br />
+&lt;div style='float: right; text-align: center; width: 144px; font-size: small; border: none; padding: 3px; margin: 2px; z-index: 10;'><br />
+</blockquote> <br />
+<br />
+The important parts of this one are the <em>z-index</em> (it must be a positive number, because that's what puts it in front of other things) and the <em>float: right</em>. if you want it to run along the left side of your plan, you would say <em>float: left</em> instead.<br />
+If you want to make the column wider or narrower, the <em>width: 144px</em> can be changed. px stands for pixels, and any number from 100 (quite narrow) to 200 (rather wide) should work pretty well. you can also specify this as a percentage of window width. 15% is a good starting point.<br />
+You can change anything else without worrying whether it will affect the overall function.<br />
+<br />
+Next, you want to make some boxes. They look like this:<br />
+<blockquote style='font-family: monospace;'> <br />
+&lt;div class='linkbox'><br />
+link here&lt;br><br />
+link here&lt;br><br />
+link here&lt;br><br />
+&lt;/div><br />
+</blockquote> <br />
+<br />
+You can put whatever you want in these boxes. Any text or valid HTML will work.<br />
+<br />
+Finally, you need to close the whole column off with another <em>&lt;/div></em>.<br />
+<br />
+You should be able to copy and paste stuff from this page into your <a href='/write/header'>header</a> to get you started.<br />
+";
+	?>

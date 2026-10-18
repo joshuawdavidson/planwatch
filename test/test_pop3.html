@@ -1,0 +1,93 @@
+<?php
+/*
+* test_pop3.html
+*
+* @(#) $Header: /cvsroot/PHPlibrary/test_pop3.html,v 1.2 1999/06/27 19:05:49 mlemos Exp $
+* pop3 class by manuel lemos
+*/
+
+pop3_process();
+
+function pop3_process()
+{
+require("pop3.php");
+
+$pop_user="submit@planwatch.org";
+$pop_pass="23Mac4x";
+$apop=0;
+$pop3_connection=new pop3_class;
+$pop3_connection->hostname="localhost";
+
+$pop3_connection->Open();
+$pop3_connection->Login($pop_user,$pop_pass);
+$pop3_connection->Statistics(&$messages,&$size);
+
+echo "<PRE>There are $messages messages in the mail box with a total of $size bytes.</PRE>n";
+$result=$pop3_connection->ListMessages("",0);
+
+if($messages>0)
+for($i=1;$i<=$messages;$i++)
+{
+unset($headers);
+unset($body);
+$pop3_connection->RetrieveMessage($i,&$headers,&$body,2);
+//		echo "<br><br>$i";
+//		var_dump($headers);
+
+$headers=implode("n",$headers);
+$body=implode("n",$body);
+
+preg_match("|Subject: (.*)s|",$headers,$subject);
+$message_subject=trim($subject[1]);
+if (fingerprint_verify($message_subject))
+{
+global $pwuserinfo,$userinfo,$preferences,$user,$pass;
+$pwuserinfo=getenv('PWUSERINFO');
+parse_str($pwuserinfo,$userinfo);
+parse_str($pwuserinfo,$preferences);
+$user=$username;
+$pass=$password;
+
+preg_match("|Date: (.*)s|",$headers,$date);
+$edit=".".strtotime($date[1]);
+
+if (strpos($message,'#private#')!==FALSE)
+{
+$message=str_replace('#private#','',$message);
+$private='.p';
+}
+if (strpos($message,'#nolinebreaks#')!==FALSE) $nolinebreaks=TRUE;
+
+include_once('setplan.php');
+putenv('BLOGPOST=TRUE');
+if (updateplan($edit,$body,$private,$nolinebreaks,$user))
+{
+$written[$i]=TRUE;
+echo "$i: $edit written<br>n";
+}
+else
+{
+echo "$i: $edit error";
+preg_match("|From: (.*)s|",$headers,$from);
+mail(
+$from[1],
+"Post Failed",
+"Your post failed for some reason. Here it is:nn$message",
+"From: help@planwatch.orgnReturn-path: help@planwatch.orgnReply-to: help@planwatch.orgn"
+);
+echo "$edit not written<br>n";
+}
+}
+else
+{
+preg_match("|From: (.*)s|",$headers,$from);
+mail(
+$from[1],
+"Post Failed",
+"Your post failed because the fingerprint you pasted in the subject was invalid. Visit planwatch.org/fingerprint when you're logged in to see your fingerprint. If you've received this message in error, reply to it to report the error. Here's a copy of your attempted post:nn$message",
+"From: help@planwatch.orgnReturn-path: help@planwatch.orgnReply-to: help@planwatch.orgn"
+);
+echo "$i: fingerprint invalid. error sent to $from[1]<br>";
+}
+}
+}

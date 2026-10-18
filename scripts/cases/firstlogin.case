@@ -1,0 +1,33 @@
+<?php
+
+/*
+FIRSTLOGIN.case
+
+the first login help page
+*/
+
+output("welcome, new user $_SERVER[USER]","
+<h1>Welcome, $_SERVER[USER]!</h1>
+<p>An email has been sent to the email address you provided.
+Once you get your confirmation email, you should click the link to confirm that the email address
+is valid. If you entered an invalid email address, please send a message to
+<a href='mailto:help@planwatch.org'>help@planwatch.org</a> with your username and real email
+address, and we'll get it fixed.</p>
+
+<p>Since this is your first time logging in, you might want to
+<a href='$_SERVER[WEB_ROOT]/edit/lists/watched'>edit your watched list</a> to add someone to read! Or if you're
+You can also <a href='$_SERVER[WEB_ROOT]/prefs'>fiddle with preferences</a>, or <a href='$_SERVER[WEB_ROOT]/edit/bio'>write a bio</a>.<br /><br />
+Of course, you could always consult the <a href='$_SERVER[WEB_ROOT]/help'>help</a> first, if you'd like, or even
+<a href='$_SERVER[WEB_ROOT]/edit/skin'>choose a skin</a> to make planwatch look different (better?).
+</p>
+Check out the buttons at the top and the <a href='$_SERVER[WEB_ROOT]/tools'>tools</a> page for more stuff to do
+to personalize your experience. Be sure to <a href='mailto:help@planwatch.org'>email for help</a> if
+something doesn't work the way you think it should.
+<hr>
+<p><strong>NOTE:</strong> Planwatch.org has been in limited maintenance since late 2011. I (Josh) will respond to bug reports but I'm not
+actively developing new features. All the code that runs this site was written in my spare time starting in 2000 with PHP3. Do not leave
+high security secrets here. Your password is hashed but files on disk are not encrypted. As the server admin, I can read everything
+you write. I won't, but you have no reason to trust me.</p>
+</div>");
+
+?>

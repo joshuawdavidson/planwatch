@@ -1,0 +1,47 @@
+<?php
+/*
+SIMPLE_AND_CLEAN_4_..BY_JWDAVIDSON....SKIN
+skin created on 22 may 2005 by jwdavidson
+skin updated on 10 sep 2005 by jwdavidson
+skin updated on 22 apr 2006 by jwdavidson
+*/
+
+$viewicon="$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/view.png";
+$writeicon="$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/write.png";
+$toolsicon="$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/tools.png";
+$snitchicon="$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/snitch.png";
+$prefsicon="$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/prefs.png";
+$helpicon="$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/help.png";
+$logouticon="$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/logout.png";
+$navtextcolor="#669";
+$textcolor="#202";
+$linkcolor="#006";
+$navlinkcolor="#444";
+$vlinkcolor="#339";
+$alinkcolor="#00F";
+$listsbgcolor="#eef";
+$headbgcolor="#EEEEEE";
+$planbgcolor="#FFF";
+$headbgimg = "$_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/greydient.jpg";
+$titletextcolor="#202";
+$sfonts="tahoma,verdana,trebuchet ms,sans-serif";
+$nfonts="tahoma,verdana,trebuchet ms,sans-serif";
+$hfonts="centaur,minion web,georgia,serif";
+$pfonts="centaur,minion web,georgia,serif";
+$nfsize="10pt";
+$sfsize="8pt";
+$hfsize="24pt";
+$pfsize="11pt";
+$sitename="planwatch.org";
+$skin_css = "
+	.planwatch { -moz-border-radius: 10px; -khtml-border-radius: 10px;
+		border-top: solid 4px #e0e0f5; border-left: solid 4px #e0e0f5; 
+		border-right: solid 4px #eef; border-bottom: solid 4px #eef; margin: 2px; }
+	#body { background: repeat-x white 
+		url($_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/white_grad.jpg); }
+	.linkbox { text-transform: lowercase; background: white repeat-x url($_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/blue_grad.jpg); padding-top: 0px; border-top: 4px solid #e5e5ff; }
+	.linkbox:first-line { font-family: sans-serif; letter-spacing: 0.2em; font-variant: small-caps; font-size: 10pt; }
+	.planwatch .listheader { font-variant: small-caps; text-transform: lowercase; }
+	.widebox { -moz-border-radius: 4px; background: white repeat-x url($_SERVER[WEB_ROOT]/resources/skins/simple_and_clean_alt/blue_grad.jpg); }
+";
+?>

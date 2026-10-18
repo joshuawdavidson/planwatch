@@ -1,0 +1,38 @@
+<?php
+	$title="Advanced Formatting: Plan Stylesheets";
+	$body="You can use cascading style sheets to do all sorts of weird formatting stuff to your plan. 
+
+Just go to <a href='/write/css'>edit your plan styles</a> and type away. If you're a NOTE or pwn user, you'll need to put your styles in the body of your plan, between `<style>` and `</style>` tags and your plan text will need to be between `<div id='plan_body_yourusername'>` and `</div>` tags.
+
+**Note:** All rules listed below start with `#plan_body_yourusername`. Please substitute your actual username for the &quot;yourusername&quot; part. The purpose of this is to make sure your styles don't change the look of other people's plans. That could get messy.
+
+Oh. You want examples? Okay, then...
+
+##Change your background color
+> `#plan_body_yourusername { background: green; }`
+
+this will make your background green. you should adjust your text and link colors too, in case someone is reading with a skin that has green text. So here's a better example:
+
+> `#plan_body_yourusername { background: green; color: fuchsia; } /* changes background and text */
+>  
+>   #plan_body_yourusername a { color: white; } /* changes link color */ `
+
+##Change how your links look
+
+>   #plan_body_yourusername a { text-decoration: underline; font-weight: bold; } /* makes links bold and underlined */ `
+
+##Fonts
+Using `font-family: name of font;` you can specify fonts for your readers. `font-size: XXpt;` will set the font to a size of XX points. You can make this relative with percentages, so `font-size: 150%;` would be half again the size of things around it.
+
+##Styles by HTML Tag
+You can also specify a style for any html tag, so you could have all `<b>` tags be red by using the line `B { color: red; }`. Please be courteous to your readers and put #plan_body_yourusername in front of these rules so you don't stomp on stuff outside of your plan.
+
+##Divider
+You can surround the divider text with a `<div class='divider'>` and `</div>` and then make a rule like
+>   `.divider { font-family: script mt bold, fantasy; font-size: larger; background: black; color: white; }`
+
+to make it look really funny. 
+
+##Use Restraint?
+You probably want to avoid doing anything as scary-ugly as the style sheet given above, since it will make people want to scream and run instead of reading your plan. But you <i>can</i> do some nice presentation formatting without upsetting anyone. Or maybe upsetting people is your goal?";
+	?>

@@ -1,0 +1,413 @@
+a:364:{s:17:"America: New York";s:16:"America/New_York";s:16:"America: Detroit";s:15:"America/Detroit";s:19:"America: Louisville";s:18:"America/Louisville";s:21:"America: Indianapolis";s:20:"America/Indianapolis";s:25:"America: Indiana: Marengo";s:23:"America/Indiana/Marengo";s:22:"America: Indiana: Knox";s:20:"America/Indiana/Knox";s:23:"America: Indiana: Vevay";s:21:"America/Indiana/Vevay";s:16:"America: Chicago";s:15:"America/Chicago";s:18:"America: Menominee";s:17:"America/Menominee";s:15:"America: Denver";s:14:"America/Denver";s:14:"America: Boise";s:13:"America/Boise";s:17:"America: Shiprock";s:16:"America/Shiprock";s:16:"America: Phoenix";s:15:"America/Phoenix";s:20:"America: Los Angeles";s:19:"America/Los_Angeles";s:18:"America: Anchorage";s:17:"America/Anchorage";s:15:"America: Juneau";s:14:"America/Juneau";s:16:"America: Yakutat";s:15:"America/Yakutat";s:13:"America: Nome";s:12:"America/Nome";s:13:"America: Adak";s:12:"America/Adak";s:17:"Pacific: Honolulu";s:16:"Pacific/Honolulu";s:10:"----------";s:5:"GMT+0";s:16:"Europe: Andorra
+";s:15:"Europe/Andorra
+";s:12:"Asia: Dubai
+";s:11:"Asia/Dubai
+";s:12:"Asia: Kabul
+";s:11:"Asia/Kabul
+";s:17:"America: Antigua
+";s:16:"America/Antigua
+";s:18:"America: Anguilla
+";s:17:"America/Anguilla
+";s:15:"Europe: Tirane
+";s:14:"Europe/Tirane
+";s:14:"Asia: Yerevan
+";s:13:"Asia/Yerevan
+";s:17:"America: Curacao
+";s:16:"America/Curacao
+";s:15:"Africa: Luanda
+";s:14:"Africa/Luanda
+";s:19:"Antarctica: McMurdo";s:18:"Antarctica/McMurdo";s:22:"Antarctica: South Pole";s:21:"Antarctica/South_Pole";s:18:"Antarctica: Palmer";s:17:"Antarctica/Palmer";s:18:"Antarctica: Mawson";s:17:"Antarctica/Mawson";s:17:"Antarctica: Davis";s:16:"Antarctica/Davis";s:17:"Antarctica: Casey";s:16:"Antarctica/Casey";s:26:"Antarctica: DumontDUrville";s:25:"Antarctica/DumontDUrville";s:17:"Antarctica: Syowa";s:16:"Antarctica/Syowa";s:21:"America: Buenos Aires";s:20:"America/Buenos_Aires";s:16:"America: Rosario";s:15:"America/Rosario";s:16:"America: Cordoba";s:15:"America/Cordoba";s:14:"America: Jujuy";s:13:"America/Jujuy";s:18:"America: Catamarca";s:17:"America/Catamarca";s:16:"America: Mendoza";s:15:"America/Mendoza";s:19:"Pacific: Pago Pago
+";s:18:"Pacific/Pago_Pago
+";s:15:"Europe: Vienna
+";s:14:"Europe/Vienna
+";s:20:"Australia: Lord Howe";s:19:"Australia/Lord_Howe";s:17:"Australia: Hobart";s:16:"Australia/Hobart";s:20:"Australia: Melbourne";s:19:"Australia/Melbourne";s:17:"Australia: Sydney";s:16:"Australia/Sydney";s:22:"Australia: Broken Hill";s:21:"Australia/Broken_Hill";s:19:"Australia: Brisbane";s:18:"Australia/Brisbane";s:19:"Australia: Lindeman";s:18:"Australia/Lindeman";s:19:"Australia: Adelaide";s:18:"Australia/Adelaide";s:17:"Australia: Darwin";s:16:"Australia/Darwin";s:16:"Australia: Perth";s:15:"Australia/Perth";s:15:"America: Aruba
+";s:14:"America/Aruba
+";s:11:"Asia: Baku
+";s:10:"Asia/Baku
+";s:17:"Europe: Sarajevo
+";s:16:"Europe/Sarajevo
+";s:18:"America: Barbados
+";s:17:"America/Barbados
+";s:12:"Asia: Dacca
+";s:11:"Asia/Dacca
+";s:17:"Europe: Brussels
+";s:16:"Europe/Brussels
+";s:20:"Africa: Ouagadougou
+";s:19:"Africa/Ouagadougou
+";s:14:"Europe: Sofia
+";s:13:"Europe/Sofia
+";s:14:"Asia: Bahrain
+";s:13:"Asia/Bahrain
+";s:18:"Africa: Bujumbura
+";s:17:"Africa/Bujumbura
+";s:19:"Africa: Porto-Novo
+";s:18:"Africa/Porto-Novo
+";s:18:"Atlantic: Bermuda
+";s:17:"Atlantic/Bermuda
+";s:13:"Asia: Brunei
+";s:12:"Asia/Brunei
+";s:16:"America: La Paz
+";s:15:"America/La_Paz
+";s:16:"America: Noronha";s:15:"America/Noronha";s:14:"America: Belem";s:13:"America/Belem";s:18:"America: Fortaleza";s:17:"America/Fortaleza";s:18:"America: Araguaina";s:17:"America/Araguaina";s:15:"America: Maceio";s:14:"America/Maceio";s:18:"America: Sao Paulo";s:17:"America/Sao_Paulo";s:15:"America: Cuiaba";s:14:"America/Cuiaba";s:20:"America: Porto Velho";s:19:"America/Porto_Velho";s:18:"America: Boa Vista";s:17:"America/Boa_Vista";s:15:"America: Manaus";s:14:"America/Manaus";s:19:"America: Porto Acre";s:18:"America/Porto_Acre";s:16:"America: Nassau
+";s:15:"America/Nassau
+";s:13:"Asia: Thimbu
+";s:12:"Asia/Thimbu
+";s:17:"Africa: Gaborone
+";s:16:"Africa/Gaborone
+";s:14:"Europe: Minsk
+";s:13:"Europe/Minsk
+";s:16:"America: Belize
+";s:15:"America/Belize
+";s:17:"America: St Johns";s:16:"America/St_Johns";s:16:"America: Halifax";s:15:"America/Halifax";s:18:"America: Glace Bay";s:17:"America/Glace_Bay";s:18:"America: Goose Bay";s:17:"America/Goose_Bay";s:17:"America: Montreal";s:16:"America/Montreal";s:16:"America: Nipigon";s:15:"America/Nipigon";s:20:"America: Thunder Bay";s:19:"America/Thunder_Bay";s:17:"America: Winnipeg";s:16:"America/Winnipeg";s:20:"America: Rainy River";s:19:"America/Rainy_River";s:20:"America: Pangnirtung";s:19:"America/Pangnirtung";s:16:"America: Iqaluit";s:15:"America/Iqaluit";s:21:"America: Rankin Inlet";s:20:"America/Rankin_Inlet";s:22:"America: Cambridge Bay";s:21:"America/Cambridge_Bay";s:15:"America: Regina";s:14:"America/Regina";s:22:"America: Swift Current";s:21:"America/Swift_Current";s:17:"America: Edmonton";s:16:"America/Edmonton";s:20:"America: Yellowknife";s:19:"America/Yellowknife";s:15:"America: Inuvik";s:14:"America/Inuvik";s:21:"America: Dawson Creek";s:20:"America/Dawson_Creek";s:18:"America: Vancouver";s:17:"America/Vancouver";s:19:"America: Whitehorse";s:18:"America/Whitehorse";s:15:"America: Dawson";s:14:"America/Dawson";s:14:"Indian: Cocos
+";s:13:"Indian/Cocos
+";s:16:"Africa: Kinshasa";s:15:"Africa/Kinshasa";s:18:"Africa: Lubumbashi";s:17:"Africa/Lubumbashi";s:15:"Africa: Bangui
+";s:14:"Africa/Bangui
+";s:20:"Africa: Brazzaville
+";s:19:"Africa/Brazzaville
+";s:15:"Europe: Zurich
+";s:14:"Europe/Zurich
+";s:16:"Africa: Abidjan
+";s:15:"Africa/Abidjan
+";s:19:"Pacific: Rarotonga
+";s:18:"Pacific/Rarotonga
+";s:17:"America: Santiago";s:16:"America/Santiago";s:15:"Pacific: Easter";s:14:"Pacific/Easter";s:15:"Africa: Douala
+";s:14:"Africa/Douala
+";s:12:"Asia: Harbin";s:11:"Asia/Harbin";s:14:"Asia: Shanghai";s:13:"Asia/Shanghai";s:15:"Asia: Chungking";s:14:"Asia/Chungking";s:12:"Asia: Urumqi";s:11:"Asia/Urumqi";s:13:"Asia: Kashgar";s:12:"Asia/Kashgar";s:16:"America: Bogota
+";s:15:"America/Bogota
+";s:20:"America: Costa Rica
+";s:19:"America/Costa_Rica
+";s:16:"America: Havana
+";s:15:"America/Havana
+";s:21:"Atlantic: Cape Verde
+";s:20:"Atlantic/Cape_Verde
+";s:18:"Indian: Christmas
+";s:17:"Indian/Christmas
+";s:14:"Asia: Nicosia
+";s:13:"Asia/Nicosia
+";s:15:"Europe: Prague
+";s:14:"Europe/Prague
+";s:15:"Europe: Berlin
+";s:14:"Europe/Berlin
+";s:17:"Africa: Djibouti
+";s:16:"Africa/Djibouti
+";s:19:"Europe: Copenhagen
+";s:18:"Europe/Copenhagen
+";s:18:"America: Dominica
+";s:17:"America/Dominica
+";s:23:"America: Santo Domingo
+";s:22:"America/Santo_Domingo
+";s:16:"Africa: Algiers
+";s:15:"Africa/Algiers
+";s:18:"America: Guayaquil";s:17:"America/Guayaquil";s:18:"Pacific: Galapagos";s:17:"Pacific/Galapagos";s:16:"Europe: Tallinn
+";s:15:"Europe/Tallinn
+";s:14:"Africa: Cairo
+";s:13:"Africa/Cairo
+";s:17:"Africa: El Aaiun
+";s:16:"Africa/El_Aaiun
+";s:15:"Africa: Asmera
+";s:14:"Africa/Asmera
+";s:14:"Europe: Madrid";s:13:"Europe/Madrid";s:13:"Africa: Ceuta";s:12:"Africa/Ceuta";s:16:"Atlantic: Canary";s:15:"Atlantic/Canary";s:20:"Africa: Addis Ababa
+";s:19:"Africa/Addis_Ababa
+";s:17:"Europe: Helsinki
+";s:16:"Europe/Helsinki
+";s:14:"Pacific: Fiji
+";s:13:"Pacific/Fiji
+";s:18:"Atlantic: Stanley
+";s:17:"Atlantic/Stanley
+";s:12:"Pacific: Yap";s:11:"Pacific/Yap";s:13:"Pacific: Truk";s:12:"Pacific/Truk";s:15:"Pacific: Ponape";s:14:"Pacific/Ponape";s:15:"Pacific: Kosrae";s:14:"Pacific/Kosrae";s:17:"Atlantic: Faeroe
+";s:16:"Atlantic/Faeroe
+";s:14:"Europe: Paris
+";s:13:"Europe/Paris
+";s:19:"Africa: Libreville
+";s:18:"Africa/Libreville
+";s:14:"Europe: London";s:13:"Europe/London";s:15:"Europe: Belfast";s:14:"Europe/Belfast";s:17:"America: Grenada
+";s:16:"America/Grenada
+";s:14:"Asia: Tbilisi
+";s:13:"Asia/Tbilisi
+";s:17:"America: Cayenne
+";s:16:"America/Cayenne
+";s:14:"Africa: Accra
+";s:13:"Africa/Accra
+";s:18:"Europe: Gibraltar
+";s:17:"Europe/Gibraltar
+";s:21:"America: Scoresbysund";s:20:"America/Scoresbysund";s:16:"America: Godthab";s:15:"America/Godthab";s:14:"America: Thule";s:13:"America/Thule";s:15:"Africa: Banjul
+";s:14:"Africa/Banjul
+";s:16:"Africa: Conakry
+";s:15:"Africa/Conakry
+";s:20:"America: Guadeloupe
+";s:19:"America/Guadeloupe
+";s:15:"Africa: Malabo
+";s:14:"Africa/Malabo
+";s:15:"Europe: Athens
+";s:14:"Europe/Athens
+";s:24:"Atlantic: South Georgia
+";s:23:"Atlantic/South_Georgia
+";s:19:"America: Guatemala
+";s:18:"America/Guatemala
+";s:14:"Pacific: Guam
+";s:13:"Pacific/Guam
+";s:15:"Africa: Bissau
+";s:14:"Africa/Bissau
+";s:16:"America: Guyana
+";s:15:"America/Guyana
+";s:16:"Asia: Hong Kong
+";s:15:"Asia/Hong_Kong
+";s:21:"America: Tegucigalpa
+";s:20:"America/Tegucigalpa
+";s:15:"Europe: Zagreb
+";s:14:"Europe/Zagreb
+";s:24:"America: Port-au-Prince
+";s:23:"America/Port-au-Prince
+";s:17:"Europe: Budapest
+";s:16:"Europe/Budapest
+";s:13:"Asia: Jakarta";s:12:"Asia/Jakarta";s:19:"Asia: Ujung Pandang";s:18:"Asia/Ujung_Pandang";s:14:"Asia: Jayapura";s:13:"Asia/Jayapura";s:15:"Europe: Dublin
+";s:14:"Europe/Dublin
+";s:16:"Asia: Jerusalem
+";s:15:"Asia/Jerusalem
+";s:15:"Asia: Calcutta
+";s:14:"Asia/Calcutta
+";s:15:"Indian: Chagos
+";s:14:"Indian/Chagos
+";s:14:"Asia: Baghdad
+";s:13:"Asia/Baghdad
+";s:13:"Asia: Tehran
+";s:12:"Asia/Tehran
+";s:20:"Atlantic: Reykjavik
+";s:19:"Atlantic/Reykjavik
+";s:13:"Europe: Rome
+";s:12:"Europe/Rome
+";s:17:"America: Jamaica
+";s:16:"America/Jamaica
+";s:12:"Asia: Amman
+";s:11:"Asia/Amman
+";s:12:"Asia: Tokyo
+";s:11:"Asia/Tokyo
+";s:16:"Africa: Nairobi
+";s:15:"Africa/Nairobi
+";s:14:"Asia: Bishkek
+";s:13:"Asia/Bishkek
+";s:17:"Asia: Phnom Penh
+";s:16:"Asia/Phnom_Penh
+";s:15:"Pacific: Tarawa";s:14:"Pacific/Tarawa";s:18:"Pacific: Enderbury";s:17:"Pacific/Enderbury";s:19:"Pacific: Kiritimati";s:18:"Pacific/Kiritimati";s:15:"Indian: Comoro
+";s:14:"Indian/Comoro
+";s:18:"America: St Kitts
+";s:17:"America/St_Kitts
+";s:16:"Asia: Pyongyang
+";s:15:"Asia/Pyongyang
+";s:12:"Asia: Seoul
+";s:11:"Asia/Seoul
+";s:13:"Asia: Kuwait
+";s:12:"Asia/Kuwait
+";s:16:"America: Cayman
+";s:15:"America/Cayman
+";s:12:"Asia: Almaty";s:11:"Asia/Almaty";s:12:"Asia: Aqtobe";s:11:"Asia/Aqtobe";s:11:"Asia: Aqtau";s:10:"Asia/Aqtau";s:16:"Asia: Vientiane
+";s:15:"Asia/Vientiane
+";s:13:"Asia: Beirut
+";s:12:"Asia/Beirut
+";s:18:"America: St Lucia
+";s:17:"America/St_Lucia
+";s:14:"Europe: Vaduz
+";s:13:"Europe/Vaduz
+";s:14:"Asia: Colombo
+";s:13:"Asia/Colombo
+";s:17:"Africa: Monrovia
+";s:16:"Africa/Monrovia
+";s:15:"Africa: Maseru
+";s:14:"Africa/Maseru
+";s:16:"Europe: Vilnius
+";s:15:"Europe/Vilnius
+";s:19:"Europe: Luxembourg
+";s:18:"Europe/Luxembourg
+";s:13:"Europe: Riga
+";s:12:"Europe/Riga
+";s:16:"Africa: Tripoli
+";s:15:"Africa/Tripoli
+";s:19:"Africa: Casablanca
+";s:18:"Africa/Casablanca
+";s:15:"Europe: Monaco
+";s:14:"Europe/Monaco
+";s:16:"Europe: Chisinau";s:15:"Europe/Chisinau";s:16:"Europe: Tiraspol";s:15:"Europe/Tiraspol";s:21:"Indian: Antananarivo
+";s:20:"Indian/Antananarivo
+";s:15:"Pacific: Majuro";s:14:"Pacific/Majuro";s:18:"Pacific: Kwajalein";s:17:"Pacific/Kwajalein";s:15:"Europe: Skopje
+";s:14:"Europe/Skopje
+";s:14:"Africa: Bamako";s:13:"Africa/Bamako";s:16:"Africa: Timbuktu";s:15:"Africa/Timbuktu";s:14:"Asia: Rangoon
+";s:13:"Asia/Rangoon
+";s:17:"Asia: Ulaanbaatar";s:16:"Asia/Ulaanbaatar";s:10:"Asia: Hovd";s:9:"Asia/Hovd";s:12:"Asia: Macao
+";s:11:"Asia/Macao
+";s:16:"Pacific: Saipan
+";s:15:"Pacific/Saipan
+";s:20:"America: Martinique
+";s:19:"America/Martinique
+";s:19:"Africa: Nouakchott
+";s:18:"Africa/Nouakchott
+";s:20:"America: Montserrat
+";s:19:"America/Montserrat
+";s:14:"Europe: Malta
+";s:13:"Europe/Malta
+";s:18:"Indian: Mauritius
+";s:17:"Indian/Mauritius
+";s:17:"Indian: Maldives
+";s:16:"Indian/Maldives
+";s:17:"Africa: Blantyre
+";s:16:"Africa/Blantyre
+";s:20:"America: Mexico City";s:19:"America/Mexico_City";s:15:"America: Cancun";s:14:"America/Cancun";s:17:"America: Mazatlan";s:16:"America/Mazatlan";s:18:"America: Chihuahua";s:17:"America/Chihuahua";s:19:"America: Hermosillo";s:18:"America/Hermosillo";s:16:"America: Tijuana";s:15:"America/Tijuana";s:18:"Asia: Kuala Lumpur";s:17:"Asia/Kuala_Lumpur";s:13:"Asia: Kuching";s:12:"Asia/Kuching";s:15:"Africa: Maputo
+";s:14:"Africa/Maputo
+";s:17:"Africa: Windhoek
+";s:16:"Africa/Windhoek
+";s:16:"Pacific: Noumea
+";s:15:"Pacific/Noumea
+";s:15:"Africa: Niamey
+";s:14:"Africa/Niamey
+";s:17:"Pacific: Norfolk
+";s:16:"Pacific/Norfolk
+";s:14:"Africa: Lagos
+";s:13:"Africa/Lagos
+";s:17:"America: Managua
+";s:16:"America/Managua
+";s:18:"Europe: Amsterdam
+";s:17:"Europe/Amsterdam
+";s:13:"Europe: Oslo
+";s:12:"Europe/Oslo
+";s:15:"Asia: Katmandu
+";s:14:"Asia/Katmandu
+";s:15:"Pacific: Nauru
+";s:14:"Pacific/Nauru
+";s:14:"Pacific: Niue
+";s:13:"Pacific/Niue
+";s:17:"Pacific: Auckland";s:16:"Pacific/Auckland";s:16:"Pacific: Chatham";s:15:"Pacific/Chatham";s:13:"Asia: Muscat
+";s:12:"Asia/Muscat
+";s:16:"America: Panama
+";s:15:"America/Panama
+";s:14:"America: Lima
+";s:13:"America/Lima
+";s:15:"Pacific: Tahiti";s:14:"Pacific/Tahiti";s:18:"Pacific: Marquesas";s:17:"Pacific/Marquesas";s:16:"Pacific: Gambier";s:15:"Pacific/Gambier";s:22:"Pacific: Port Moresby
+";s:21:"Pacific/Port_Moresby
+";s:13:"Asia: Manila
+";s:12:"Asia/Manila
+";s:14:"Asia: Karachi
+";s:13:"Asia/Karachi
+";s:15:"Europe: Warsaw
+";s:14:"Europe/Warsaw
+";s:18:"America: Miquelon
+";s:17:"America/Miquelon
+";s:18:"Pacific: Pitcairn
+";s:17:"Pacific/Pitcairn
+";s:21:"America: Puerto Rico
+";s:20:"America/Puerto_Rico
+";s:11:"Asia: Gaza
+";s:10:"Asia/Gaza
+";s:14:"Europe: Lisbon";s:13:"Europe/Lisbon";s:17:"Atlantic: Madeira";s:16:"Atlantic/Madeira";s:16:"Atlantic: Azores";s:15:"Atlantic/Azores";s:15:"Pacific: Palau
+";s:14:"Pacific/Palau
+";s:18:"America: Asuncion
+";s:17:"America/Asuncion
+";s:12:"Asia: Qatar
+";s:11:"Asia/Qatar
+";s:16:"Indian: Reunion
+";s:15:"Indian/Reunion
+";s:18:"Europe: Bucharest
+";s:17:"Europe/Bucharest
+";s:19:"Europe: Kaliningrad";s:18:"Europe/Kaliningrad";s:14:"Europe: Moscow";s:13:"Europe/Moscow";s:14:"Europe: Samara";s:13:"Europe/Samara";s:19:"Asia: Yekaterinburg";s:18:"Asia/Yekaterinburg";s:10:"Asia: Omsk";s:9:"Asia/Omsk";s:17:"Asia: Novosibirsk";s:16:"Asia/Novosibirsk";s:17:"Asia: Krasnoyarsk";s:16:"Asia/Krasnoyarsk";s:13:"Asia: Irkutsk";s:12:"Asia/Irkutsk";s:13:"Asia: Yakutsk";s:12:"Asia/Yakutsk";s:17:"Asia: Vladivostok";s:16:"Asia/Vladivostok";s:13:"Asia: Magadan";s:12:"Asia/Magadan";s:15:"Asia: Kamchatka";s:14:"Asia/Kamchatka";s:12:"Asia: Anadyr";s:11:"Asia/Anadyr";s:15:"Africa: Kigali
+";s:14:"Africa/Kigali
+";s:13:"Asia: Riyadh
+";s:12:"Asia/Riyadh
+";s:21:"Pacific: Guadalcanal
+";s:20:"Pacific/Guadalcanal
+";s:13:"Indian: Mahe
+";s:12:"Indian/Mahe
+";s:17:"Africa: Khartoum
+";s:16:"Africa/Khartoum
+";s:18:"Europe: Stockholm
+";s:17:"Europe/Stockholm
+";s:16:"Asia: Singapore
+";s:15:"Asia/Singapore
+";s:20:"Atlantic: St Helena
+";s:19:"Atlantic/St_Helena
+";s:18:"Europe: Ljubljana
+";s:17:"Europe/Ljubljana
+";s:20:"Arctic: Longyearbyen";s:19:"Arctic/Longyearbyen";s:19:"Atlantic: Jan Mayen";s:18:"Atlantic/Jan_Mayen";s:19:"Europe: Bratislava
+";s:18:"Europe/Bratislava
+";s:17:"Africa: Freetown
+";s:16:"Africa/Freetown
+";s:19:"Europe: San Marino
+";s:18:"Europe/San_Marino
+";s:14:"Africa: Dakar
+";s:13:"Africa/Dakar
+";s:18:"Africa: Mogadishu
+";s:17:"Africa/Mogadishu
+";s:20:"America: Paramaribo
+";s:19:"America/Paramaribo
+";s:17:"Africa: Sao Tome
+";s:16:"Africa/Sao_Tome
+";s:21:"America: El Salvador
+";s:20:"America/El_Salvador
+";s:15:"Asia: Damascus
+";s:14:"Asia/Damascus
+";s:16:"Africa: Mbabane
+";s:15:"Africa/Mbabane
+";s:20:"America: Grand Turk
+";s:19:"America/Grand_Turk
+";s:17:"Africa: Ndjamena
+";s:16:"Africa/Ndjamena
+";s:18:"Indian: Kerguelen
+";s:17:"Indian/Kerguelen
+";s:13:"Africa: Lome
+";s:12:"Africa/Lome
+";s:14:"Asia: Bangkok
+";s:13:"Asia/Bangkok
+";s:15:"Asia: Dushanbe
+";s:14:"Asia/Dushanbe
+";s:17:"Pacific: Fakaofo
+";s:16:"Pacific/Fakaofo
+";s:16:"Asia: Ashkhabad
+";s:15:"Asia/Ashkhabad
+";s:14:"Africa: Tunis
+";s:13:"Africa/Tunis
+";s:19:"Pacific: Tongatapu
+";s:18:"Pacific/Tongatapu
+";s:11:"Asia: Dili
+";s:10:"Asia/Dili
+";s:17:"Europe: Istanbul
+";s:16:"Europe/Istanbul
+";s:23:"America: Port of Spain
+";s:22:"America/Port_of_Spain
+";s:18:"Pacific: Funafuti
+";s:17:"Pacific/Funafuti
+";s:13:"Asia: Taipei
+";s:12:"Asia/Taipei
+";s:22:"Africa: Dar es Salaam
+";s:21:"Africa/Dar_es_Salaam
+";s:12:"Europe: Kiev";s:11:"Europe/Kiev";s:16:"Europe: Uzhgorod";s:15:"Europe/Uzhgorod";s:18:"Europe: Zaporozhye";s:17:"Europe/Zaporozhye";s:18:"Europe: Simferopol";s:17:"Europe/Simferopol";s:16:"Africa: Kampala
+";s:15:"Africa/Kampala
+";s:17:"Pacific: Johnston";s:16:"Pacific/Johnston";s:15:"Pacific: Midway";s:14:"Pacific/Midway";s:13:"Pacific: Wake";s:12:"Pacific/Wake";s:20:"America: Montevideo
+";s:19:"America/Montevideo
+";s:15:"Asia: Samarkand";s:14:"Asia/Samarkand";s:14:"Asia: Tashkent";s:13:"Asia/Tashkent";s:16:"Europe: Vatican
+";s:15:"Europe/Vatican
+";s:20:"America: St Vincent
+";s:19:"America/St_Vincent
+";s:17:"America: Caracas
+";s:16:"America/Caracas
+";s:17:"America: Tortola
+";s:16:"America/Tortola
+";s:19:"America: St Thomas
+";s:18:"America/St_Thomas
+";s:13:"Asia: Saigon
+";s:12:"Asia/Saigon
+";s:15:"Pacific: Efate
+";s:14:"Pacific/Efate
+";s:16:"Pacific: Wallis
+";s:15:"Pacific/Wallis
+";s:14:"Pacific: Apia
+";s:13:"Pacific/Apia
+";s:11:"Asia: Aden
+";s:10:"Asia/Aden
+";s:16:"Indian: Mayotte
+";s:15:"Indian/Mayotte
+";s:17:"Europe: Belgrade
+";s:16:"Europe/Belgrade
+";s:21:"Africa: Johannesburg
+";s:20:"Africa/Johannesburg
+";s:15:"Africa: Lusaka
+";s:14:"Africa/Lusaka
+";s:15:"Africa: Harare
+";s:14:"Africa/Harare
+";}

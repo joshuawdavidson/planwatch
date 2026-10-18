@@ -1,0 +1,14 @@
+<?php
+$title="
+
+ENTER A TITLE HERE
+
+";
+
+
+$body="
+
+ENTER THE TEXT OF YOUR HELP FILE HERE.
+
+";
+?>

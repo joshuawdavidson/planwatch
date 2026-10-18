@@ -1,0 +1,243 @@
+<html>
+<head>
+<title>DOM Testing Suite</title>
+<script type='text/javascript' language='javascript'>
+
+function newDiv()
+{
+
+	var mainDiv = document.getElementById('main');
+
+	var divCollection = mainDiv.getElementsByTagName('div');
+	var numberOfDivs = divCollection.length;
+	if (numberOfDivs > 0)
+	{
+		var lastDiv = divCollection.item(numberOfDivs - 1);
+		var previousDivId=lastDiv.getAttribute('id');
+	}
+	else
+	{
+		var previousDivId=-1;
+	}
+
+	var currentDiv = document.createElement('div');
+	var currentDivId = previousDivId + 1;
+	var currentButtonMinus = document.createElement('input');
+	var currentRegionSelect = document.createElement('select');
+	var currentRuletypeSelect = document.createElement('select');
+
+	var regionArray = new Array("head","title","slogan","button bar","buttons","titles","menus","watched lists","content","plan header","plan entries","plan footer","plan sidebar","reader toolbar","trailer","whole page");
+	var ruletypeArray = new Array("border","background","font","text color","custom rule");
+
+	currentRegionSelect.setAttribute("id",currentDivId + "regionSelect");
+	currentRegionSelect.setAttribute("name","regionSelect[" + currentDivId + "]");
+
+	currentRuletypeSelect.setAttribute("id",currentDivId + "ruletypeSelect");
+	currentRuletypeSelect.setAttribute("name","ruletypeSelect[" + currentDivId + "]");
+	currentRuletypeSelect.setAttribute("onChange","changeRuleOptions('" + currentDivId + "',this.value);");
+
+	for (var i in regionArray)
+	{
+		var newOption = document.createElement('option');
+		var newOptionText = document.createTextNode(regionArray[i]);
+		newOption.setAttribute("id",currentDivId + regionArray[i]);
+		newOption.setAttribute("name",regionArray[i] + "[" + currentDivId + "]");
+		newOption.setAttribute("value",regionArray[i]);
+		newOption.appendChild(newOptionText);
+		
+		currentRegionSelect.appendChild(newOption);
+	}
+
+	for (var i in ruletypeArray)
+	{
+		var newOption = document.createElement('option');
+		var newOptionText = document.createTextNode(ruletypeArray[i]);
+		newOption.setAttribute("id",currentDivId + ruletypeArray[i]);
+		newOption.setAttribute("name",ruletypeArray[i] + "[" + currentDivId + "]");
+		newOption.setAttribute("value",ruletypeArray[i]);
+		newOption.appendChild(newOptionText);
+		currentRuletypeSelect.appendChild(newOption);
+	}
+
+	currentDiv.setAttribute("id",currentDivId);
+
+	currentButtonMinus.setAttribute("id",currentDivId + '-');
+	currentButtonMinus.setAttribute("type","button");
+	currentButtonMinus.setAttribute("value","X");
+	currentButtonMinus.setAttribute("onClick","delDiv('" + currentDivId + "');");
+
+	currentDiv.appendChild(currentButtonMinus);
+	currentDiv.appendChild(currentRegionSelect);
+	currentDiv.appendChild(currentRuletypeSelect);
+
+	mainDiv.appendChild(currentDiv);
+	changeRuleOptions(currentDivId,ruletypeArray[0]);
+}
+
+function delDiv(currentDivId)
+{
+	var mainDiv = document.getElementById("main");
+	var divToRemove = document.getElementById(currentDivId);
+	var removed = mainDiv.removeChild(divToRemove);
+}
+
+function changeRuleOptions(currentDivId,detailType)
+{
+	var currentDiv = document.getElementById(currentDivId);
+
+	if (currentDiv.getElementsByTagName('div').item(0))
+	{
+		currentDiv.removeChild(currentDiv.getElementsByTagName('div').item(0));
+	}
+
+	var detailsDiv = document.createElement('div');
+	detailsDiv.setAttribute('id','details' + currentDivId);
+	detailsDiv.setAttribute('style','display: inline;' + currentDivId);
+
+	switch(detailType)
+	{
+		case 'border':
+			var newLabelOne = document.createTextNode("thickness: ");
+			var newFieldOne = document.createElement("input");
+			var newLabelTwo = document.createTextNode(" pixels, color: ");
+			var newFieldTwo = document.createElement("input");
+			var newLabelThree = document.createTextNode(", line style: ");
+			var newFieldThree = document.createElement("select");
+
+			newFieldOne.setAttribute("id",currentDivId + "borderWidthField");
+			newFieldOne.setAttribute("name","border_width[" + currentDivId + "]");
+			newFieldOne.setAttribute("type","text");
+			newFieldOne.setAttribute("size","3");
+
+			newFieldTwo.setAttribute("id",currentDivId + "borderColorField");
+			newFieldTwo.setAttribute("name","border_color[" + currentDivId + "]");
+			newFieldTwo.setAttribute("type","text");
+			newFieldTwo.setAttribute("size","7");
+
+			var borderStyleArray = new Array("dotted","dashed","solid");
+			for(var i in borderStyleArray)
+			{
+				var newOption = document.createElement('option');
+				var newOptionText = document.createTextNode(borderStyleArray[i]);
+				newOption.setAttribute("id",currentDivId + borderStyleArray[i]);
+				newOption.setAttribute("name",borderStyleArray[i] + "[" + currentDivId + "]");
+				newOption.setAttribute("value",borderStyleArray[i]);
+				newOption.appendChild(newOptionText);
+				newFieldThree.appendChild(newOption);
+			}
+
+			detailsDiv.appendChild(newLabelOne);
+			detailsDiv.appendChild(newFieldOne);
+			detailsDiv.appendChild(newLabelTwo);
+			detailsDiv.appendChild(newFieldTwo);
+			detailsDiv.appendChild(newLabelThree);
+			detailsDiv.appendChild(newFieldThree);
+			break;
+
+		case 'background':
+			var newLabelOne = document.createTextNode("color: ");
+			var newFieldOne = document.createElement("input");
+			var newLabelTwo = document.createTextNode(" image(url): ");
+			var newFieldTwo = document.createElement("input");
+
+			newFieldOne.setAttribute("id",currentDivId + "backgroundColorField");
+			newFieldOne.setAttribute("name","background_color[" + currentDivId + "]");
+			newFieldOne.setAttribute("type","text");
+			newFieldOne.setAttribute("size","7");
+
+			newFieldTwo.setAttribute("id",currentDivId + "backgroundImageField");
+			newFieldTwo.setAttribute("name","background_image[" + currentDivId + "]");
+			newFieldTwo.setAttribute("type","text");
+			newFieldTwo.setAttribute("size","20");
+
+			detailsDiv.appendChild(newLabelOne);
+			detailsDiv.appendChild(newFieldOne);
+			detailsDiv.appendChild(newLabelTwo);
+			detailsDiv.appendChild(newFieldTwo);
+			break;
+
+		case 'font':
+			var newLabelOne = document.createTextNode("family: ");
+			var newFieldOne = document.createElement("input");
+			var newLabelTwo = document.createTextNode(", size: ");
+			var newFieldTwo = document.createElement("input");
+			var newLabelThree = document.createTextNode("point, color: ");
+			var newFieldThree = document.createElement("input");
+
+			newFieldOne.setAttribute("id",currentDivId + "fontFamilyField");
+			newFieldOne.setAttribute("name","font_family[" + currentDivId + "]");
+			newFieldOne.setAttribute("type","text");
+			newFieldOne.setAttribute("size","15");
+
+			newFieldTwo.setAttribute("id",currentDivId + "fontSizeField");
+			newFieldTwo.setAttribute("name","font_size[" + currentDivId + "]");
+			newFieldTwo.setAttribute("type","text");
+			newFieldTwo.setAttribute("size","3");
+
+			newFieldThree.setAttribute("id",currentDivId + "fontColorField");
+			newFieldThree.setAttribute("name","font_color[" + currentDivId + "]");
+			newFieldThree.setAttribute("type","text");
+			newFieldThree.setAttribute("size","7");
+
+			detailsDiv.appendChild(newLabelOne);
+			detailsDiv.appendChild(newFieldOne);
+			detailsDiv.appendChild(newLabelTwo);
+			detailsDiv.appendChild(newFieldTwo);
+			detailsDiv.appendChild(newLabelThree);
+			detailsDiv.appendChild(newFieldThree);
+			break;
+
+		case 'text color':
+			var newLabelOne = document.createTextNode("text color: ");
+			var newFieldOne = document.createElement("input");
+			var newLabelTwo = document.createTextNode(", link color: ");
+			var newFieldTwo = document.createElement("input");
+
+			newFieldOne.setAttribute("id",currentDivId + "textColorField");
+			newFieldOne.setAttribute("name","text_color[" + currentDivId + "]");
+			newFieldOne.setAttribute("type","text");
+			newFieldOne.setAttribute("size","7");
+
+			newFieldTwo.setAttribute("id",currentDivId + "linkColorField");
+			newFieldTwo.setAttribute("name","link_color[" + currentDivId + "]");
+			newFieldTwo.setAttribute("type","text");
+			newFieldTwo.setAttribute("size","7");
+
+			detailsDiv.appendChild(newLabelOne);
+			detailsDiv.appendChild(newFieldOne);
+			detailsDiv.appendChild(newLabelTwo);
+			detailsDiv.appendChild(newFieldTwo);
+			break;
+
+		case 'custom rule':
+			var newLabelOne = document.createTextNode("custom css statements: ");
+			var newFieldOne = document.createElement("input");
+			newFieldOne.setAttribute("id",currentDivId + "customCSSField");
+			newFieldOne.setAttribute("name","custom_css[" + currentDivId + "]");
+			newFieldOne.setAttribute("type","text");
+			newFieldOne.setAttribute("size","40");
+			detailsDiv.appendChild(newLabelOne);
+			detailsDiv.appendChild(newFieldOne);
+			break;
+	}
+
+	currentDiv.appendChild(detailsDiv);
+}
+
+
+</script>
+<style type='text/css'>
+DIV { background-color: #eeeeee; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div id='main'>
+
+	<script type='text/javascript' language='javascript'>
+		newDiv();
+	</script>
+
+</div>
+<input type='button' onclick="newDiv();" value='+'/>
+</body>
+</html>
