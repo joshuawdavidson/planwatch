@@ -1,5 +1,0 @@
-<?php
-
-echo "this page has not been downloaded and you are out of network range. try again when you can see a network.";
-
-?>

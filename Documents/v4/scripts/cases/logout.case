@@ -1,9 +1,0 @@
-<?php
-
-/*
-LOGOUT.case
-*/
-
-logout();
-
-?>
