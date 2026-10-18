@@ -1,0 +1,35 @@
+<?php
+	$title="Intro Formatting: Plan Links";
+	$body="##Plan Links
+When you mention another user in your plan, putting their name inside &#33;s will create a link
+to their plan. This lets people who read you click on their name to read their plan, and it
+gives them a 'snoop' to let them know you're saying something to them (or about them).<br>
+Examples:
+> &#33;jwdavidson! becomes !jwdavidson!
+> &#33;jlodom00@note! becomes !jlodom00@note!
+
+
+#Alias Links
+If you use <a href='/help/watched#aliases'>watched list aliases</a>, you can refer to users by their watched list alias instead
+of their actual user name. This is most useful for RSS plans. For instance, if i watched
+the slashdot RSS feed (http://slashdot.org/slashdot.rss) and aliased it as 'slash' in my
+watched list, this example would create a link:
+> &#33;slash! becomes <a href='/read/http://slashdot.org/slashdot.rss'>slash</a>
+
+<b>Web links</b>
+You can link to websites using the same format, so these examples will also work:<br>
+<blockquote>
+&#33;http://www.blah.com/:website title&#33; becomes !http://www.blah.com/:website title!
+</blockquote>
+
+<b>Links with descriptions</b><br>
+You can add some descriptive text to a link after a colon. This text will show up as the link 
+text instead of the username or website the link points to. These demonstrate:<br>
+<blockquote>
+&#33;link:http://www.blah.com/:blah! becomes !link:http://www.blah.com/:blah!<br>
+&#33;jwdavidson:josh is a really cool guy&#33; becomes !jwdavidson:josh is a really cool guy!
+</blockquote>
+<br><br>
+
+";
+	?>

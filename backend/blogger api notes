@@ -1,0 +1,97 @@
+notes:
+* appkey is on misha's computer at the moment
+   * but we have no need of it if we're just accepting writes. we can discard it
+* blogid is just username again
+* username and password are standard planwatch.org values
+* content is the post (duh)
+* postid is the timecode of the post (what about nonjournaling plans?)
+* publish is privacy
+* templateType is ignored, at present. none of the template functions will be supported unless
+  it's necessary for something.
+
+blogger.newPost
+returns postid
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# blogid (string): Unique identifier of the blog the post will be added to.
+# username (string): Login for a Blogger user who has permission to post to the blog.
+# password (string): Password for said username.
+# content (string): Contents of the post.
+# publish (boolean): If true, the blog will be published immediately after the post is made.
+
+blogger.editPost: Edits a given post. Optionally, will publish the blog after making the edit.
+returns TRUE
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# postid (string): Unique identifier of the post to be changed.
+# username (string): Login for a Blogger user who has permission to edit the given post (either the user who originally created it or an admin of the blog).
+# password (string): Password for said username.
+# content (string): New content of the post.
+# publish (boolean): If true, the blog will be published immediately after the post is made.
+
+blogger.getUsersBlogs: Returns information on all the blogs a given user is a member of.
+returns struct (1=>('blogid'=>$blogid, 'blogName'=>$blogName, 'url'=>$url))
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# username (string): Login for the Blogger user who's blogs will be retrieved.
+# password (string): Password for said username. 
+
+blogger.getUserInfo: Authenticates a user and returns basic user info (name, email, userid, etc.).
+returns a struct containing user's userid, firstname, lastname, nickname, email, and url.
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# username (string): Login for the Blogger user who's blogs will be retrieved.
+# password (string): Password for said username. 
+
+blogger.getTemplate: Returns the main or archive index template of a given blog.
+returns text of template as string or base64
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# blogid (string): Unique identifier of the blog who's template is to be returned.
+# username (string): Login for a Blogger who has admin permission on give blog.
+# password (string): Password for said username.
+# templateType (string): Determines which of the blog's templates will be returned. Currently, either "main" or "archiveIndex". 
+
+blogger.setTemplate: Edits the main or archive index template of a given blog.
+returns TRUE
+# appkey (string): Unique identifier/passcode of the application sending the post. (See access info.)
+# blogid (string): Unique identifier of the blog who's template is to be returned.
+# username (string): Login for a Blogger who has admin permission on give blog.
+# password (string): Password for said username.
+# template (string): The text for the new template (usually mostly HTML). Must contain opening and closing <Blogger> tags, since they're needed to publish.
+# templateType (string): Determines which of the blog's templates will be returned. Currently, either "main" or "archiveIndex". 
+
+
+---
+http://xmlrpc.free-conversant.com/docs/bloggerAPI
+---
+
+blogger.getPost
+
+Parameters:
+    * appkey : currently ignored
+    * postId : postId is a unique identifier for the post created. It is the value returned by blogger.newPost. postId will look like..."zoneId|convId|pathToWeblog|msgNum".
+    * username : the email address you use as a username for the site. This user must have privileges to post to the weblog as either the weblog owner, or a member of the owner group.
+    * password : the password you use for the site
+
+Returns:
+    * struct containing values content ( message body ), userId, postId and dateCreated.
+
+blogger.getRecentPosts
+
+Parameters:
+    * appkey : currently ignored
+    * blogId : blogId should be a string identifying the blog you wish to post to. This string will look like "zoneId|convId|pathToWeblog". pathToWeblog should be only the path that remains if you remove that base URL of the site...ie, if your weblog resides at "http://www.free-conversant.com/[mysite]/weblog", the pathToWeblog should be "weblog".
+    * username : the email address you use as a username for the site. This user must have privileges to post to the weblog as either the weblog owner, or a member of the owner group.
+    * password : the password you use for the site
+    * numberOfPosts : the number of recent posts that you want returns
+
+Returns:
+    * an array of structs, where each struct is one post. Each post is formatted exactly like the result of blogger.getPost (see above).
+
+blogger.deletePost
+
+Parameters:
+    * appkey : currently ignored
+    * postId : postId is a unique identifier for the post created. It is the value returned by blogger.newPost. postId will look like..."zoneId|convId|pathToWeblog|msgNum".
+    * username : the email address you use as a username for the site. This user must have privileges to post to the weblog as either the weblog owner, or a member of the owner group.
+    * password : the password you use for the site
+    * publish : true/false. Ignored.
+
+Returns:
+    * true

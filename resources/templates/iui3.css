@@ -1,0 +1,380 @@
+/* iui.css (c) 2007-9 by iUI Project Members, see LICENSE.txt for license */
+.linkbox {
+	width: 100%; float: none;
+}
+.linkbox .listheader {
+	background: transparent; font-size: 0.75rem;
+}
+
+.linkbox:first-line:not(.listheader) { font-family: sans-serif; letter-spacing: 0em; text-transform: uppercase; font-size: 20px; background: transparent !important; }
+body {
+    margin: 0;
+    font-family: $GLOBALS[pfont],$GLOBALS[pfonts];
+    background: $GLOBALS[planbgcolor];
+    color: $GLOBALS[textcolor];
+    overflow-x: hidden;
+}
+
+body > *:not(.toolbar) {
+	font-size: 16px;
+    display: none;
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 75svh;
+}
+
+body > b:not(.toolbar) { display: inline !important; position: relative !important; font-size: 1em; top: 0; width: auto; min-height: auto; }
+
+body[orient="landscape"] > *:not(.toolbar) {
+    min-height: 75svh;
+}
+
+body > *[selected="true"] {
+    display: block;
+}
+
+a[selected], a:active {
+    background-color: $GLOBALS[linkcolor] !important;
+    background-repeat: no-repeat, repeat-x;
+    background-position: right center, left top;
+    color: $GLOBALS[planbgcolor] !important;
+}
+
+
+/************************************************************************************************/
+
+body > .toolbar {
+	font-family: $GLOBALS[nfont],$GLOBALS[nfonts];
+    border-bottom: 2px solid $GLOBALS[navtextcolor];
+    padding: 0px;
+    width: 100%;
+	background: -webkit-gradient(linear, left top, left 65%, from(#fff), to($GLOBALS[listsbgcolor])) $GLOBALS[listsbgcolor];
+}
+
+.toolbar > h1 {
+display: none;
+}
+
+body[orient="landscape"] > .toolbar > h1 {
+    width: 100%;
+}
+
+textarea       {    margin-bottom: 2rem; }
+#submit_button {	font-size: 1.5rem; font-weight: bold; 	}
+#draft_button  {	font-size: 2rem; font-weight: bold; 	}
+#format_toolbar { display: flex; flex-wrap: wrap; }
+
+/************************************************************************************************/
+
+body > ul > li {
+    position: relative;
+    margin: 0px;
+    border-bottom: 1px solid rgba(200,200,200,0.5);
+    padding: 8px 0 8px 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    list-style: none;
+}
+
+body > ul > li.group {
+    position: relative;
+    top: -1px;
+    margin-bottom: -2px;
+    border-top: 1px solid #7d7d7d;
+    border-bottom: 1px solid #999999;
+    padding: 1px 10px;
+    background: url(/resources/iui3/listGroup.png) repeat-x;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+    color: #FFFFFF;
+}
+
+body > ul > li.group:first-child {
+    top: 0;
+    border-top: none;
+}
+
+body > ul > li > a {
+    display: block;
+    margin: -8px 0 0px -10px;
+    padding: 8px 5px 8px 10px;
+    text-decoration: none;
+    color: inherit;
+    background: url(/resources/iui3/listArrow.png) no-repeat right center;
+}
+
+article {
+	padding-inline: 0.25rem;
+}
+
+/************************************************************************************************/
+
+input:not(input[type|=radio]):not(input[type|=checkbox]) {
+    width: 100%;
+    margin: 8px 0 0 0;
+    padding: 6px 6px 6px 44px;
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+/************************************************************************************************/
+
+/* CUSTOM SECTION */
+.editLayer { display: none;
+	}
+
+img { max-width: 100svw;
+	}
+
+h1 { font-size: 2rem; }
+
+div.entry_header { font-weight: bold;
+	font-size: 1.5rem;
+	}
+
+ul.flicklist  {
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+	}
+
+ul li  {  list-style: none;
+	padding-left: 0px;
+	margin-left: 0px;}
+
+
+
+.tabbar  {
+	font: $GLOBALS[nfonts];
+	overflow: hidden;
+	width: 100%;
+	text-align: center;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	padding-top: 1rem;
+	background: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: bottom;
+}
+.tabbar li  {
+	font-size: 1rem;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	border: 1px solid $GLOBALS[navtextcolor];
+	border-bottom: 0px;
+	padding: 5px;
+	padding-bottom: 0px;
+	background: rgba(255,255,255,0.3);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	margin-right: 2px;
+	opacity: 0.8;
+}
+
+	#toolstab,#xtab  {
+		font-size: 0.75rem !important;
+		margin: 0px;
+		position: relative;
+		display: inline;
+		border: thin solid $GLOBALS[navtextcolor];
+		border-bottom: 0.25rem solid $GLOBALS[navtextcolor];
+		padding: 0.125rem;
+		padding-bottom: 0px;
+		background-color: $GLOBALS[navtextcolor] !important;
+		color: $GLOBALS[navlinkcolor];
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		margin-left: 0.5rem;
+		}
+		#toolstab a,#xtab a { color: $GLOBALS[listsbgcolor] !important;  font-size: 0.75rem; }
+
+	.tabbar li a  {
+		letter-spacing: -0.05em;
+		text-decoration: none;
+		text-transform: uppercase;
+		color: $GLOBALS[navtextcolor];
+		font-size: 1.1rem;
+	}
+		.tabbar li.current  {
+			margin-top: 0px;
+			background-color: $GLOBALS[navlinkcolor] !important;
+			font-weight: bold;
+			border: 1px solid $GLOBALS[navlinkcolor];
+			border-bottom: 1px solid $GLOBALS[navlinkcolor];
+		}
+		.tabbar li.current a  {  	color: $GLOBALS[listsbgcolor] !important; }
+
+		.tabbar li a:hover  {  color: $GLOBALS[listsbgcolor]; }
+
+	.flicklist li  {
+		font-family: $GLOBALS[nfont],$GLOBALS[nfonts];
+		list-style: none;
+		font-size: 1.25rem;
+		min-height: 3rem;
+		}
+
+	.nodesktop  {display: block; }
+	ul.flicklist li.listheader  {
+		font-size: 1.5rem; line-height: 1.4rem;
+		background: $GLOBALS[navtextcolor];
+		font-weight: bold;
+		color: $GLOBALS[listsbgcolor];
+		min-height: 1.5rem;
+		border-bottom: 0px;
+		}
+
+	li.listheader a  {
+		font-weight: bold;
+		color: $GLOBALS[listsbgcolor];
+		}
+
+	li.unread  {
+			background-color: $GLOBALS[listsbgcolor];
+		}
+
+#reader_toolbar  {  text-align: center;
+	background: $GLOBALS[navtextcolor];
+	list-style: none;
+	margin: 0px;
+	padding: 6px;
+		font-size: 0.75rem; text-rendering: optimizeLegibility;
+	}
+
+
+	#reader_toolbar li  {  display: inline-block;
+		padding: 2px;
+		font-size: 1rem;
+		margin: 2px;
+		text-align: center;
+		}
+	#reader_toolbar li.toolbutton  {
+		border-radius: 5px;
+		background: $GLOBALS[listsbgcolor];
+		padding: 3px;
+		text-decoration: none;
+		text-transform: uppercase;
+		}
+	#reader_toolbar li.toolbutton a  {  text-decoration: none;
+		color: $GLOBALS[navlinkcolor];
+		font-weight: bold;
+		}
+	#reader_toolbar li.plan_data_block    {  display: inline;
+		border: none;
+		font-size: 0.75rem;
+		background: transparent; color: $GLOBALS[listsbgcolor];
+		}
+
+	#moremenu { background: $GLOBALS[listsbgcolor]; margin: 0px; padding: 0px; }
+	#moremenu li {  display: block; float: none; width: 200px; border-radius: 0px; background: $GLOBALS[navtextcolor]; border: none; height: 40px; }
+	#moremenu li a { color: $GLOBALS[listsbgcolor] }
+
+
+.main_content  {  position: absolute;
+
+	}
+.entry_title  {  font-size: 1.25rem;
+	font-weight: bold;
+	}
+
+textarea#textbox,textarea#send_textbox { float: left;
+	width:  100svw;
+	font-size: 1rem;
+	height:  50svh;
+	margin-bottom: 0.5rem; }
+
+#writetitle,#writetags {
+	width: 100svw; font-size: 1.25rem;
+}
+
+.nomobile { display: none !important; }
+
+.settingsbox { font-size: 1rem; line-height: 2rem; float: none; width: auto;}
+.settingsbox label { font-size: 1rem; line-height: 2rem; }
+label input[type="checkbox"] {  width: 1rem; height: 1rem;  }
+
+body > ul > li,ul.flicklist > li {
+	border-bottom: 1px solid #E0E0E0;
+	padding-inline: 0.5rem;
+	font-size: 1.25rem;
+	font-weight: bold;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	min-height: 3rem;
+	}
+	li:empty { min-height: 0; height:0; }
+
+
+
+body > ul > li.group { position: relative;
+	top: -1px;
+	margin-bottom: -2px;
+	border-top: 1px solid #7d7d7d;
+	border-bottom: 1px solid #999999;
+	padding: 1px 10px;
+	background: url(m.planwatch.org/iui/listGroup.png) repeat-x;
+	font-size: 1rem;
+	font-weight: bold;
+	text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+	color: #FFFFFF;
+	}
+
+body > ul > li.group:first-child { top: 0;
+	border-top: none;
+	}
+
+body > ul > li > a,ul.flicklist > li > a {
+		text-decoration: none;
+	}
+body > ul > li > a.tool,ul.flicklist > li > a.tool {
+	display: inline;
+	background: transparent;
+	z-index: 1000;
+	}
+
+body > ul > li > a.updatetime, ul.flicklist > li > a.updatetime {
+	font-size: 0.75rem;
+	font-weight: normal;
+	flex: 0;
+	}
+
+body > ul > li > a.updatename, ul.flicklist > li > a.updatename {
+	font-size: 1rem !important;
+	line-height: 1rem;
+	flex: 1;
+	}
+
+body > ul > li > a.updatename:first-line, ul.flicklist > li > a.updatename:first-line {
+	font-size: 1.25rem !important;
+	}
+
+		.planwatch listheader a  { padding: 0px; margin: 0px; }
+
+
+a[target="_replace"] {
+	box-sizing: border-box;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	font-size: 1rem;
+	color: cornflowerblue;
+	background-color: #FFFFFF;
+	background-image: none;
+	}
+
+body > *[selected="true"] {
+	display: block;
+	}
+
+#fingerbox { font-size: 1.5rem; margin: 0px; border: 0px; }
+
+pre,section.pre { font-size: 0.9rem; letter-spacing: -0.05em; font-family: serif; white-space: pre-wrap; width: 98%; overflow: scroll; }
+
+
+.send_from,.send_to {  overflow: scroll; -webkit-overflow-scrolling: touch; }

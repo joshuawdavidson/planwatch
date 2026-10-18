@@ -1,0 +1,15 @@
+<?php
+
+/*
+APPLY.case
+
+applies the skin named closest to the passed key
+*/
+
+include_once('editstyles.php');
+exec("ls $_SERVER[FILE_ROOT]/resources/skins/$urlarray[2]*.skin",$skin_a);
+exec("ls $_SERVER[FILE_ROOT]/resources/skins/*.skin",$allskin_a);
+if (sizeof($skin_a)==sizeof($allskin_a)) $skin_a[0]=$allskin_a[rand(0,sizeof($allskin_a)-1)];
+skin_write(basename($skin_a[0]));
+
+?>

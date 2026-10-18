@@ -1,0 +1,10 @@
+<?php
+$title='Planwatch Skins';
+$body="
+<br>
+instead of specifying all the colors and fonts yourself via our <a href='/edit/styles'>style editor</a>, you can use one of our premade skins. click <a href='/edit/skin'>here</a> to do it, or click on 'choose a skin' on the <a href='/tools'>tools</a> page. <a href='/read/madvani'>madvani</a> has kindly contributed some attractive skins to make up for <a href='/read/jwdavidson'>jwdavidson's</a> ugly ones.
+<br><br>
+<h2>make your own skins</h2>
+By choosing custom colors, fonts, and images using the <a href='/edit/styles'>style editor</a> available on the <a href='/tools'>tools</a> page, then using the <a href='/edit/makeskin'>skin creation form</a> also available from the <a href='/tools'>tools</a> page, you can turn your custom style into a skin that anyone can use. <a href='http://www.zootle.net/afda/share-and-enjoy.shtml'>share and enjoy!</a><br><br> you can edit your skin later and resubmit it, but you can't change skins that weren't created by you.
+";
+?>

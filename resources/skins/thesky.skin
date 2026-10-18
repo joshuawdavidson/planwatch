@@ -1,0 +1,133 @@
+<?php
+/*
+THESKY.SKIN -- part of the planwatch library
+*/
+
+$sitename="pwo:<span style='font-weight: normal; color: #CCCCFF;'>thesky</span>";
+
+
+/*
+------------------------------------------------------------------------------
+IMAGES
+------------------------------------------------------------------------------
+pagebgimage 	the image that is displayed as the background of the page
+listsbgimg	image displayed as the watched list background
+planbgimg	image displayed as the content area background
+headbgimg	image displayed as the header area background
+pwlogo		the image that is displayed next to the site name
+
+the others are the icons that go next to the links in the toolbar
+*/
+
+	$pagebgimage='/resources/skins/thesky/sky.jpg';
+	$listsbgimg='';
+	$planbgimg='';
+	$headbgimg='';
+
+	$pwlogo='';
+	$writeicon='/graphics/pencil.gif';
+	$toolsicon='/graphics/hammer.gif';
+	$snitchicon='/graphics/eye.gif';
+	$prefsicon='/graphics/smiley.gif';
+	$helpicon='/graphics/help.gif';
+	$logouticon='/graphics/x.gif';
+
+
+/*
+------------------------------------------------------------------------------
+TEXT COLORS
+------------------------------------------------------------------------------
+textcolor 		is the basic color of all text on the page, except links, 
+				titletext, and text in the plan lists. it should contrast
+				well with pagebgcolor and planbgcolor.
+
+titletextcolor	is the text color for the text at the top of the page
+				(slogan, site name, toolbar, status text). it should contrast
+				well with headbgcolor.
+				
+navtextcolor	is the color of plan times in the watched lists. it should
+				contrast well with listsbgcolor and be different from 
+				navlinkcolor.
+*/
+
+	$textcolor='#000000';
+	$titletextcolor='#000000';
+	$navtextcolor='#000000';
+
+
+/*
+------------------------------------------------------------------------------
+LINK COLORS
+------------------------------------------------------------------------------
+linkcolor 		is the basic color of all links on the page, except as below
+
+alinkcolor		is the text color of all links while you hold the mouse on them
+				
+vlinkcolor		is the color of regular links that you've visited
+
+navlinkcolor	is the color of links to other plans in the watched lists
+*/
+
+	$linkcolor='#3333CC';
+	$vlinkcolor='#6666FF';
+	$alinkcolor='#6666FF';
+	$navlinkcolor='#000099';
+
+/*
+------------------------------------------------------------------------------
+BACKGROUND COLORS
+------------------------------------------------------------------------------
+pagebgcolor		is the color of the page background
+
+listsbgcolor	is the background color of the watched lists
+				
+headbgcolor		is the background color of the header area of the page
+
+planbgcolor		is the background color of the area of the page which contains the
+				actual content
+*/
+
+	$pagebgcolor='#FFFFFF';
+	$listsbgcolor='#FFFFCC';
+	$headbgcolor=' ';
+	$planbgcolor='#FFFFFF';
+
+
+/*
+------------------------------------------------------------------------------
+FONTS
+------------------------------------------------------------------------------
+pfonts			the font or fonts assigned to plan text
+
+nfonts			the font or fonts assigned to watched lists
+				
+sfonts			the font or fonts assigned to slogans and status
+
+hfonts			the font or fonts assigned to the "Planwatch.org" text
+*/
+
+	$pfonts="hoefler text,georgia,times new roman,serif";
+	$sfonts="trebuchet ms, verdana, helvetica, arial, sans-serif";
+	$nfonts="verdana, trebuchet ms, helvetica, arial, sans-serif";
+	$hfonts="trebuchet ms, verdana, helvetica, arial, sans-serif";
+
+
+/*
+------------------------------------------------------------------------------
+FONT SIZES (range from 1-7)
+------------------------------------------------------------------------------
+pfsize			the size of plan text
+
+nfsize			the size of watched list text
+				
+sfsize			the size of slogan text
+
+hfsize			the size of the site name
+*/
+
+	$hfsize='6';
+	$sfsize='3';
+	$nfsize='3';
+	$pfsize='3';
+
+?>

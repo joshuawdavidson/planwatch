@@ -1,0 +1,20 @@
+<?php
+	$title="Statistical Usage Reporting";
+	$body="<p>Starting in a week or two, planwatch will begin collecting statistical, anonymous usage data from users who allow it. </p><p><h2>What data?</h2>
+We're collecting and using the following data:<ul>
+<li>average number of pages per visit</li>
+<li>average number of minutes per visit</li>
+<li>average number visits per page</li>
+<li>time distribution of visits (by hour)</li>
+<li>visitor configuration (screen size, colors, browser, operating system)</li>
+<li>visitor network (cell or fixed)</li>
+</ul></p><p><h2>Who gets to see it?</h2>
+Only the planwatch admins. It doesn't even get shared back to google's aggregation program.</p><p><h2>What will you do with it?</h2>
+Figure out ways to make the site better, and try to identify unpopular or buggy features that need attention.</p><p><h2>What won't you do with it?</h2>
+Show it to third parties. Reveal personally identifiable information. Track specific user paths. Allow google indexing of any content on planwatch.org.</p><p><h2>How do I know you're telling the truth?</h2>
+Well, if you don't trust us, you should probably find another site to host your plan. You can always talk to <a href='/read/jwdavidson'>josh</a> directly if you have questions.</p><p><h2>This doesn't mean google will index my plan, right?</h2>
+No. Google will not index your plan unless you reproduce it on another site. Have a look at our <a href='/robots.txt'>robots.txt</a> if you're uncertain about this.</p>
+<h2>This makes me uncomfortable. How do I stop it?</h2>
+Well, it hasn't started yet. You can adjust the setting on your <a href='/prefs'>prefs</a> page. An alert will appear on the <a href='/'>dashboard</a> before we turn it on.
+<br />";
+	?>

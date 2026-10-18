@@ -1,0 +1,13 @@
+<?php
+$title='Help with Slogans';
+$body="
+users can submit slogans to be part of the random rotation below the pw.o name/logo. you can see what slogans others have submitted by going to the <a href='/edit/slogan/list'>slogan list page</a>, and you can see what slogans you've submitted by going to the <a href='/edit/slogan/listmine'>my slogans</a> page.<br><br>
+you can edit your slogans after you've submitted them, and you can vote any slogan up or down. slogans that have a vote total of zero or less will never show up. the chance any particular slogan will show up is its vote total divided by the total positive votes. you can see this as a percentage on the slogan list page.
+<br><br>
+new slogans always have a vote total of 1.
+<br><br>
+if a slogan has a vote total of zero or less for two straight weeks, it will be automatically deleted.
+<br><br>
+you can view a <a href='/edit/slogan/list'>list of active slogans</a>, <a href='/edit/slogan/listmine'>slogans you have submitted</a>, or <a href='/edit/slogan/listinactive'>inactive slogans</a>.
+";
+?>

@@ -1,0 +1,15 @@
+<?php
+$title='What the icons mean';
+$body="
+	<ul>
+	<li><img src='/graphics/read.gif' width='16' height='16'>View Your Own Plan
+	<li><img src='/graphics/hammer.gif' width='16' height='16'>Tools
+	<li><img src='/graphics/eye.gif' width='16' height='16'>Snitch
+	<li><img src='/graphics/pencil.gif' width='16' height='16'>Write an update
+	<li><img src='/graphics/smiley.gif' width='16' height='16'>Edit your user info
+	<li><img src='/graphics/help.gif' width='16' height='16'>Help
+	<li><img src='/graphics/x.gif' width='16' height='16'>Log out
+	</ul>
+";
+
+?>

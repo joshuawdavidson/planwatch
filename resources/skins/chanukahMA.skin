@@ -1,0 +1,39 @@
+<?php
+/*
+chanukahMA
+this skin was automatically created on 10 Dec 2001, 02:01:10 pm GMT
+in celebration of chanukah; features star of david and light aqua shades
+*/
+
+$pagebgimage="";
+$listsbgimg="http://www.planwatch.org/resources/graphics/sd.jpg";
+$planbgimg="";
+$headbgimg="http://www.planwatch.org/resources/graphics/sd.jpg";
+$pwlogo="";
+$writeicon="/graphics/pencil.gif";
+$toolsicon="/graphics/hammer.gif";
+$snitchicon="/graphics/eye.gif";
+$prefsicon="/graphics/smiley.gif";
+$helpicon="/graphics/help.gif";
+$logouticon="/graphics/x.gif";
+$navtextcolor="navy";
+$textcolor="black";
+$linkcolor="navy";
+$navlinkcolor="navy";
+$vlinkcolor="navy";
+$alinkcolor="blue";
+$planlinkcolor="";
+$pagebgcolor="white";
+$listsbgcolor="white";
+$headbgcolor="white";
+$planbgcolor="88EEFF";
+$titletextcolor="navy";
+$nfonts="";
+$sfonts="";
+$hfonts="trebuchet ms, verdana, arial, sans-serif";
+$pfonts="";
+$nfsize="1";
+$sfsize="1";
+$hfsize="6";
+$pfsize="1";
+?>

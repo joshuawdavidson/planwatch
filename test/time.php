@@ -1,0 +1,1 @@
+<?php echo date("F jS Y h:ia",$time); ?>

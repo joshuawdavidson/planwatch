@@ -1,0 +1,10 @@
+<?php
+	$title="How To Include Your Plan on Your Website";
+	$body="If your plan is public, you can include the text on your homepage by adding this script tag where you want it to appear:<br>
+&lt;script type=\"text/javascript\" src=\"http://rssxpress.ukoln.ac.uk/lite/viewer/?rss=http%3A%2F%2Fplanwatch.org/read/<strong>username</strong>/rss\"/&gt;<br><br>
+All non-private entries from your plan will show up on your homepage in place of that tag (you'll want to put it all on one line in your page).<br><br>
+You can use <a href='http://wendypeck.com/css101.html'>CSS</a> (that's a 
+link to a pretty good primer on CSS) to control how it looks on your site 
+-- colors, fonts, etc. When anyone loads your site, you'll get an <i>RSS 
+Reader from ...</i> snitch to let you know someone's read your feed. ";
+	?>

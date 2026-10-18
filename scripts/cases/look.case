@@ -1,0 +1,109 @@
+<?php
+/*
+cases/LOOK.case
+
+powers planwatch/look
+*/
+
+function styles_strip($data)
+{
+	while(strstr($data,"<style"))
+	{
+		$start=strpos($data,"<style");
+		$end=strpos($data,"</style>");
+		$data=str_replace(substr($data,$start,$end-$start+8),'',$data);
+	}
+//	$data=preg_replace("/style=['\"][^'\"]*['\"]/",'',$data);
+	$data=preg_replace("/<link [^\>]*stylesheet[^\>]*>/",'',$data);
+	return $data;
+}
+
+include_once('plan_read.php');
+
+if ($_SERVER['USER']) { $watchedlist=file("$_SERVER[USER_ROOT]/watchedlist.txt"); }
+else $watchedlist=array();
+
+user_update_last_action();
+
+if ($urlarray[2]=='group')
+{
+	$group=strtolower(urldecode($urlarray[3]));
+	$start=-1; $end=-1;
+	foreach($watchedlist as $key=>$watched)
+	{
+		$watched=trim(strtolower($watched));
+		if ($start>=0 && $watched[0]=='#' && $end<0) { $end=$key; }
+		if ($watched=="#$group") { $start=$key; }
+	}
+	if ($start>=0 && $end<0) $end=count($watchedlist);
+	
+	$watchedlist=array_slice($watchedlist,$start,$end-$start);
+
+}
+
+if ($urlarray[2]=='metafeed')
+{
+	$group=strtolower(urldecode($urlarray[3]));
+	$start=-1; $end=-1;
+	foreach($watchedlist as $key=>$watched)
+	{
+		$watched=trim(strtolower($watched));
+		if ($start>=0 && $watched[0]=='#' && $end<0) { $end=$key; }
+		if ($watched=="#$group") { $start=$key; }
+	}
+	if ($start>=0 && $end<0) $end=count($watchedlist);
+	
+	$watchedlist=array_slice($watchedlist,$start,$end-$start);
+	foreach($watchedlist as $i=>$watched)
+	{
+		if (strstr($watched,'!') && strstr($watched,':'))
+		{
+			list($watched,$junk)=explode(':',str_replace('!','',$watched),3);
+			if ($junk[0]=='/') $watched.=":$junk";
+			$watchedlist[$i]=$watched;
+		}
+		if (!strstr($watchedlist[$i],'://')) unset($watchedlist[$i]);
+	}
+	output("Readings in $urlarray[3]",plan_read_metafeed($watchedlist));
+	exit;
+}
+
+$output.="<h1>$group look</h1>";
+
+$updatetimes=plan_get_last_update($watchedlist);
+$lastread=plan_get_last_view($watchedlist);
+
+	$i=1;
+foreach($watchedlist as $j=>$watched)
+{
+	if (strstr($watched,'!') && strstr($watched,':'))
+	{
+		$watchedparts=explode(':',str_replace('!','',$watched));
+		$watched=implode(':',array_slice($watchedparts,0,count($watchedparts)-1));
+		if (strpos(end($watchedparts),'/')===0) $watched.=end($watchedparts);
+	}
+	
+	if (!strstr($watched,'sort by') && !strstr($watched,'!') && $updatetimes[$j]>$lastread[$j])
+	{
+		$watched=trim($watched);
+		if (!isset($_SERVER['PLANOWNER_INFO_ARRAY']) || $_SERVER['PLANOWNER']!=$watched)
+		{
+			plan_get_owner_info($watched);
+		}
+
+		$output.="<a href='#e$i'>$watched</a>: ".formattime($updatetimes[$j])."<br />\n";
+		$outputplans.="<div id='e$i'><b>$watched's plan:</b> [<a class='hidden' href='#e0'>/\</a>]<br />".styles_strip(plan_read($watched))."</div><hr/>\n";
+		$i++;
+	}
+}
+
+$output_head="<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><meta name = \"viewport\" content = \"maximum-scale=0.6667,width=480\" >
+<script type='text/javascript' src='http://planwatch.org/resources/javascript/look.js'></script>
+</head><body>";
+$output_foot="</body></html>";
+$output="$output_head<div id='e0'>$output</div><hr>$outputplans<div id='e$i'>&nbsp;</div>$output_foot";
+
+if (!$_SERVER['USER'] && !$urlarray[2]) $output.='you are not logged in. please log in and try again.';
+else if (!strstr($output,"<div id='e1'")) $output.='nothing new. sorry.';
+
+echo $output;

@@ -1,0 +1,41 @@
+<?php
+/*
+CLASSIC_VALENTINE_..BY_MADVANI....SKIN
+this skin was automatically created on 13 Feb 2004, 05:33:24 pm GMT
+from madvani's color and font prefs
+*/
+
+$pagebgimage="";
+$listsbgimg="";
+$planbgimg="";
+$headbgimg="";
+$pwlogo="";
+$writeicon="/graphics/smheart.gif";
+$toolsicon="/graphics/smheart.gif";
+$snitchicon="/graphics/smheart.gif";
+$prefsicon="/graphics/smheart.gif";
+$helpicon="/graphics/smheart.gif";
+$logouticon="/graphics/smheart.gif";
+$navtextcolor="#F9E0E9";
+$textcolor="#93093C";
+$linkcolor="#E66699";
+$navlinkcolor="#93093C";
+$vlinkcolor="#F6196C";
+$alinkcolor="#F6196C";
+$planlinkcolor="";
+$pagebgcolor="#F9E0E9";
+$listsbgcolor="#E66699";
+$headbgcolor="#F9E0E9";
+$planbgcolor="#F9E0E9";
+$titletextcolor="#93093C";
+$nfonts="tahoma,verdana,trebuchet ms";
+$sfonts="tahoma,verdana,trebuchet ms";
+$hfonts="tahoma,verdana,trebuchet ms";
+$pfonts="tahoma,verdana,trebuchet ms";
+$nfsize="1";
+$sfsize="0";
+$hfsize="5";
+$pfsize="1";
+$sitename="planwatch.org";
+$viewicon="/graphics/smheart.gif";
+?>

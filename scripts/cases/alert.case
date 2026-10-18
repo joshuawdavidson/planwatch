@@ -1,0 +1,9 @@
+<?php
+/*
+ALERT.case
+*/
+
+$content="<div class='alert'>".urldecode($urlarray[2])."</div>";
+output("Alert",$content);
+
+?>

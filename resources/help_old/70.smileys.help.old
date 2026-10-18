@@ -1,0 +1,9 @@
+<?php
+$title='What Smilies Are There?';
+
+$body="
+	<iframe src='/smileys' style='border: 0; width: 300;'></iframe>
+	<br>
+	<a href='/edit/smiley'><img src='$toolsicon'> upload a new smiley</a> (must be a .gif or .png)
+";
+?>

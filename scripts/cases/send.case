@@ -1,0 +1,70 @@
+<?php
+/*
+SEND.case
+*/
+
+if(trim($_SERVER['USER']=='')) { header("Location: https://planwatch.org/"); exit; }
+
+include_once('send.php');
+$send_dir="$_SERVER[USER_ROOT]/sends";
+
+switch($urlarray[2]):
+
+case "unread":
+	touch("$send_dir/".files_encode_safe_name("$urlarray[3]..new"));
+	redirect('/');
+	break;
+
+case "":
+	if (!is_dir($send_dir))
+	{
+		$old=umask(0);
+		mkdir($send_dir,0777);
+		umask($old);
+	}
+
+	if (file_exists("$send_dir/..new"))
+		unlink("$send_dir/..new");
+	$senders=send_list();
+
+	if(OUTPUT_MODE!='MOBILE') {$content.="<h1>Send</h1>";}
+	$content.="
+	<ul class='flicklist'>
+	<li class='listheader' id='newsend'><a  onclick='document.getElementById(\"sendform\").style.display=\"block\"; document.getElementById(\"newsend\").style.height=\"500px\";' href='#sendform'>New conversation &gt;</a>
+		<form id='sendform' style='display: none;' action='/scripts/send.php' method='post'>
+		<div style='margin-bottom: 20px;'>
+		to: <input type='text' name='recipient' style='width: 200px !important;' value=''/><br/>
+		message:<br/>
+		<textarea name='sendmessage' id='textbox'></textarea><br/>
+		<input type='hidden' name='action' value='send'>
+		<input type='submit' id='submit_button' value='Send'/>
+		</div>
+<a href='#'>		</form>
+	</li>
+	<li class='listheader'><a href='#'>Current</a></li>
+	$senders
+	</ul>
+	";
+	output("Send",$content);
+	break;
+
+case "ajax":
+	$content=send_display($urlarray[3],TRUE,$urlarray[4]);
+	$_SERVER['OUTPUT_METHOD']='AJAX';
+	output("Send offset $urlarray[4]",$content);
+	break;
+
+default:
+	$content=$from='';
+	$offset=0;
+	if(isset($urlarray[2])) { $from=$urlarray[2]; }
+	if(isset($urlarray[3])) { $offset = $urlarray[3]; }
+	$content.=send_display($from,TRUE,$offset);
+	$content.="<input type='hidden' id='last_send' value='29' />\n";
+	output("Send: $urlarray[2]",$content);
+	break;
+
+endswitch;
+
+
+?>

@@ -1,0 +1,40 @@
+<?php
+/*
+Autumnal skin with maple and dark cranberry tones, red leaves. 
+11 Nov 2002, 10:16:45 am GMT
+*/
+
+$pagebgimage="";
+$listsbgimg="";
+$planbgimg="";
+$headbgimg="";
+$pwlogo="";
+$viewicon="/resources/graphics/leaf.gif";
+$writeicon="/resources/graphics/leaf.gif";
+$toolsicon="/resources/graphics/leaf.gif";
+$snitchicon="/resources/graphics/leaf.gif";
+$prefsicon="/resources/graphics/leaf.gif";
+$helpicon="/resources/graphics/leaf.gif";
+$logouticon="/resources/graphics/leaf.gif";
+$navtextcolor="#000000";
+$textcolor="#ffffff";
+$linkcolor="#cccc99";
+$navlinkcolor="#660000";
+$vlinkcolor="#cc0000";
+$alinkcolor="#cc0000";
+$planlinkcolor="cccc99";
+$pagebgcolor="#ffffff";
+$listsbgcolor="#cccc99";
+$headbgcolor="#cccc99";
+$planbgcolor="#660000";
+$titletextcolor="#660000";
+$nfonts="tahoma,verdana, helvetica, arial, sans-serif ";
+$sfonts="tahoma,verdana, helvetica, arial, sans-serif ";
+$hfonts="tahoma,verdana, helvetica, arial, sans-serif";
+$pfonts="tahoma,verdana, helvetica, arial, sans-serif ";
+$nfsize="10pt";
+$sfsize="6pt";
+$hfsize="16pt";
+$pfsize="10pt";
+$sitename="planwatch.org";
+?>

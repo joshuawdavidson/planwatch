@@ -1,0 +1,110 @@
+<?php
+
+$salt="planwatch-backup-salt-jgkljangkjbkvjnabkvjnq;kjvnakldsvnkalsdnvkasndvasdv;lkasdv;lansdvlasdvl;kasd;vlalvna;dlvknasl;dvkna;sldkvn";
+
+$backup_permissions_dir="$_SERVER[FILE_ROOT]/stats/backup_permissions";
+if(!file_exists($backup_permissions_dir)) mkdir($backup_permissions_dir,0777);
+$backup_users_list=implode("-_-",files_list($backup_permissions_dir,"*.permission"));
+
+
+$urlarray[3]=urldecode($urlarray[3]);
+
+switch($urlarray[2]):
+
+case "":
+	echo "you really shouldn't be here";
+	break;
+	
+case "unpermit":
+	$tentative_permissions_file="$backup_permissions_dir/$urlarray[3].permission.tentative";
+	if(file_exists($tentative_permissions_file))
+	{
+		list($user_hash,$permission_timecode)=explode("---",trim(file_get_contents($tentative_permissions_file)));
+		if($user_hash==md5($urlarray[3].$salt) && time()<(base64_decode($permission_timecode)+1800))
+		{
+			exec("rm $_SERVER[FILE_ROOT]/stats/backup_permissions/$urlarray[3].permission");
+			echo "<h1>You have revoked backup permission</h1>All backups have been deleted and no more will be made.";
+		}
+		else
+		{
+			echo "<h1>Hm.</h1>You don't seem to be authorized to make this decision. This may well be a bug, so email help@planwatch.org if you want.";
+		}
+	}
+
+	break;
+
+case "permit":
+	$tentative_permissions_file="$backup_permissions_dir/$urlarray[3].permission.tentative";
+	if(file_exists($tentative_permissions_file))
+	{
+		list($user_hash,$permission_timecode)=explode("---",trim(file_get_contents($tentative_permissions_file)));
+		if($user_hash==md5($urlarray[3].$salt) && time()<(base64_decode($permission_timecode)+1800))
+		{
+			exec("mv $tentative_permissions_file $_SERVER[FILE_ROOT]/stats/backup_permissions/$urlarray[3].permission");
+		}
+		echo "<h1>Yay!</h1>You have granted permission. Automatic backups will begin within 15 minutes.";
+	}
+	else
+	{
+		echo "<h1>Not Authorized</h1>Sorry, you must read backup@planwatch.org from your note or pwn account to authorize backup services.";
+	}
+	break;
+
+case "setup":
+
+	$backup_users=file_get_contents($backup_users_registry);
+
+	$requester=str_replace(array("@planwatch.org","@beta","@pwo"),'',$requester);
+	$backup_permission=md5($urlarray[3]."$salt")."---".base64_encode(time());
+	file_put_contents("$backup_permissions_dir/$urlarray[3].permission.tentative",$backup_permission);
+
+	if(strstr($backup_users_list,$urlarray[3]))
+	{
+		echo "<h1>You're signed up!</h1>
+		Backups are underway. The interface for viewing your older backups will be ready Sunday. If you want to stop backing up, click the red button:<br /><br />
+		
+		<a href='http://planwatch.org/xn_backup/unpermit/$urlarray[3]/$backup_permission' style='border-style: outset; padding: 4px; background: red; color: white; font-size: 30px; -webkit-border-radius: 15px;'>Don't Back Up My Plan</a>
+		";
+		
+		echo "<br /><br />Your Latest Backup: <br /><textarea style='max-width: 600px; width: 90%; height: 250px;'>".file_get_contents("/home/planwatc/pwusers/backup/files/$urlarray[3].latest.backup")."</textarea>";
+	}
+	else
+	{
+
+		echo"
+		<h1>Planwatch.org Backup Services</h1>
+		<em style='color: gray;'>(Make sure planwatch.org users can read your plan*)</em><br /><br />
+		Click the big green button to get started: <a href='http://planwatch.org/xn_backup/permit/$urlarray[3]/$backup_permission' style='border-style: outset; padding: 4px; background: green; color: white; font-size: 30px; -webkit-border-radius: 15px;'>Back Up My Plan</a>
+		<br />
+		<hr /><br /><br />
+		<h3>What am I signing up for?</h3>
+		Planwatch.org will check your plan for updates every 15 minutes, and whenever a new plan is available backup@planwatch.org will read you and save a copy.
+		If you want to see your archived plans, just read backup@planwatch.org and use the onscreen options to navigate your archives.
+		
+		
+		Need help? Send jwdavidson@planwatch.org or email <a href='mailto:help@planwatch.org'>help@planwatch.org</a>.
+		
+		
+		<hr /><br /><br />
+		* If you don't want to do this, you can still manually back up your plan by getting a pwo account from invite@planwatch.org and copy-pasting your updates by hand.			";
+	}
+
+	break;
+
+
+default:
+	echo "you shouldn't be here";
+	break;
+
+endswitch;
+
+/*
+	echo "<html><body><script>
+	var permitframe=document.getElementById('PERMITFRAME');
+	permitframe.style.height='200px';
+	permitframe.style.width='200px';
+	alert('this worked');
+	</script></body></html>";
+*/
+
+?>
